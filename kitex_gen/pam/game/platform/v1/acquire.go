@@ -482,10 +482,11 @@ var fieldIDToName_AcquireRoomData = map[int16]string{
 }
 
 type AcquireTempData struct {
-	LastTileKey          string                        `thrift:"last_tile_key,1,required" frugal:"1,required,string" json:"last_tile_key"`
-	MergeSettleData      map[string]*AcquireSettleData `thrift:"mergeSettleData,2,required" frugal:"2,required,map<string:AcquireSettleData>" json:"mergeSettleData"`
-	MergeMainCompanyTemp string                        `thrift:"merge_main_company_temp,3,required" frugal:"3,required,string" json:"merge_main_company_temp"`
-	MergeSelectionTemp   *AcquireMergingSelection      `thrift:"merge_selection_temp,4,required" frugal:"4,required,AcquireMergingSelection" json:"merge_selection_temp"`
+	LastTileKey              string                        `thrift:"last_tile_key,1,required" frugal:"1,required,string" json:"last_tile_key"`
+	MergeSettleData          map[string]*AcquireSettleData `thrift:"mergeSettleData,2,required" frugal:"2,required,map<string:AcquireSettleData>" json:"mergeSettleData"`
+	MergeMainCompanyTemp     string                        `thrift:"merge_main_company_temp,3,required" frugal:"3,required,string" json:"merge_main_company_temp"`
+	MergeSelectionTemp       *AcquireMergingSelection      `thrift:"merge_selection_temp,4,required" frugal:"4,required,AcquireMergingSelection" json:"merge_selection_temp"`
+	MergeSettleCurrentPlayer *string                       `thrift:"merge_settle_current_player,5,optional" frugal:"5,optional,string" json:"merge_settle_current_player,omitempty"`
 }
 
 func NewAcquireTempData() *AcquireTempData {
@@ -515,6 +516,15 @@ func (p *AcquireTempData) GetMergeSelectionTemp() (v *AcquireMergingSelection) {
 	}
 	return p.MergeSelectionTemp
 }
+
+var AcquireTempData_MergeSettleCurrentPlayer_DEFAULT string
+
+func (p *AcquireTempData) GetMergeSettleCurrentPlayer() (v string) {
+	if !p.IsSetMergeSettleCurrentPlayer() {
+		return AcquireTempData_MergeSettleCurrentPlayer_DEFAULT
+	}
+	return *p.MergeSettleCurrentPlayer
+}
 func (p *AcquireTempData) SetLastTileKey(val string) {
 	p.LastTileKey = val
 }
@@ -527,9 +537,16 @@ func (p *AcquireTempData) SetMergeMainCompanyTemp(val string) {
 func (p *AcquireTempData) SetMergeSelectionTemp(val *AcquireMergingSelection) {
 	p.MergeSelectionTemp = val
 }
+func (p *AcquireTempData) SetMergeSettleCurrentPlayer(val *string) {
+	p.MergeSettleCurrentPlayer = val
+}
 
 func (p *AcquireTempData) IsSetMergeSelectionTemp() bool {
 	return p.MergeSelectionTemp != nil
+}
+
+func (p *AcquireTempData) IsSetMergeSettleCurrentPlayer() bool {
+	return p.MergeSettleCurrentPlayer != nil
 }
 
 func (p *AcquireTempData) String() string {
@@ -544,6 +561,7 @@ var fieldIDToName_AcquireTempData = map[int16]string{
 	2: "mergeSettleData",
 	3: "merge_main_company_temp",
 	4: "merge_selection_temp",
+	5: "merge_settle_current_player",
 }
 
 type AcquirePlayerResult_ struct {

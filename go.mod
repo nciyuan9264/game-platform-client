@@ -5,7 +5,6 @@ go 1.24.4
 require (
 	github.com/cloudwego/gopkg v0.2.0
 	github.com/cloudwego/kitex v0.16.3
-	github.com/cloudwego/thriftgo v0.4.5
 )
 
 require (
@@ -20,6 +19,7 @@ require (
 	github.com/cloudwego/localsession v0.2.2 // indirect
 	github.com/cloudwego/netpoll v0.7.2 // indirect
 	github.com/cloudwego/runtimex v0.1.2 // indirect
+	github.com/cloudwego/thriftgo v0.4.5 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fatih/structtag v1.2.0 // indirect
 	github.com/golang/protobuf v1.5.4 // indirect

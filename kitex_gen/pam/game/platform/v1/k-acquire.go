@@ -2449,6 +2449,20 @@ func (p *AcquireTempData) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 5:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField5(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -2561,6 +2575,20 @@ func (p *AcquireTempData) FastReadField4(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *AcquireTempData) FastReadField5(buf []byte) (int, error) {
+	offset := 0
+
+	var _field *string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = &v
+	}
+	p.MergeSettleCurrentPlayer = _field
+	return offset, nil
+}
+
 func (p *AcquireTempData) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -2572,6 +2600,7 @@ func (p *AcquireTempData) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
+		offset += p.fastWriteField5(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -2584,6 +2613,7 @@ func (p *AcquireTempData) BLength() int {
 		l += p.field2Length()
 		l += p.field3Length()
 		l += p.field4Length()
+		l += p.field5Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -2625,6 +2655,15 @@ func (p *AcquireTempData) fastWriteField4(buf []byte, w thrift.NocopyWriter) int
 	return offset
 }
 
+func (p *AcquireTempData) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetMergeSettleCurrentPlayer() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.MergeSettleCurrentPlayer)
+	}
+	return offset
+}
+
 func (p *AcquireTempData) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
@@ -2656,6 +2695,15 @@ func (p *AcquireTempData) field4Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += p.MergeSelectionTemp.BLength()
+	return l
+}
+
+func (p *AcquireTempData) field5Length() int {
+	l := 0
+	if p.IsSetMergeSettleCurrentPlayer() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.StringLengthNocopy(*p.MergeSettleCurrentPlayer)
+	}
 	return l
 }
 

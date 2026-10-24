@@ -140,8 +140,7 @@ func newServiceInfo(hasStreaming bool, keepStreamingMethods bool, keepNonStreami
 		methods[name] = m
 	}
 	extra := map[string]interface{}{
-		"PackageName":     "v1",
-		"ServiceFilePath": `/data00/home/wangzhenyu.9264/learning/pam-idl/idl/game_platform/v1/service.thrift`,
+		"PackageName": "v1",
 	}
 	if hasStreaming {
 		extra["streaming"] = hasStreaming

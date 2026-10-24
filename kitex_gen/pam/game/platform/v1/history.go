@@ -19,6 +19,7 @@ type HistoryGamePlayer struct {
 	FinalRank   *int32      `thrift:"finalRank,10,optional" frugal:"10,optional,i32" json:"finalRank,omitempty"`
 	IsWinner    bool        `thrift:"isWinner,11,required" frugal:"11,required,bool" json:"isWinner"`
 	CreatedAt   ISODateTime `thrift:"createdAt,12,required" frugal:"12,required,string" json:"createdAt"`
+	DisplayName *string     `thrift:"displayName,13,optional" frugal:"13,optional,string" json:"displayName,omitempty"`
 }
 
 func NewHistoryGamePlayer() *HistoryGamePlayer {
@@ -95,6 +96,15 @@ func (p *HistoryGamePlayer) GetIsWinner() (v bool) {
 func (p *HistoryGamePlayer) GetCreatedAt() (v ISODateTime) {
 	return p.CreatedAt
 }
+
+var HistoryGamePlayer_DisplayName_DEFAULT string
+
+func (p *HistoryGamePlayer) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return HistoryGamePlayer_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
 func (p *HistoryGamePlayer) SetId(val int64) {
 	p.Id = val
 }
@@ -131,6 +141,9 @@ func (p *HistoryGamePlayer) SetIsWinner(val bool) {
 func (p *HistoryGamePlayer) SetCreatedAt(val ISODateTime) {
 	p.CreatedAt = val
 }
+func (p *HistoryGamePlayer) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
 
 func (p *HistoryGamePlayer) IsSetUserID() bool {
 	return p.UserID != nil
@@ -146,6 +159,10 @@ func (p *HistoryGamePlayer) IsSetFinalMoney() bool {
 
 func (p *HistoryGamePlayer) IsSetFinalRank() bool {
 	return p.FinalRank != nil
+}
+
+func (p *HistoryGamePlayer) IsSetDisplayName() bool {
+	return p.DisplayName != nil
 }
 
 func (p *HistoryGamePlayer) String() string {
@@ -168,6 +185,7 @@ var fieldIDToName_HistoryGamePlayer = map[int16]string{
 	10: "finalRank",
 	11: "isWinner",
 	12: "createdAt",
+	13: "displayName",
 }
 
 type HistoryGame struct {
@@ -353,9 +371,10 @@ var fieldIDToName_HistoryGame = map[int16]string{
 }
 
 type HistoryEventMeta struct {
-	Seq      int32  `thrift:"seq,1,required" frugal:"1,required,i32" json:"seq"`
-	PlayerID string `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
-	CmdType  string `thrift:"cmdType,3,required" frugal:"3,required,string" json:"cmdType"`
+	Seq         int32   `thrift:"seq,1,required" frugal:"1,required,i32" json:"seq"`
+	PlayerID    string  `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
+	CmdType     string  `thrift:"cmdType,3,required" frugal:"3,required,string" json:"cmdType"`
+	DisplayName *string `thrift:"displayName,4,optional" frugal:"4,optional,string" json:"displayName,omitempty"`
 }
 
 func NewHistoryEventMeta() *HistoryEventMeta {
@@ -376,6 +395,15 @@ func (p *HistoryEventMeta) GetPlayerID() (v string) {
 func (p *HistoryEventMeta) GetCmdType() (v string) {
 	return p.CmdType
 }
+
+var HistoryEventMeta_DisplayName_DEFAULT string
+
+func (p *HistoryEventMeta) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return HistoryEventMeta_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
 func (p *HistoryEventMeta) SetSeq(val int32) {
 	p.Seq = val
 }
@@ -384,6 +412,13 @@ func (p *HistoryEventMeta) SetPlayerID(val string) {
 }
 func (p *HistoryEventMeta) SetCmdType(val string) {
 	p.CmdType = val
+}
+func (p *HistoryEventMeta) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
+
+func (p *HistoryEventMeta) IsSetDisplayName() bool {
+	return p.DisplayName != nil
 }
 
 func (p *HistoryEventMeta) String() string {
@@ -397,6 +432,7 @@ var fieldIDToName_HistoryEventMeta = map[int16]string{
 	1: "seq",
 	2: "playerID",
 	3: "cmdType",
+	4: "displayName",
 }
 
 type HistoryStats struct {
@@ -523,10 +559,11 @@ var fieldIDToName_RankLeaderboardMetric = map[int16]string{
 }
 
 type LeaderboardEntry struct {
-	UserID     int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
-	PlayerID   string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
-	TotalGames int32              `thrift:"totalGames,3,required" frugal:"3,required,i32" json:"totalGames"`
-	Metric     *LeaderboardMetric `thrift:"metric,4,required" frugal:"4,required,LeaderboardMetric" json:"metric"`
+	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
+	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
+	TotalGames  int32              `thrift:"totalGames,3,required" frugal:"3,required,i32" json:"totalGames"`
+	Metric      *LeaderboardMetric `thrift:"metric,4,required" frugal:"4,required,LeaderboardMetric" json:"metric"`
+	DisplayName *string            `thrift:"displayName,5,optional" frugal:"5,optional,string" json:"displayName,omitempty"`
 }
 
 func NewLeaderboardEntry() *LeaderboardEntry {
@@ -556,6 +593,15 @@ func (p *LeaderboardEntry) GetMetric() (v *LeaderboardMetric) {
 	}
 	return p.Metric
 }
+
+var LeaderboardEntry_DisplayName_DEFAULT string
+
+func (p *LeaderboardEntry) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return LeaderboardEntry_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
 func (p *LeaderboardEntry) SetUserID(val int64) {
 	p.UserID = val
 }
@@ -568,9 +614,16 @@ func (p *LeaderboardEntry) SetTotalGames(val int32) {
 func (p *LeaderboardEntry) SetMetric(val *LeaderboardMetric) {
 	p.Metric = val
 }
+func (p *LeaderboardEntry) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
 
 func (p *LeaderboardEntry) IsSetMetric() bool {
 	return p.Metric != nil
+}
+
+func (p *LeaderboardEntry) IsSetDisplayName() bool {
+	return p.DisplayName != nil
 }
 
 func (p *LeaderboardEntry) String() string {
@@ -585,6 +638,7 @@ var fieldIDToName_LeaderboardEntry = map[int16]string{
 	2: "playerID",
 	3: "totalGames",
 	4: "metric",
+	5: "displayName",
 }
 
 type ListHistoryGamesReq struct {

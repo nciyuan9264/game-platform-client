@@ -159,6 +159,7 @@ type ReplayEvent struct {
 	PlayerID    string  `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
 	CmdType     string  `thrift:"cmdType,3,required" frugal:"3,required,string" json:"cmdType"`
 	PayloadJSON *string `thrift:"payloadJSON,4,optional" frugal:"4,optional,string" json:"payloadJSON,omitempty"`
+	DisplayName *string `thrift:"displayName,5,optional" frugal:"5,optional,string" json:"displayName,omitempty"`
 }
 
 func NewReplayEvent() *ReplayEvent {
@@ -188,6 +189,15 @@ func (p *ReplayEvent) GetPayloadJSON() (v string) {
 	}
 	return *p.PayloadJSON
 }
+
+var ReplayEvent_DisplayName_DEFAULT string
+
+func (p *ReplayEvent) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return ReplayEvent_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
 func (p *ReplayEvent) SetSeq(val int32) {
 	p.Seq = val
 }
@@ -200,9 +210,16 @@ func (p *ReplayEvent) SetCmdType(val string) {
 func (p *ReplayEvent) SetPayloadJSON(val *string) {
 	p.PayloadJSON = val
 }
+func (p *ReplayEvent) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
 
 func (p *ReplayEvent) IsSetPayloadJSON() bool {
 	return p.PayloadJSON != nil
+}
+
+func (p *ReplayEvent) IsSetDisplayName() bool {
+	return p.DisplayName != nil
 }
 
 func (p *ReplayEvent) String() string {
@@ -217,6 +234,7 @@ var fieldIDToName_ReplayEvent = map[int16]string{
 	2: "playerID",
 	3: "cmdType",
 	4: "payloadJSON",
+	5: "displayName",
 }
 
 type GamePlatformError struct {

@@ -330,8 +330,9 @@ var fieldIDToName_DavinciRoomData = map[int16]string{
 }
 
 type DavinciCardData struct {
-	Self      []*DavinciCard `thrift:"self,1,required" frugal:"1,required,list<DavinciCard>" json:"self"`
-	Opponents []*DavinciCard `thrift:"opponents,2,required" frugal:"2,required,list<DavinciCard>" json:"opponents"`
+	Self             []*DavinciCard `thrift:"self,1,required" frugal:"1,required,list<DavinciCard>" json:"self"`
+	Opponents        []*DavinciCard `thrift:"opponents,2,required" frugal:"2,required,list<DavinciCard>" json:"opponents"`
+	InitialHandReady *bool          `thrift:"initialHandReady,3,optional" frugal:"3,optional,bool" json:"initialHandReady,omitempty"`
 }
 
 func NewDavinciCardData() *DavinciCardData {
@@ -348,11 +349,27 @@ func (p *DavinciCardData) GetSelf() (v []*DavinciCard) {
 func (p *DavinciCardData) GetOpponents() (v []*DavinciCard) {
 	return p.Opponents
 }
+
+var DavinciCardData_InitialHandReady_DEFAULT bool
+
+func (p *DavinciCardData) GetInitialHandReady() (v bool) {
+	if !p.IsSetInitialHandReady() {
+		return DavinciCardData_InitialHandReady_DEFAULT
+	}
+	return *p.InitialHandReady
+}
 func (p *DavinciCardData) SetSelf(val []*DavinciCard) {
 	p.Self = val
 }
 func (p *DavinciCardData) SetOpponents(val []*DavinciCard) {
 	p.Opponents = val
+}
+func (p *DavinciCardData) SetInitialHandReady(val *bool) {
+	p.InitialHandReady = val
+}
+
+func (p *DavinciCardData) IsSetInitialHandReady() bool {
+	return p.InitialHandReady != nil
 }
 
 func (p *DavinciCardData) String() string {
@@ -365,6 +382,7 @@ func (p *DavinciCardData) String() string {
 var fieldIDToName_DavinciCardData = map[int16]string{
 	1: "self",
 	2: "opponents",
+	3: "initialHandReady",
 }
 
 type DavinciResult_ struct {
@@ -593,10 +611,78 @@ var fieldIDToName_DavinciSetCardPayload = map[int16]string{
 	2: "index",
 }
 
+type DavinciJokerPlacement struct {
+	Id    string `thrift:"id,1,required" frugal:"1,required,string" json:"id"`
+	Index int32  `thrift:"index,2,required" frugal:"2,required,i32" json:"index"`
+}
+
+func NewDavinciJokerPlacement() *DavinciJokerPlacement {
+	return &DavinciJokerPlacement{}
+}
+
+func (p *DavinciJokerPlacement) InitDefault() {
+}
+
+func (p *DavinciJokerPlacement) GetId() (v string) {
+	return p.Id
+}
+
+func (p *DavinciJokerPlacement) GetIndex() (v int32) {
+	return p.Index
+}
+func (p *DavinciJokerPlacement) SetId(val string) {
+	p.Id = val
+}
+func (p *DavinciJokerPlacement) SetIndex(val int32) {
+	p.Index = val
+}
+
+func (p *DavinciJokerPlacement) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DavinciJokerPlacement(%+v)", *p)
+}
+
+var fieldIDToName_DavinciJokerPlacement = map[int16]string{
+	1: "id",
+	2: "index",
+}
+
+type DavinciInitializeHandPayload struct {
+	JokerPlacements []*DavinciJokerPlacement `thrift:"jokerPlacements,1,required" frugal:"1,required,list<DavinciJokerPlacement>" json:"jokerPlacements"`
+}
+
+func NewDavinciInitializeHandPayload() *DavinciInitializeHandPayload {
+	return &DavinciInitializeHandPayload{}
+}
+
+func (p *DavinciInitializeHandPayload) InitDefault() {
+}
+
+func (p *DavinciInitializeHandPayload) GetJokerPlacements() (v []*DavinciJokerPlacement) {
+	return p.JokerPlacements
+}
+func (p *DavinciInitializeHandPayload) SetJokerPlacements(val []*DavinciJokerPlacement) {
+	p.JokerPlacements = val
+}
+
+func (p *DavinciInitializeHandPayload) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("DavinciInitializeHandPayload(%+v)", *p)
+}
+
+var fieldIDToName_DavinciInitializeHandPayload = map[int16]string{
+	1: "jokerPlacements",
+}
+
 type DavinciCommandPayload struct {
-	GetCard   *DavinciGetCardPayload   `thrift:"getCard,1,optional" frugal:"1,optional,DavinciGetCardPayload" json:"getCard,omitempty"`
-	GuessCard *DavinciGuessCardPayload `thrift:"guessCard,2,optional" frugal:"2,optional,DavinciGuessCardPayload" json:"guessCard,omitempty"`
-	SetCard   *DavinciSetCardPayload   `thrift:"setCard,3,optional" frugal:"3,optional,DavinciSetCardPayload" json:"setCard,omitempty"`
+	GetCard        *DavinciGetCardPayload        `thrift:"getCard,1,optional" frugal:"1,optional,DavinciGetCardPayload" json:"getCard,omitempty"`
+	GuessCard      *DavinciGuessCardPayload      `thrift:"guessCard,2,optional" frugal:"2,optional,DavinciGuessCardPayload" json:"guessCard,omitempty"`
+	SetCard        *DavinciSetCardPayload        `thrift:"setCard,3,optional" frugal:"3,optional,DavinciSetCardPayload" json:"setCard,omitempty"`
+	InitializeHand *DavinciInitializeHandPayload `thrift:"initializeHand,4,optional" frugal:"4,optional,DavinciInitializeHandPayload" json:"initializeHand,omitempty"`
 }
 
 func NewDavinciCommandPayload() *DavinciCommandPayload {
@@ -632,6 +718,15 @@ func (p *DavinciCommandPayload) GetSetCard() (v *DavinciSetCardPayload) {
 	}
 	return p.SetCard
 }
+
+var DavinciCommandPayload_InitializeHand_DEFAULT *DavinciInitializeHandPayload
+
+func (p *DavinciCommandPayload) GetInitializeHand() (v *DavinciInitializeHandPayload) {
+	if !p.IsSetInitializeHand() {
+		return DavinciCommandPayload_InitializeHand_DEFAULT
+	}
+	return p.InitializeHand
+}
 func (p *DavinciCommandPayload) SetGetCard(val *DavinciGetCardPayload) {
 	p.GetCard = val
 }
@@ -640,6 +735,9 @@ func (p *DavinciCommandPayload) SetGuessCard(val *DavinciGuessCardPayload) {
 }
 func (p *DavinciCommandPayload) SetSetCard(val *DavinciSetCardPayload) {
 	p.SetCard = val
+}
+func (p *DavinciCommandPayload) SetInitializeHand(val *DavinciInitializeHandPayload) {
+	p.InitializeHand = val
 }
 
 func (p *DavinciCommandPayload) CountSetFieldsDavinciCommandPayload() int {
@@ -651,6 +749,9 @@ func (p *DavinciCommandPayload) CountSetFieldsDavinciCommandPayload() int {
 		count++
 	}
 	if p.IsSetSetCard() {
+		count++
+	}
+	if p.IsSetInitializeHand() {
 		count++
 	}
 	return count
@@ -668,6 +769,10 @@ func (p *DavinciCommandPayload) IsSetSetCard() bool {
 	return p.SetCard != nil
 }
 
+func (p *DavinciCommandPayload) IsSetInitializeHand() bool {
+	return p.InitializeHand != nil
+}
+
 func (p *DavinciCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -679,4 +784,5 @@ var fieldIDToName_DavinciCommandPayload = map[int16]string{
 	1: "getCard",
 	2: "guessCard",
 	3: "setCard",
+	4: "initializeHand",
 }

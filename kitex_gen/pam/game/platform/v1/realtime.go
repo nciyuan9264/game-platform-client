@@ -103,7 +103,9 @@ var fieldIDToName_MatchRemovePlayerPayload = map[int16]string{
 }
 
 type RoomUpdateSettingsPayload struct {
-	Visibility Visibility `thrift:"visibility,1,required" frugal:"1,required,string" json:"visibility"`
+	Visibility         Visibility `thrift:"visibility,1,required" frugal:"1,required,string" json:"visibility"`
+	DisplayName        *string    `thrift:"displayName,2,optional" frugal:"2,optional,string" json:"displayName,omitempty"`
+	TurnTimeoutSeconds *int32     `thrift:"turnTimeoutSeconds,3,optional" frugal:"3,optional,i32" json:"turnTimeoutSeconds,omitempty"`
 }
 
 func NewRoomUpdateSettingsPayload() *RoomUpdateSettingsPayload {
@@ -116,8 +118,40 @@ func (p *RoomUpdateSettingsPayload) InitDefault() {
 func (p *RoomUpdateSettingsPayload) GetVisibility() (v Visibility) {
 	return p.Visibility
 }
+
+var RoomUpdateSettingsPayload_DisplayName_DEFAULT string
+
+func (p *RoomUpdateSettingsPayload) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return RoomUpdateSettingsPayload_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
+
+var RoomUpdateSettingsPayload_TurnTimeoutSeconds_DEFAULT int32
+
+func (p *RoomUpdateSettingsPayload) GetTurnTimeoutSeconds() (v int32) {
+	if !p.IsSetTurnTimeoutSeconds() {
+		return RoomUpdateSettingsPayload_TurnTimeoutSeconds_DEFAULT
+	}
+	return *p.TurnTimeoutSeconds
+}
 func (p *RoomUpdateSettingsPayload) SetVisibility(val Visibility) {
 	p.Visibility = val
+}
+func (p *RoomUpdateSettingsPayload) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
+func (p *RoomUpdateSettingsPayload) SetTurnTimeoutSeconds(val *int32) {
+	p.TurnTimeoutSeconds = val
+}
+
+func (p *RoomUpdateSettingsPayload) IsSetDisplayName() bool {
+	return p.DisplayName != nil
+}
+
+func (p *RoomUpdateSettingsPayload) IsSetTurnTimeoutSeconds() bool {
+	return p.TurnTimeoutSeconds != nil
 }
 
 func (p *RoomUpdateSettingsPayload) String() string {
@@ -129,6 +163,8 @@ func (p *RoomUpdateSettingsPayload) String() string {
 
 var fieldIDToName_RoomUpdateSettingsPayload = map[int16]string{
 	1: "visibility",
+	2: "displayName",
+	3: "turnTimeoutSeconds",
 }
 
 type ClientCommand struct {
@@ -809,6 +845,7 @@ type ClientCommandPayload struct {
 	Splendor *SplendorCommandPayload `thrift:"splendor,4,optional" frugal:"4,optional,SplendorCommandPayload" json:"splendor,omitempty"`
 	Yinsh    *YinshCommandPayload    `thrift:"yinsh,5,optional" frugal:"5,optional,YinshCommandPayload" json:"yinsh,omitempty"`
 	Othello  *OthelloCommandPayload  `thrift:"othello,6,optional" frugal:"6,optional,OthelloCommandPayload" json:"othello,omitempty"`
+	Fugitive *FugitiveCommandPayload `thrift:"fugitive,7,optional" frugal:"7,optional,FugitiveCommandPayload" json:"fugitive,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -871,6 +908,15 @@ func (p *ClientCommandPayload) GetOthello() (v *OthelloCommandPayload) {
 	}
 	return p.Othello
 }
+
+var ClientCommandPayload_Fugitive_DEFAULT *FugitiveCommandPayload
+
+func (p *ClientCommandPayload) GetFugitive() (v *FugitiveCommandPayload) {
+	if !p.IsSetFugitive() {
+		return ClientCommandPayload_Fugitive_DEFAULT
+	}
+	return p.Fugitive
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -888,6 +934,9 @@ func (p *ClientCommandPayload) SetYinsh(val *YinshCommandPayload) {
 }
 func (p *ClientCommandPayload) SetOthello(val *OthelloCommandPayload) {
 	p.Othello = val
+}
+func (p *ClientCommandPayload) SetFugitive(val *FugitiveCommandPayload) {
+	p.Fugitive = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -908,6 +957,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetOthello() {
+		count++
+	}
+	if p.IsSetFugitive() {
 		count++
 	}
 	return count
@@ -937,6 +989,10 @@ func (p *ClientCommandPayload) IsSetOthello() bool {
 	return p.Othello != nil
 }
 
+func (p *ClientCommandPayload) IsSetFugitive() bool {
+	return p.Fugitive != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -951,6 +1007,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	4: "splendor",
 	5: "yinsh",
 	6: "othello",
+	7: "fugitive",
 }
 
 type RoomView struct {
@@ -959,6 +1016,7 @@ type RoomView struct {
 	Splendor *SplendorRoomView `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomView" json:"splendor,omitempty"`
 	Yinsh    *YinshRoomView    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomView" json:"yinsh,omitempty"`
 	Othello  *OthelloRoomView  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomView" json:"othello,omitempty"`
+	Fugitive *FugitiveRoomView `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomView" json:"fugitive,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1012,6 +1070,15 @@ func (p *RoomView) GetOthello() (v *OthelloRoomView) {
 	}
 	return p.Othello
 }
+
+var RoomView_Fugitive_DEFAULT *FugitiveRoomView
+
+func (p *RoomView) GetFugitive() (v *FugitiveRoomView) {
+	if !p.IsSetFugitive() {
+		return RoomView_Fugitive_DEFAULT
+	}
+	return p.Fugitive
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1026,6 +1093,9 @@ func (p *RoomView) SetYinsh(val *YinshRoomView) {
 }
 func (p *RoomView) SetOthello(val *OthelloRoomView) {
 	p.Othello = val
+}
+func (p *RoomView) SetFugitive(val *FugitiveRoomView) {
+	p.Fugitive = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1043,6 +1113,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetOthello() {
+		count++
+	}
+	if p.IsSetFugitive() {
 		count++
 	}
 	return count
@@ -1068,6 +1141,10 @@ func (p *RoomView) IsSetOthello() bool {
 	return p.Othello != nil
 }
 
+func (p *RoomView) IsSetFugitive() bool {
+	return p.Fugitive != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1081,6 +1158,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	3: "splendor",
 	4: "yinsh",
 	5: "othello",
+	6: "fugitive",
 }
 
 type ServerMessage struct {

@@ -20,6 +20,7 @@ type HistoryGamePlayer struct {
 	IsWinner    bool        `thrift:"isWinner,11,required" frugal:"11,required,bool" json:"isWinner"`
 	CreatedAt   ISODateTime `thrift:"createdAt,12,required" frugal:"12,required,string" json:"createdAt"`
 	DisplayName *string     `thrift:"displayName,13,optional" frugal:"13,optional,string" json:"displayName,omitempty"`
+	GameRole    *string     `thrift:"gameRole,14,optional" frugal:"14,optional,string" json:"gameRole,omitempty"`
 }
 
 func NewHistoryGamePlayer() *HistoryGamePlayer {
@@ -105,6 +106,15 @@ func (p *HistoryGamePlayer) GetDisplayName() (v string) {
 	}
 	return *p.DisplayName
 }
+
+var HistoryGamePlayer_GameRole_DEFAULT string
+
+func (p *HistoryGamePlayer) GetGameRole() (v string) {
+	if !p.IsSetGameRole() {
+		return HistoryGamePlayer_GameRole_DEFAULT
+	}
+	return *p.GameRole
+}
 func (p *HistoryGamePlayer) SetId(val int64) {
 	p.Id = val
 }
@@ -144,6 +154,9 @@ func (p *HistoryGamePlayer) SetCreatedAt(val ISODateTime) {
 func (p *HistoryGamePlayer) SetDisplayName(val *string) {
 	p.DisplayName = val
 }
+func (p *HistoryGamePlayer) SetGameRole(val *string) {
+	p.GameRole = val
+}
 
 func (p *HistoryGamePlayer) IsSetUserID() bool {
 	return p.UserID != nil
@@ -163,6 +176,10 @@ func (p *HistoryGamePlayer) IsSetFinalRank() bool {
 
 func (p *HistoryGamePlayer) IsSetDisplayName() bool {
 	return p.DisplayName != nil
+}
+
+func (p *HistoryGamePlayer) IsSetGameRole() bool {
+	return p.GameRole != nil
 }
 
 func (p *HistoryGamePlayer) String() string {
@@ -186,6 +203,7 @@ var fieldIDToName_HistoryGamePlayer = map[int16]string{
 	11: "isWinner",
 	12: "createdAt",
 	13: "displayName",
+	14: "gameRole",
 }
 
 type HistoryGame struct {
@@ -202,6 +220,7 @@ type HistoryGame struct {
 	CreatedAt       ISODateTime          `thrift:"createdAt,11,required" frugal:"11,required,string" json:"createdAt"`
 	UpdatedAt       ISODateTime          `thrift:"updatedAt,12,required" frugal:"12,required,string" json:"updatedAt"`
 	Players         []*HistoryGamePlayer `thrift:"players,13,optional" frugal:"13,optional,list<HistoryGamePlayer>" json:"players,omitempty"`
+	RoomDisplayName *string              `thrift:"roomDisplayName,14,optional" frugal:"14,optional,string" json:"roomDisplayName,omitempty"`
 }
 
 func NewHistoryGame() *HistoryGame {
@@ -287,6 +306,15 @@ func (p *HistoryGame) GetPlayers() (v []*HistoryGamePlayer) {
 	}
 	return p.Players
 }
+
+var HistoryGame_RoomDisplayName_DEFAULT string
+
+func (p *HistoryGame) GetRoomDisplayName() (v string) {
+	if !p.IsSetRoomDisplayName() {
+		return HistoryGame_RoomDisplayName_DEFAULT
+	}
+	return *p.RoomDisplayName
+}
 func (p *HistoryGame) SetId(val int64) {
 	p.Id = val
 }
@@ -326,6 +354,9 @@ func (p *HistoryGame) SetUpdatedAt(val ISODateTime) {
 func (p *HistoryGame) SetPlayers(val []*HistoryGamePlayer) {
 	p.Players = val
 }
+func (p *HistoryGame) SetRoomDisplayName(val *string) {
+	p.RoomDisplayName = val
+}
 
 func (p *HistoryGame) IsSetEndedAt() bool {
 	return p.EndedAt != nil
@@ -345,6 +376,10 @@ func (p *HistoryGame) IsSetEndReason() bool {
 
 func (p *HistoryGame) IsSetPlayers() bool {
 	return p.Players != nil
+}
+
+func (p *HistoryGame) IsSetRoomDisplayName() bool {
+	return p.RoomDisplayName != nil
 }
 
 func (p *HistoryGame) String() string {
@@ -368,6 +403,7 @@ var fieldIDToName_HistoryGame = map[int16]string{
 	11: "createdAt",
 	12: "updatedAt",
 	13: "players",
+	14: "roomDisplayName",
 }
 
 type HistoryEventMeta struct {
@@ -436,10 +472,12 @@ var fieldIDToName_HistoryEventMeta = map[int16]string{
 }
 
 type HistoryStats struct {
-	TotalGames int32   `thrift:"totalGames,1,required" frugal:"1,required,i32" json:"totalGames"`
-	Wins       int32   `thrift:"wins,2,required" frugal:"2,required,i32" json:"wins"`
-	WinRate    float64 `thrift:"winRate,3,required" frugal:"3,required,double" json:"winRate"`
-	AvgScore   float64 `thrift:"avgScore,4,required" frugal:"4,required,double" json:"avgScore"`
+	TotalGames  int32            `thrift:"totalGames,1,required" frugal:"1,required,i32" json:"totalGames"`
+	Wins        int32            `thrift:"wins,2,required" frugal:"2,required,i32" json:"wins"`
+	WinRate     float64          `thrift:"winRate,3,required" frugal:"3,required,double" json:"winRate"`
+	AvgScore    float64          `thrift:"avgScore,4,required" frugal:"4,required,double" json:"avgScore"`
+	GamesByRole map[string]int32 `thrift:"gamesByRole,5,optional" frugal:"5,optional,map<string:i32>" json:"gamesByRole,omitempty"`
+	WinsByRole  map[string]int32 `thrift:"winsByRole,6,optional" frugal:"6,optional,map<string:i32>" json:"winsByRole,omitempty"`
 }
 
 func NewHistoryStats() *HistoryStats {
@@ -464,6 +502,24 @@ func (p *HistoryStats) GetWinRate() (v float64) {
 func (p *HistoryStats) GetAvgScore() (v float64) {
 	return p.AvgScore
 }
+
+var HistoryStats_GamesByRole_DEFAULT map[string]int32
+
+func (p *HistoryStats) GetGamesByRole() (v map[string]int32) {
+	if !p.IsSetGamesByRole() {
+		return HistoryStats_GamesByRole_DEFAULT
+	}
+	return p.GamesByRole
+}
+
+var HistoryStats_WinsByRole_DEFAULT map[string]int32
+
+func (p *HistoryStats) GetWinsByRole() (v map[string]int32) {
+	if !p.IsSetWinsByRole() {
+		return HistoryStats_WinsByRole_DEFAULT
+	}
+	return p.WinsByRole
+}
 func (p *HistoryStats) SetTotalGames(val int32) {
 	p.TotalGames = val
 }
@@ -475,6 +531,20 @@ func (p *HistoryStats) SetWinRate(val float64) {
 }
 func (p *HistoryStats) SetAvgScore(val float64) {
 	p.AvgScore = val
+}
+func (p *HistoryStats) SetGamesByRole(val map[string]int32) {
+	p.GamesByRole = val
+}
+func (p *HistoryStats) SetWinsByRole(val map[string]int32) {
+	p.WinsByRole = val
+}
+
+func (p *HistoryStats) IsSetGamesByRole() bool {
+	return p.GamesByRole != nil
+}
+
+func (p *HistoryStats) IsSetWinsByRole() bool {
+	return p.WinsByRole != nil
 }
 
 func (p *HistoryStats) String() string {
@@ -489,6 +559,8 @@ var fieldIDToName_HistoryStats = map[int16]string{
 	2: "wins",
 	3: "winRate",
 	4: "avgScore",
+	5: "gamesByRole",
+	6: "winsByRole",
 }
 
 type DavinciLeaderboardMetric struct {
@@ -630,6 +702,44 @@ func (p *OthelloLeaderboardMetric) String() string {
 }
 
 var fieldIDToName_OthelloLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
+type FugitiveLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewFugitiveLeaderboardMetric() *FugitiveLeaderboardMetric {
+	return &FugitiveLeaderboardMetric{}
+}
+
+func (p *FugitiveLeaderboardMetric) InitDefault() {
+}
+
+func (p *FugitiveLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *FugitiveLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *FugitiveLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *FugitiveLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *FugitiveLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("FugitiveLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_FugitiveLeaderboardMetric = map[int16]string{
 	1: "wins",
 	2: "winRate",
 }
@@ -975,6 +1085,7 @@ type GetLeaderboardReq struct {
 	Sort     *string  `thrift:"sort,2,optional" frugal:"2,optional,string" json:"sort,omitempty"`
 	Limit    *int32   `thrift:"limit,3,optional" frugal:"3,optional,i32" json:"limit,omitempty"`
 	Offset   *int32   `thrift:"offset,4,optional" frugal:"4,optional,i32" json:"offset,omitempty"`
+	GameRole *string  `thrift:"game_role,5,optional" frugal:"5,optional,string" json:"game_role,omitempty"`
 }
 
 func NewGetLeaderboardReq() *GetLeaderboardReq {
@@ -1014,6 +1125,15 @@ func (p *GetLeaderboardReq) GetOffset() (v int32) {
 	}
 	return *p.Offset
 }
+
+var GetLeaderboardReq_GameRole_DEFAULT string
+
+func (p *GetLeaderboardReq) GetGameRole() (v string) {
+	if !p.IsSetGameRole() {
+		return GetLeaderboardReq_GameRole_DEFAULT
+	}
+	return *p.GameRole
+}
 func (p *GetLeaderboardReq) SetGameType(val GameType) {
 	p.GameType = val
 }
@@ -1025,6 +1145,9 @@ func (p *GetLeaderboardReq) SetLimit(val *int32) {
 }
 func (p *GetLeaderboardReq) SetOffset(val *int32) {
 	p.Offset = val
+}
+func (p *GetLeaderboardReq) SetGameRole(val *string) {
+	p.GameRole = val
 }
 
 func (p *GetLeaderboardReq) IsSetSort() bool {
@@ -1039,6 +1162,10 @@ func (p *GetLeaderboardReq) IsSetOffset() bool {
 	return p.Offset != nil
 }
 
+func (p *GetLeaderboardReq) IsSetGameRole() bool {
+	return p.GameRole != nil
+}
+
 func (p *GetLeaderboardReq) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1051,6 +1178,7 @@ var fieldIDToName_GetLeaderboardReq = map[int16]string{
 	2: "sort",
 	3: "limit",
 	4: "offset",
+	5: "game_role",
 }
 
 type HistoryListData struct {
@@ -1614,10 +1742,11 @@ var fieldIDToName_LeaderboardResp = map[int16]string{
 }
 
 type LeaderboardMetric struct {
-	Davinci *DavinciLeaderboardMetric `thrift:"davinci,1,optional" frugal:"1,optional,DavinciLeaderboardMetric" json:"davinci,omitempty"`
-	Rank    *RankLeaderboardMetric    `thrift:"rank,2,optional" frugal:"2,optional,RankLeaderboardMetric" json:"rank,omitempty"`
-	Yinsh   *YinshLeaderboardMetric   `thrift:"yinsh,3,optional" frugal:"3,optional,YinshLeaderboardMetric" json:"yinsh,omitempty"`
-	Othello *OthelloLeaderboardMetric `thrift:"othello,4,optional" frugal:"4,optional,OthelloLeaderboardMetric" json:"othello,omitempty"`
+	Davinci  *DavinciLeaderboardMetric  `thrift:"davinci,1,optional" frugal:"1,optional,DavinciLeaderboardMetric" json:"davinci,omitempty"`
+	Rank     *RankLeaderboardMetric     `thrift:"rank,2,optional" frugal:"2,optional,RankLeaderboardMetric" json:"rank,omitempty"`
+	Yinsh    *YinshLeaderboardMetric    `thrift:"yinsh,3,optional" frugal:"3,optional,YinshLeaderboardMetric" json:"yinsh,omitempty"`
+	Othello  *OthelloLeaderboardMetric  `thrift:"othello,4,optional" frugal:"4,optional,OthelloLeaderboardMetric" json:"othello,omitempty"`
+	Fugitive *FugitiveLeaderboardMetric `thrift:"fugitive,5,optional" frugal:"5,optional,FugitiveLeaderboardMetric" json:"fugitive,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1662,6 +1791,15 @@ func (p *LeaderboardMetric) GetOthello() (v *OthelloLeaderboardMetric) {
 	}
 	return p.Othello
 }
+
+var LeaderboardMetric_Fugitive_DEFAULT *FugitiveLeaderboardMetric
+
+func (p *LeaderboardMetric) GetFugitive() (v *FugitiveLeaderboardMetric) {
+	if !p.IsSetFugitive() {
+		return LeaderboardMetric_Fugitive_DEFAULT
+	}
+	return p.Fugitive
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
@@ -1673,6 +1811,9 @@ func (p *LeaderboardMetric) SetYinsh(val *YinshLeaderboardMetric) {
 }
 func (p *LeaderboardMetric) SetOthello(val *OthelloLeaderboardMetric) {
 	p.Othello = val
+}
+func (p *LeaderboardMetric) SetFugitive(val *FugitiveLeaderboardMetric) {
+	p.Fugitive = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -1687,6 +1828,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetOthello() {
+		count++
+	}
+	if p.IsSetFugitive() {
 		count++
 	}
 	return count
@@ -1708,6 +1852,10 @@ func (p *LeaderboardMetric) IsSetOthello() bool {
 	return p.Othello != nil
 }
 
+func (p *LeaderboardMetric) IsSetFugitive() bool {
+	return p.Fugitive != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1720,6 +1868,7 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 	2: "rank",
 	3: "yinsh",
 	4: "othello",
+	5: "fugitive",
 }
 
 type ReplaySnapshot struct {

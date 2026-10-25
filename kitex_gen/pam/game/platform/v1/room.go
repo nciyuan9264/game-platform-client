@@ -15,6 +15,7 @@ type RoomPlayer struct {
 	Online      bool    `thrift:"online,6,required" frugal:"6,required,bool" json:"online"`
 	Ai          bool    `thrift:"ai,7,required" frugal:"7,required,bool" json:"ai"`
 	Ready       bool    `thrift:"ready,8,required" frugal:"8,required,bool" json:"ready"`
+	GameRole    *string `thrift:"gameRole,9,optional" frugal:"9,optional,string" json:"gameRole,omitempty"`
 }
 
 func NewRoomPlayer() *RoomPlayer {
@@ -65,6 +66,15 @@ func (p *RoomPlayer) GetAi() (v bool) {
 func (p *RoomPlayer) GetReady() (v bool) {
 	return p.Ready
 }
+
+var RoomPlayer_GameRole_DEFAULT string
+
+func (p *RoomPlayer) GetGameRole() (v string) {
+	if !p.IsSetGameRole() {
+		return RoomPlayer_GameRole_DEFAULT
+	}
+	return *p.GameRole
+}
 func (p *RoomPlayer) SetUserID(val *string) {
 	p.UserID = val
 }
@@ -89,6 +99,9 @@ func (p *RoomPlayer) SetAi(val bool) {
 func (p *RoomPlayer) SetReady(val bool) {
 	p.Ready = val
 }
+func (p *RoomPlayer) SetGameRole(val *string) {
+	p.GameRole = val
+}
 
 func (p *RoomPlayer) IsSetUserID() bool {
 	return p.UserID != nil
@@ -96,6 +109,10 @@ func (p *RoomPlayer) IsSetUserID() bool {
 
 func (p *RoomPlayer) IsSetAvatar() bool {
 	return p.Avatar != nil
+}
+
+func (p *RoomPlayer) IsSetGameRole() bool {
+	return p.GameRole != nil
 }
 
 func (p *RoomPlayer) String() string {
@@ -114,6 +131,7 @@ var fieldIDToName_RoomPlayer = map[int16]string{
 	6: "online",
 	7: "ai",
 	8: "ready",
+	9: "gameRole",
 }
 
 type AcquireRoomMetrics struct {
@@ -351,6 +369,62 @@ var fieldIDToName_OthelloRoomMetrics = map[int16]string{
 	3: "progressTotal",
 }
 
+type FugitiveRoomMetrics struct {
+	HighestRevealed    int32 `thrift:"highestRevealed,1,required" frugal:"1,required,i32" json:"highestRevealed"`
+	HiddenHideoutCount int32 `thrift:"hiddenHideoutCount,2,required" frugal:"2,required,i32" json:"hiddenHideoutCount"`
+	ProgressCurrent    int32 `thrift:"progressCurrent,3,required" frugal:"3,required,i32" json:"progressCurrent"`
+	ProgressTotal      int32 `thrift:"progressTotal,4,required" frugal:"4,required,i32" json:"progressTotal"`
+}
+
+func NewFugitiveRoomMetrics() *FugitiveRoomMetrics {
+	return &FugitiveRoomMetrics{}
+}
+
+func (p *FugitiveRoomMetrics) InitDefault() {
+}
+
+func (p *FugitiveRoomMetrics) GetHighestRevealed() (v int32) {
+	return p.HighestRevealed
+}
+
+func (p *FugitiveRoomMetrics) GetHiddenHideoutCount() (v int32) {
+	return p.HiddenHideoutCount
+}
+
+func (p *FugitiveRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *FugitiveRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *FugitiveRoomMetrics) SetHighestRevealed(val int32) {
+	p.HighestRevealed = val
+}
+func (p *FugitiveRoomMetrics) SetHiddenHideoutCount(val int32) {
+	p.HiddenHideoutCount = val
+}
+func (p *FugitiveRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *FugitiveRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *FugitiveRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("FugitiveRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_FugitiveRoomMetrics = map[int16]string{
+	1: "highestRevealed",
+	2: "hiddenHideoutCount",
+	3: "progressCurrent",
+	4: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -367,6 +441,8 @@ type RoomInfo struct {
 	UpdatedAt          ISODateTime   `thrift:"updatedAt,13,required" frugal:"13,required,string" json:"updatedAt"`
 	Players            []*RoomPlayer `thrift:"players,14,required" frugal:"14,required,list<RoomPlayer>" json:"players"`
 	Metrics            *RoomMetrics  `thrift:"metrics,15,required" frugal:"15,required,RoomMetrics" json:"metrics"`
+	DisplayName        *string       `thrift:"displayName,16,optional" frugal:"16,optional,string" json:"displayName,omitempty"`
+	TurnTimeoutSeconds *int32        `thrift:"turnTimeoutSeconds,17,optional" frugal:"17,optional,i32" json:"turnTimeoutSeconds,omitempty"`
 }
 
 func NewRoomInfo() *RoomInfo {
@@ -440,6 +516,24 @@ func (p *RoomInfo) GetMetrics() (v *RoomMetrics) {
 	}
 	return p.Metrics
 }
+
+var RoomInfo_DisplayName_DEFAULT string
+
+func (p *RoomInfo) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return RoomInfo_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
+
+var RoomInfo_TurnTimeoutSeconds_DEFAULT int32
+
+func (p *RoomInfo) GetTurnTimeoutSeconds() (v int32) {
+	if !p.IsSetTurnTimeoutSeconds() {
+		return RoomInfo_TurnTimeoutSeconds_DEFAULT
+	}
+	return *p.TurnTimeoutSeconds
+}
 func (p *RoomInfo) SetRoomID(val string) {
 	p.RoomID = val
 }
@@ -485,9 +579,23 @@ func (p *RoomInfo) SetPlayers(val []*RoomPlayer) {
 func (p *RoomInfo) SetMetrics(val *RoomMetrics) {
 	p.Metrics = val
 }
+func (p *RoomInfo) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
+func (p *RoomInfo) SetTurnTimeoutSeconds(val *int32) {
+	p.TurnTimeoutSeconds = val
+}
 
 func (p *RoomInfo) IsSetMetrics() bool {
 	return p.Metrics != nil
+}
+
+func (p *RoomInfo) IsSetDisplayName() bool {
+	return p.DisplayName != nil
+}
+
+func (p *RoomInfo) IsSetTurnTimeoutSeconds() bool {
+	return p.TurnTimeoutSeconds != nil
 }
 
 func (p *RoomInfo) String() string {
@@ -513,13 +621,17 @@ var fieldIDToName_RoomInfo = map[int16]string{
 	13: "updatedAt",
 	14: "players",
 	15: "metrics",
+	16: "displayName",
+	17: "turnTimeoutSeconds",
 }
 
 type CreateRoomReq struct {
-	GameType   GameType    `thrift:"game_type,1,required" frugal:"1,required,string" json:"game_type"`
-	Visibility *Visibility `thrift:"visibility,2,optional" frugal:"2,optional,string" json:"visibility,omitempty"`
-	MaxPlayers *int32      `thrift:"max_players,3,optional" frugal:"3,optional,i32" json:"max_players,omitempty"`
-	RequestId  string      `thrift:"request_id,4,required" frugal:"4,required,string" json:"request_id"`
+	GameType           GameType    `thrift:"game_type,1,required" frugal:"1,required,string" json:"game_type"`
+	Visibility         *Visibility `thrift:"visibility,2,optional" frugal:"2,optional,string" json:"visibility,omitempty"`
+	MaxPlayers         *int32      `thrift:"max_players,3,optional" frugal:"3,optional,i32" json:"max_players,omitempty"`
+	RequestId          string      `thrift:"request_id,4,required" frugal:"4,required,string" json:"request_id"`
+	DisplayName        *string     `thrift:"display_name,5,optional" frugal:"5,optional,string" json:"display_name,omitempty"`
+	TurnTimeoutSeconds *int32      `thrift:"turn_timeout_seconds,6,optional" frugal:"6,optional,i32" json:"turn_timeout_seconds,omitempty"`
 }
 
 func NewCreateRoomReq() *CreateRoomReq {
@@ -554,6 +666,24 @@ func (p *CreateRoomReq) GetMaxPlayers() (v int32) {
 func (p *CreateRoomReq) GetRequestId() (v string) {
 	return p.RequestId
 }
+
+var CreateRoomReq_DisplayName_DEFAULT string
+
+func (p *CreateRoomReq) GetDisplayName() (v string) {
+	if !p.IsSetDisplayName() {
+		return CreateRoomReq_DisplayName_DEFAULT
+	}
+	return *p.DisplayName
+}
+
+var CreateRoomReq_TurnTimeoutSeconds_DEFAULT int32
+
+func (p *CreateRoomReq) GetTurnTimeoutSeconds() (v int32) {
+	if !p.IsSetTurnTimeoutSeconds() {
+		return CreateRoomReq_TurnTimeoutSeconds_DEFAULT
+	}
+	return *p.TurnTimeoutSeconds
+}
 func (p *CreateRoomReq) SetGameType(val GameType) {
 	p.GameType = val
 }
@@ -566,6 +696,12 @@ func (p *CreateRoomReq) SetMaxPlayers(val *int32) {
 func (p *CreateRoomReq) SetRequestId(val string) {
 	p.RequestId = val
 }
+func (p *CreateRoomReq) SetDisplayName(val *string) {
+	p.DisplayName = val
+}
+func (p *CreateRoomReq) SetTurnTimeoutSeconds(val *int32) {
+	p.TurnTimeoutSeconds = val
+}
 
 func (p *CreateRoomReq) IsSetVisibility() bool {
 	return p.Visibility != nil
@@ -573,6 +709,14 @@ func (p *CreateRoomReq) IsSetVisibility() bool {
 
 func (p *CreateRoomReq) IsSetMaxPlayers() bool {
 	return p.MaxPlayers != nil
+}
+
+func (p *CreateRoomReq) IsSetDisplayName() bool {
+	return p.DisplayName != nil
+}
+
+func (p *CreateRoomReq) IsSetTurnTimeoutSeconds() bool {
+	return p.TurnTimeoutSeconds != nil
 }
 
 func (p *CreateRoomReq) String() string {
@@ -587,6 +731,8 @@ var fieldIDToName_CreateRoomReq = map[int16]string{
 	2: "visibility",
 	3: "max_players",
 	4: "request_id",
+	5: "display_name",
+	6: "turn_timeout_seconds",
 }
 
 type ListRoomsReq struct {
@@ -1009,6 +1155,7 @@ type RoomMetrics struct {
 	Splendor *SplendorRoomMetrics `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomMetrics" json:"splendor,omitempty"`
 	Yinsh    *YinshRoomMetrics    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomMetrics" json:"yinsh,omitempty"`
 	Othello  *OthelloRoomMetrics  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomMetrics" json:"othello,omitempty"`
+	Fugitive *FugitiveRoomMetrics `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomMetrics" json:"fugitive,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1062,6 +1209,15 @@ func (p *RoomMetrics) GetOthello() (v *OthelloRoomMetrics) {
 	}
 	return p.Othello
 }
+
+var RoomMetrics_Fugitive_DEFAULT *FugitiveRoomMetrics
+
+func (p *RoomMetrics) GetFugitive() (v *FugitiveRoomMetrics) {
+	if !p.IsSetFugitive() {
+		return RoomMetrics_Fugitive_DEFAULT
+	}
+	return p.Fugitive
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1076,6 +1232,9 @@ func (p *RoomMetrics) SetYinsh(val *YinshRoomMetrics) {
 }
 func (p *RoomMetrics) SetOthello(val *OthelloRoomMetrics) {
 	p.Othello = val
+}
+func (p *RoomMetrics) SetFugitive(val *FugitiveRoomMetrics) {
+	p.Fugitive = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1093,6 +1252,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetOthello() {
+		count++
+	}
+	if p.IsSetFugitive() {
 		count++
 	}
 	return count
@@ -1118,6 +1280,10 @@ func (p *RoomMetrics) IsSetOthello() bool {
 	return p.Othello != nil
 }
 
+func (p *RoomMetrics) IsSetFugitive() bool {
+	return p.Fugitive != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1131,4 +1297,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	3: "splendor",
 	4: "yinsh",
 	5: "othello",
+	6: "fugitive",
 }

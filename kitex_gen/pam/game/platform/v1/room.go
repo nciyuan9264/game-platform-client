@@ -257,6 +257,53 @@ var fieldIDToName_SplendorRoomMetrics = map[int16]string{
 	3: "progressTotal",
 }
 
+type YinshRoomMetrics struct {
+	RingsRemoved    int32 `thrift:"ringsRemoved,1,required" frugal:"1,required,i32" json:"ringsRemoved"`
+	ProgressCurrent int32 `thrift:"progressCurrent,2,required" frugal:"2,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,3,required" frugal:"3,required,i32" json:"progressTotal"`
+}
+
+func NewYinshRoomMetrics() *YinshRoomMetrics {
+	return &YinshRoomMetrics{}
+}
+
+func (p *YinshRoomMetrics) InitDefault() {
+}
+
+func (p *YinshRoomMetrics) GetRingsRemoved() (v int32) {
+	return p.RingsRemoved
+}
+
+func (p *YinshRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *YinshRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *YinshRoomMetrics) SetRingsRemoved(val int32) {
+	p.RingsRemoved = val
+}
+func (p *YinshRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *YinshRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *YinshRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("YinshRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_YinshRoomMetrics = map[int16]string{
+	1: "ringsRemoved",
+	2: "progressCurrent",
+	3: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -913,6 +960,7 @@ type RoomMetrics struct {
 	Acquire  *AcquireRoomMetrics  `thrift:"acquire,1,optional" frugal:"1,optional,AcquireRoomMetrics" json:"acquire,omitempty"`
 	Davinci  *DavinciRoomMetrics  `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomMetrics" json:"davinci,omitempty"`
 	Splendor *SplendorRoomMetrics `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomMetrics" json:"splendor,omitempty"`
+	Yinsh    *YinshRoomMetrics    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomMetrics" json:"yinsh,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -948,6 +996,15 @@ func (p *RoomMetrics) GetSplendor() (v *SplendorRoomMetrics) {
 	}
 	return p.Splendor
 }
+
+var RoomMetrics_Yinsh_DEFAULT *YinshRoomMetrics
+
+func (p *RoomMetrics) GetYinsh() (v *YinshRoomMetrics) {
+	if !p.IsSetYinsh() {
+		return RoomMetrics_Yinsh_DEFAULT
+	}
+	return p.Yinsh
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -956,6 +1013,9 @@ func (p *RoomMetrics) SetDavinci(val *DavinciRoomMetrics) {
 }
 func (p *RoomMetrics) SetSplendor(val *SplendorRoomMetrics) {
 	p.Splendor = val
+}
+func (p *RoomMetrics) SetYinsh(val *YinshRoomMetrics) {
+	p.Yinsh = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -967,6 +1027,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetSplendor() {
+		count++
+	}
+	if p.IsSetYinsh() {
 		count++
 	}
 	return count
@@ -984,6 +1047,10 @@ func (p *RoomMetrics) IsSetSplendor() bool {
 	return p.Splendor != nil
 }
 
+func (p *RoomMetrics) IsSetYinsh() bool {
+	return p.Yinsh != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -995,4 +1062,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	1: "acquire",
 	2: "davinci",
 	3: "splendor",
+	4: "yinsh",
 }

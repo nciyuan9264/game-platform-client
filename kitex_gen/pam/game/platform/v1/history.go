@@ -558,6 +558,44 @@ var fieldIDToName_RankLeaderboardMetric = map[int16]string{
 	1: "avgRank",
 }
 
+type YinshLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewYinshLeaderboardMetric() *YinshLeaderboardMetric {
+	return &YinshLeaderboardMetric{}
+}
+
+func (p *YinshLeaderboardMetric) InitDefault() {
+}
+
+func (p *YinshLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *YinshLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *YinshLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *YinshLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *YinshLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("YinshLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_YinshLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type LeaderboardEntry struct {
 	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
 	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
@@ -1540,6 +1578,7 @@ var fieldIDToName_LeaderboardResp = map[int16]string{
 type LeaderboardMetric struct {
 	Davinci *DavinciLeaderboardMetric `thrift:"davinci,1,optional" frugal:"1,optional,DavinciLeaderboardMetric" json:"davinci,omitempty"`
 	Rank    *RankLeaderboardMetric    `thrift:"rank,2,optional" frugal:"2,optional,RankLeaderboardMetric" json:"rank,omitempty"`
+	Yinsh   *YinshLeaderboardMetric   `thrift:"yinsh,3,optional" frugal:"3,optional,YinshLeaderboardMetric" json:"yinsh,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1566,11 +1605,23 @@ func (p *LeaderboardMetric) GetRank() (v *RankLeaderboardMetric) {
 	}
 	return p.Rank
 }
+
+var LeaderboardMetric_Yinsh_DEFAULT *YinshLeaderboardMetric
+
+func (p *LeaderboardMetric) GetYinsh() (v *YinshLeaderboardMetric) {
+	if !p.IsSetYinsh() {
+		return LeaderboardMetric_Yinsh_DEFAULT
+	}
+	return p.Yinsh
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
 func (p *LeaderboardMetric) SetRank(val *RankLeaderboardMetric) {
 	p.Rank = val
+}
+func (p *LeaderboardMetric) SetYinsh(val *YinshLeaderboardMetric) {
+	p.Yinsh = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -1579,6 +1630,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetRank() {
+		count++
+	}
+	if p.IsSetYinsh() {
 		count++
 	}
 	return count
@@ -1592,6 +1646,10 @@ func (p *LeaderboardMetric) IsSetRank() bool {
 	return p.Rank != nil
 }
 
+func (p *LeaderboardMetric) IsSetYinsh() bool {
+	return p.Yinsh != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1602,11 +1660,13 @@ func (p *LeaderboardMetric) String() string {
 var fieldIDToName_LeaderboardMetric = map[int16]string{
 	1: "davinci",
 	2: "rank",
+	3: "yinsh",
 }
 
 type ReplaySnapshot struct {
 	Acquire  *AcquireReplaySnapshot  `thrift:"acquire,1,optional" frugal:"1,optional,AcquireReplaySnapshot" json:"acquire,omitempty"`
 	Splendor *SplendorReplaySnapshot `thrift:"splendor,2,optional" frugal:"2,optional,SplendorReplaySnapshot" json:"splendor,omitempty"`
+	Yinsh    *YinshReplaySnapshot    `thrift:"yinsh,3,optional" frugal:"3,optional,YinshReplaySnapshot" json:"yinsh,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -1633,11 +1693,23 @@ func (p *ReplaySnapshot) GetSplendor() (v *SplendorReplaySnapshot) {
 	}
 	return p.Splendor
 }
+
+var ReplaySnapshot_Yinsh_DEFAULT *YinshReplaySnapshot
+
+func (p *ReplaySnapshot) GetYinsh() (v *YinshReplaySnapshot) {
+	if !p.IsSetYinsh() {
+		return ReplaySnapshot_Yinsh_DEFAULT
+	}
+	return p.Yinsh
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
 func (p *ReplaySnapshot) SetSplendor(val *SplendorReplaySnapshot) {
 	p.Splendor = val
+}
+func (p *ReplaySnapshot) SetYinsh(val *YinshReplaySnapshot) {
+	p.Yinsh = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -1646,6 +1718,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetSplendor() {
+		count++
+	}
+	if p.IsSetYinsh() {
 		count++
 	}
 	return count
@@ -1659,6 +1734,10 @@ func (p *ReplaySnapshot) IsSetSplendor() bool {
 	return p.Splendor != nil
 }
 
+func (p *ReplaySnapshot) IsSetYinsh() bool {
+	return p.Yinsh != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1669,4 +1748,5 @@ func (p *ReplaySnapshot) String() string {
 var fieldIDToName_ReplaySnapshot = map[int16]string{
 	1: "acquire",
 	2: "splendor",
+	3: "yinsh",
 }

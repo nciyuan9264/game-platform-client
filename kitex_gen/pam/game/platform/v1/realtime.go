@@ -807,6 +807,7 @@ type ClientCommandPayload struct {
 	Acquire  *AcquireCommandPayload  `thrift:"acquire,2,optional" frugal:"2,optional,AcquireCommandPayload" json:"acquire,omitempty"`
 	Davinci  *DavinciCommandPayload  `thrift:"davinci,3,optional" frugal:"3,optional,DavinciCommandPayload" json:"davinci,omitempty"`
 	Splendor *SplendorCommandPayload `thrift:"splendor,4,optional" frugal:"4,optional,SplendorCommandPayload" json:"splendor,omitempty"`
+	Yinsh    *YinshCommandPayload    `thrift:"yinsh,5,optional" frugal:"5,optional,YinshCommandPayload" json:"yinsh,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -851,6 +852,15 @@ func (p *ClientCommandPayload) GetSplendor() (v *SplendorCommandPayload) {
 	}
 	return p.Splendor
 }
+
+var ClientCommandPayload_Yinsh_DEFAULT *YinshCommandPayload
+
+func (p *ClientCommandPayload) GetYinsh() (v *YinshCommandPayload) {
+	if !p.IsSetYinsh() {
+		return ClientCommandPayload_Yinsh_DEFAULT
+	}
+	return p.Yinsh
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -862,6 +872,9 @@ func (p *ClientCommandPayload) SetDavinci(val *DavinciCommandPayload) {
 }
 func (p *ClientCommandPayload) SetSplendor(val *SplendorCommandPayload) {
 	p.Splendor = val
+}
+func (p *ClientCommandPayload) SetYinsh(val *YinshCommandPayload) {
+	p.Yinsh = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -876,6 +889,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetSplendor() {
+		count++
+	}
+	if p.IsSetYinsh() {
 		count++
 	}
 	return count
@@ -897,6 +913,10 @@ func (p *ClientCommandPayload) IsSetSplendor() bool {
 	return p.Splendor != nil
 }
 
+func (p *ClientCommandPayload) IsSetYinsh() bool {
+	return p.Yinsh != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -909,12 +929,14 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	2: "acquire",
 	3: "davinci",
 	4: "splendor",
+	5: "yinsh",
 }
 
 type RoomView struct {
 	Acquire  *AcquireRoomView  `thrift:"acquire,1,optional" frugal:"1,optional,AcquireRoomView" json:"acquire,omitempty"`
 	Davinci  *DavinciRoomView  `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomView" json:"davinci,omitempty"`
 	Splendor *SplendorRoomView `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomView" json:"splendor,omitempty"`
+	Yinsh    *YinshRoomView    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomView" json:"yinsh,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -950,6 +972,15 @@ func (p *RoomView) GetSplendor() (v *SplendorRoomView) {
 	}
 	return p.Splendor
 }
+
+var RoomView_Yinsh_DEFAULT *YinshRoomView
+
+func (p *RoomView) GetYinsh() (v *YinshRoomView) {
+	if !p.IsSetYinsh() {
+		return RoomView_Yinsh_DEFAULT
+	}
+	return p.Yinsh
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -958,6 +989,9 @@ func (p *RoomView) SetDavinci(val *DavinciRoomView) {
 }
 func (p *RoomView) SetSplendor(val *SplendorRoomView) {
 	p.Splendor = val
+}
+func (p *RoomView) SetYinsh(val *YinshRoomView) {
+	p.Yinsh = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -969,6 +1003,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetSplendor() {
+		count++
+	}
+	if p.IsSetYinsh() {
 		count++
 	}
 	return count
@@ -986,6 +1023,10 @@ func (p *RoomView) IsSetSplendor() bool {
 	return p.Splendor != nil
 }
 
+func (p *RoomView) IsSetYinsh() bool {
+	return p.Yinsh != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -997,6 +1038,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	1: "acquire",
 	2: "davinci",
 	3: "splendor",
+	4: "yinsh",
 }
 
 type ServerMessage struct {

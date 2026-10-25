@@ -204,6 +204,7 @@ type YinshRoomData struct {
 	Players        map[string]*RoomPlayer        `thrift:"players,14,required" frugal:"14,required,map<string:RoomPlayer>" json:"players"`
 	PlayerOrder    []string                      `thrift:"playerOrder,15,required" frugal:"15,required,list<string>" json:"playerOrder"`
 	RoundNo        int32                         `thrift:"roundNo,16,required" frugal:"16,required,i32" json:"roundNo"`
+	Activity       []*YinshLastAction            `thrift:"activity,17,optional" frugal:"17,optional,list<YinshLastAction>" json:"activity,omitempty"`
 }
 
 func NewYinshRoomData() *YinshRoomData {
@@ -301,6 +302,15 @@ func (p *YinshRoomData) GetPlayerOrder() (v []string) {
 func (p *YinshRoomData) GetRoundNo() (v int32) {
 	return p.RoundNo
 }
+
+var YinshRoomData_Activity_DEFAULT []*YinshLastAction
+
+func (p *YinshRoomData) GetActivity() (v []*YinshLastAction) {
+	if !p.IsSetActivity() {
+		return YinshRoomData_Activity_DEFAULT
+	}
+	return p.Activity
+}
 func (p *YinshRoomData) SetRings(val map[string]YinshSide) {
 	p.Rings = val
 }
@@ -349,6 +359,9 @@ func (p *YinshRoomData) SetPlayerOrder(val []string) {
 func (p *YinshRoomData) SetRoundNo(val int32) {
 	p.RoundNo = val
 }
+func (p *YinshRoomData) SetActivity(val []*YinshLastAction) {
+	p.Activity = val
+}
 
 func (p *YinshRoomData) IsSetMoverPlayer() bool {
 	return p.MoverPlayer != nil
@@ -368,6 +381,10 @@ func (p *YinshRoomData) IsSetTurnDeadline() bool {
 
 func (p *YinshRoomData) IsSetTurnTimeoutMs() bool {
 	return p.TurnTimeoutMs != nil
+}
+
+func (p *YinshRoomData) IsSetActivity() bool {
+	return p.Activity != nil
 }
 
 func (p *YinshRoomData) String() string {
@@ -394,6 +411,7 @@ var fieldIDToName_YinshRoomData = map[int16]string{
 	14: "players",
 	15: "playerOrder",
 	16: "roundNo",
+	17: "activity",
 }
 
 type YinshResult_ struct {

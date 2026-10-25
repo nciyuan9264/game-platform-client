@@ -1056,6 +1056,20 @@ func (p *YinshRoomData) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 17:
+			if fieldTypeId == thrift.LIST {
+				l, err = p.FastReadField17(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -1475,6 +1489,31 @@ func (p *YinshRoomData) FastReadField16(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *YinshRoomData) FastReadField17(buf []byte) (int, error) {
+	offset := 0
+
+	_, size, l, err := thrift.Binary.ReadListBegin(buf[offset:])
+	offset += l
+	if err != nil {
+		return offset, err
+	}
+	_field := make([]*YinshLastAction, 0, size)
+	values := make([]YinshLastAction, size)
+	for i := 0; i < size; i++ {
+		_elem := &values[i]
+		_elem.InitDefault()
+		if l, err := _elem.FastRead(buf[offset:]); err != nil {
+			return offset, err
+		} else {
+			offset += l
+		}
+
+		_field = append(_field, _elem)
+	}
+	p.Activity = _field
+	return offset, nil
+}
+
 func (p *YinshRoomData) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -1498,6 +1537,7 @@ func (p *YinshRoomData) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField12(buf[offset:], w)
 		offset += p.fastWriteField14(buf[offset:], w)
 		offset += p.fastWriteField15(buf[offset:], w)
+		offset += p.fastWriteField17(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -1522,6 +1562,7 @@ func (p *YinshRoomData) BLength() int {
 		l += p.field14Length()
 		l += p.field15Length()
 		l += p.field16Length()
+		l += p.field17Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -1710,6 +1751,22 @@ func (p *YinshRoomData) fastWriteField16(buf []byte, w thrift.NocopyWriter) int 
 	return offset
 }
 
+func (p *YinshRoomData) fastWriteField17(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetActivity() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.LIST, 17)
+		listBeginOffset := offset
+		offset += thrift.Binary.ListBeginLength()
+		var length int
+		for _, v := range p.Activity {
+			length++
+			offset += v.FastWriteNocopy(buf[offset:], w)
+		}
+		thrift.Binary.WriteListBegin(buf[listBeginOffset:], thrift.STRUCT, length)
+	}
+	return offset
+}
+
 func (p *YinshRoomData) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
@@ -1871,6 +1928,19 @@ func (p *YinshRoomData) field16Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += thrift.Binary.I32Length()
+	return l
+}
+
+func (p *YinshRoomData) field17Length() int {
+	l := 0
+	if p.IsSetActivity() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.ListBeginLength()
+		for _, v := range p.Activity {
+			_ = v
+			l += v.BLength()
+		}
+	}
 	return l
 }
 

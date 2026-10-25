@@ -808,6 +808,7 @@ type ClientCommandPayload struct {
 	Davinci  *DavinciCommandPayload  `thrift:"davinci,3,optional" frugal:"3,optional,DavinciCommandPayload" json:"davinci,omitempty"`
 	Splendor *SplendorCommandPayload `thrift:"splendor,4,optional" frugal:"4,optional,SplendorCommandPayload" json:"splendor,omitempty"`
 	Yinsh    *YinshCommandPayload    `thrift:"yinsh,5,optional" frugal:"5,optional,YinshCommandPayload" json:"yinsh,omitempty"`
+	Othello  *OthelloCommandPayload  `thrift:"othello,6,optional" frugal:"6,optional,OthelloCommandPayload" json:"othello,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -861,6 +862,15 @@ func (p *ClientCommandPayload) GetYinsh() (v *YinshCommandPayload) {
 	}
 	return p.Yinsh
 }
+
+var ClientCommandPayload_Othello_DEFAULT *OthelloCommandPayload
+
+func (p *ClientCommandPayload) GetOthello() (v *OthelloCommandPayload) {
+	if !p.IsSetOthello() {
+		return ClientCommandPayload_Othello_DEFAULT
+	}
+	return p.Othello
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -875,6 +885,9 @@ func (p *ClientCommandPayload) SetSplendor(val *SplendorCommandPayload) {
 }
 func (p *ClientCommandPayload) SetYinsh(val *YinshCommandPayload) {
 	p.Yinsh = val
+}
+func (p *ClientCommandPayload) SetOthello(val *OthelloCommandPayload) {
+	p.Othello = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -892,6 +905,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetYinsh() {
+		count++
+	}
+	if p.IsSetOthello() {
 		count++
 	}
 	return count
@@ -917,6 +933,10 @@ func (p *ClientCommandPayload) IsSetYinsh() bool {
 	return p.Yinsh != nil
 }
 
+func (p *ClientCommandPayload) IsSetOthello() bool {
+	return p.Othello != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -930,6 +950,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	3: "davinci",
 	4: "splendor",
 	5: "yinsh",
+	6: "othello",
 }
 
 type RoomView struct {
@@ -937,6 +958,7 @@ type RoomView struct {
 	Davinci  *DavinciRoomView  `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomView" json:"davinci,omitempty"`
 	Splendor *SplendorRoomView `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomView" json:"splendor,omitempty"`
 	Yinsh    *YinshRoomView    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomView" json:"yinsh,omitempty"`
+	Othello  *OthelloRoomView  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomView" json:"othello,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -981,6 +1003,15 @@ func (p *RoomView) GetYinsh() (v *YinshRoomView) {
 	}
 	return p.Yinsh
 }
+
+var RoomView_Othello_DEFAULT *OthelloRoomView
+
+func (p *RoomView) GetOthello() (v *OthelloRoomView) {
+	if !p.IsSetOthello() {
+		return RoomView_Othello_DEFAULT
+	}
+	return p.Othello
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -992,6 +1023,9 @@ func (p *RoomView) SetSplendor(val *SplendorRoomView) {
 }
 func (p *RoomView) SetYinsh(val *YinshRoomView) {
 	p.Yinsh = val
+}
+func (p *RoomView) SetOthello(val *OthelloRoomView) {
+	p.Othello = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1006,6 +1040,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetYinsh() {
+		count++
+	}
+	if p.IsSetOthello() {
 		count++
 	}
 	return count
@@ -1027,6 +1064,10 @@ func (p *RoomView) IsSetYinsh() bool {
 	return p.Yinsh != nil
 }
 
+func (p *RoomView) IsSetOthello() bool {
+	return p.Othello != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1039,6 +1080,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	2: "davinci",
 	3: "splendor",
 	4: "yinsh",
+	5: "othello",
 }
 
 type ServerMessage struct {

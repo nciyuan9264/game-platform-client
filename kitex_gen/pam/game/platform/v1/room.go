@@ -304,6 +304,53 @@ var fieldIDToName_YinshRoomMetrics = map[int16]string{
 	3: "progressTotal",
 }
 
+type OthelloRoomMetrics struct {
+	OccupiedCount   int32 `thrift:"occupiedCount,1,required" frugal:"1,required,i32" json:"occupiedCount"`
+	ProgressCurrent int32 `thrift:"progressCurrent,2,required" frugal:"2,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,3,required" frugal:"3,required,i32" json:"progressTotal"`
+}
+
+func NewOthelloRoomMetrics() *OthelloRoomMetrics {
+	return &OthelloRoomMetrics{}
+}
+
+func (p *OthelloRoomMetrics) InitDefault() {
+}
+
+func (p *OthelloRoomMetrics) GetOccupiedCount() (v int32) {
+	return p.OccupiedCount
+}
+
+func (p *OthelloRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *OthelloRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *OthelloRoomMetrics) SetOccupiedCount(val int32) {
+	p.OccupiedCount = val
+}
+func (p *OthelloRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *OthelloRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *OthelloRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OthelloRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_OthelloRoomMetrics = map[int16]string{
+	1: "occupiedCount",
+	2: "progressCurrent",
+	3: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -961,6 +1008,7 @@ type RoomMetrics struct {
 	Davinci  *DavinciRoomMetrics  `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomMetrics" json:"davinci,omitempty"`
 	Splendor *SplendorRoomMetrics `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomMetrics" json:"splendor,omitempty"`
 	Yinsh    *YinshRoomMetrics    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomMetrics" json:"yinsh,omitempty"`
+	Othello  *OthelloRoomMetrics  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomMetrics" json:"othello,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1005,6 +1053,15 @@ func (p *RoomMetrics) GetYinsh() (v *YinshRoomMetrics) {
 	}
 	return p.Yinsh
 }
+
+var RoomMetrics_Othello_DEFAULT *OthelloRoomMetrics
+
+func (p *RoomMetrics) GetOthello() (v *OthelloRoomMetrics) {
+	if !p.IsSetOthello() {
+		return RoomMetrics_Othello_DEFAULT
+	}
+	return p.Othello
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1016,6 +1073,9 @@ func (p *RoomMetrics) SetSplendor(val *SplendorRoomMetrics) {
 }
 func (p *RoomMetrics) SetYinsh(val *YinshRoomMetrics) {
 	p.Yinsh = val
+}
+func (p *RoomMetrics) SetOthello(val *OthelloRoomMetrics) {
+	p.Othello = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1030,6 +1090,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetYinsh() {
+		count++
+	}
+	if p.IsSetOthello() {
 		count++
 	}
 	return count
@@ -1051,6 +1114,10 @@ func (p *RoomMetrics) IsSetYinsh() bool {
 	return p.Yinsh != nil
 }
 
+func (p *RoomMetrics) IsSetOthello() bool {
+	return p.Othello != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1063,4 +1130,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	2: "davinci",
 	3: "splendor",
 	4: "yinsh",
+	5: "othello",
 }

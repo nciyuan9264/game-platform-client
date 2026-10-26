@@ -865,6 +865,7 @@ type ClientCommandPayload struct {
 	Othello  *OthelloCommandPayload  `thrift:"othello,6,optional" frugal:"6,optional,OthelloCommandPayload" json:"othello,omitempty"`
 	Fugitive *FugitiveCommandPayload `thrift:"fugitive,7,optional" frugal:"7,optional,FugitiveCommandPayload" json:"fugitive,omitempty"`
 	Warchest *WarChestCommandPayload `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
+	Quoridor *QuoridorCommandPayload `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -945,6 +946,15 @@ func (p *ClientCommandPayload) GetWarchest() (v *WarChestCommandPayload) {
 	}
 	return p.Warchest
 }
+
+var ClientCommandPayload_Quoridor_DEFAULT *QuoridorCommandPayload
+
+func (p *ClientCommandPayload) GetQuoridor() (v *QuoridorCommandPayload) {
+	if !p.IsSetQuoridor() {
+		return ClientCommandPayload_Quoridor_DEFAULT
+	}
+	return p.Quoridor
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -968,6 +978,9 @@ func (p *ClientCommandPayload) SetFugitive(val *FugitiveCommandPayload) {
 }
 func (p *ClientCommandPayload) SetWarchest(val *WarChestCommandPayload) {
 	p.Warchest = val
+}
+func (p *ClientCommandPayload) SetQuoridor(val *QuoridorCommandPayload) {
+	p.Quoridor = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -994,6 +1007,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetWarchest() {
+		count++
+	}
+	if p.IsSetQuoridor() {
 		count++
 	}
 	return count
@@ -1031,6 +1047,10 @@ func (p *ClientCommandPayload) IsSetWarchest() bool {
 	return p.Warchest != nil
 }
 
+func (p *ClientCommandPayload) IsSetQuoridor() bool {
+	return p.Quoridor != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1047,6 +1067,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	6: "othello",
 	7: "fugitive",
 	8: "warchest",
+	9: "quoridor",
 }
 
 type MatchSetupView struct {
@@ -1103,6 +1124,7 @@ type RoomView struct {
 	Othello  *OthelloRoomView  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomView" json:"othello,omitempty"`
 	Fugitive *FugitiveRoomView `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomView" json:"fugitive,omitempty"`
 	Warchest *WarChestRoomView `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
+	Quoridor *QuoridorRoomView `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1174,6 +1196,15 @@ func (p *RoomView) GetWarchest() (v *WarChestRoomView) {
 	}
 	return p.Warchest
 }
+
+var RoomView_Quoridor_DEFAULT *QuoridorRoomView
+
+func (p *RoomView) GetQuoridor() (v *QuoridorRoomView) {
+	if !p.IsSetQuoridor() {
+		return RoomView_Quoridor_DEFAULT
+	}
+	return p.Quoridor
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1194,6 +1225,9 @@ func (p *RoomView) SetFugitive(val *FugitiveRoomView) {
 }
 func (p *RoomView) SetWarchest(val *WarChestRoomView) {
 	p.Warchest = val
+}
+func (p *RoomView) SetQuoridor(val *QuoridorRoomView) {
+	p.Quoridor = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1217,6 +1251,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetWarchest() {
+		count++
+	}
+	if p.IsSetQuoridor() {
 		count++
 	}
 	return count
@@ -1250,6 +1287,10 @@ func (p *RoomView) IsSetWarchest() bool {
 	return p.Warchest != nil
 }
 
+func (p *RoomView) IsSetQuoridor() bool {
+	return p.Quoridor != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1265,6 +1306,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	5: "othello",
 	6: "fugitive",
 	7: "warchest",
+	8: "quoridor",
 }
 
 type ServerMessage struct {

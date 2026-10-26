@@ -3495,6 +3495,20 @@ func (p *ClientCommandPayload) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 9:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField9(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3609,6 +3623,18 @@ func (p *ClientCommandPayload) FastReadField8(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *ClientCommandPayload) FastReadField9(buf []byte) (int, error) {
+	offset := 0
+	_field := NewQuoridorCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Quoridor = _field
+	return offset, nil
+}
+
 func (p *ClientCommandPayload) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -3630,6 +3656,7 @@ func (p *ClientCommandPayload) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
+		offset += p.fastWriteField9(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3654,6 +3681,7 @@ func (p *ClientCommandPayload) BLength() int {
 		l += p.field6Length()
 		l += p.field7Length()
 		l += p.field8Length()
+		l += p.field9Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3733,6 +3761,15 @@ func (p *ClientCommandPayload) fastWriteField8(buf []byte, w thrift.NocopyWriter
 	return offset
 }
 
+func (p *ClientCommandPayload) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetQuoridor() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 9)
+		offset += p.Quoridor.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *ClientCommandPayload) field1Length() int {
 	l := 0
 	if p.IsSetCommon() {
@@ -3801,6 +3838,15 @@ func (p *ClientCommandPayload) field8Length() int {
 	if p.IsSetWarchest() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Warchest.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field9Length() int {
+	l := 0
+	if p.IsSetQuoridor() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Quoridor.BLength()
 	}
 	return l
 }
@@ -4037,6 +4083,20 @@ func (p *RoomView) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 8:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField8(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -4139,6 +4199,18 @@ func (p *RoomView) FastReadField7(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *RoomView) FastReadField8(buf []byte) (int, error) {
+	offset := 0
+	_field := NewQuoridorRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Quoridor = _field
+	return offset, nil
+}
+
 func (p *RoomView) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -4159,6 +4231,7 @@ func (p *RoomView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
+		offset += p.fastWriteField8(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4182,6 +4255,7 @@ func (p *RoomView) BLength() int {
 		l += p.field5Length()
 		l += p.field6Length()
 		l += p.field7Length()
+		l += p.field8Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4252,6 +4326,15 @@ func (p *RoomView) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
+func (p *RoomView) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetQuoridor() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 8)
+		offset += p.Quoridor.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *RoomView) field1Length() int {
 	l := 0
 	if p.IsSetAcquire() {
@@ -4311,6 +4394,15 @@ func (p *RoomView) field7Length() int {
 	if p.IsSetWarchest() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Warchest.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field8Length() int {
+	l := 0
+	if p.IsSetQuoridor() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Quoridor.BLength()
 	}
 	return l
 }

@@ -472,6 +472,35 @@ var fieldIDToName_WarChestRoomMetrics = map[int16]string{
 	3: "progressTotal",
 }
 
+type QuoridorRoomMetrics struct {
+	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
+}
+
+func NewQuoridorRoomMetrics() *QuoridorRoomMetrics {
+	return &QuoridorRoomMetrics{}
+}
+
+func (p *QuoridorRoomMetrics) InitDefault() {
+}
+
+func (p *QuoridorRoomMetrics) GetTurnCount() (v int32) {
+	return p.TurnCount
+}
+func (p *QuoridorRoomMetrics) SetTurnCount(val int32) {
+	p.TurnCount = val
+}
+
+func (p *QuoridorRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("QuoridorRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_QuoridorRoomMetrics = map[int16]string{
+	1: "turnCount",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1204,6 +1233,7 @@ type RoomMetrics struct {
 	Othello  *OthelloRoomMetrics  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomMetrics" json:"othello,omitempty"`
 	Fugitive *FugitiveRoomMetrics `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomMetrics" json:"fugitive,omitempty"`
 	Warchest *WarChestRoomMetrics `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
+	Quoridor *QuoridorRoomMetrics `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1275,6 +1305,15 @@ func (p *RoomMetrics) GetWarchest() (v *WarChestRoomMetrics) {
 	}
 	return p.Warchest
 }
+
+var RoomMetrics_Quoridor_DEFAULT *QuoridorRoomMetrics
+
+func (p *RoomMetrics) GetQuoridor() (v *QuoridorRoomMetrics) {
+	if !p.IsSetQuoridor() {
+		return RoomMetrics_Quoridor_DEFAULT
+	}
+	return p.Quoridor
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1295,6 +1334,9 @@ func (p *RoomMetrics) SetFugitive(val *FugitiveRoomMetrics) {
 }
 func (p *RoomMetrics) SetWarchest(val *WarChestRoomMetrics) {
 	p.Warchest = val
+}
+func (p *RoomMetrics) SetQuoridor(val *QuoridorRoomMetrics) {
+	p.Quoridor = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1318,6 +1360,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetWarchest() {
+		count++
+	}
+	if p.IsSetQuoridor() {
 		count++
 	}
 	return count
@@ -1351,6 +1396,10 @@ func (p *RoomMetrics) IsSetWarchest() bool {
 	return p.Warchest != nil
 }
 
+func (p *RoomMetrics) IsSetQuoridor() bool {
+	return p.Quoridor != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1366,4 +1415,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	5: "othello",
 	6: "fugitive",
 	7: "warchest",
+	8: "quoridor",
 }

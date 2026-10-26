@@ -782,6 +782,44 @@ var fieldIDToName_WarChestLeaderboardMetric = map[int16]string{
 	2: "winRate",
 }
 
+type QuoridorLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewQuoridorLeaderboardMetric() *QuoridorLeaderboardMetric {
+	return &QuoridorLeaderboardMetric{}
+}
+
+func (p *QuoridorLeaderboardMetric) InitDefault() {
+}
+
+func (p *QuoridorLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *QuoridorLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *QuoridorLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *QuoridorLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *QuoridorLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("QuoridorLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_QuoridorLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type LeaderboardEntry struct {
 	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
 	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
@@ -1786,6 +1824,7 @@ type LeaderboardMetric struct {
 	Othello  *OthelloLeaderboardMetric  `thrift:"othello,4,optional" frugal:"4,optional,OthelloLeaderboardMetric" json:"othello,omitempty"`
 	Fugitive *FugitiveLeaderboardMetric `thrift:"fugitive,5,optional" frugal:"5,optional,FugitiveLeaderboardMetric" json:"fugitive,omitempty"`
 	Warchest *WarChestLeaderboardMetric `thrift:"warchest,6,optional" frugal:"6,optional,WarChestLeaderboardMetric" json:"warchest,omitempty"`
+	Quoridor *QuoridorLeaderboardMetric `thrift:"quoridor,7,optional" frugal:"7,optional,QuoridorLeaderboardMetric" json:"quoridor,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1848,6 +1887,15 @@ func (p *LeaderboardMetric) GetWarchest() (v *WarChestLeaderboardMetric) {
 	}
 	return p.Warchest
 }
+
+var LeaderboardMetric_Quoridor_DEFAULT *QuoridorLeaderboardMetric
+
+func (p *LeaderboardMetric) GetQuoridor() (v *QuoridorLeaderboardMetric) {
+	if !p.IsSetQuoridor() {
+		return LeaderboardMetric_Quoridor_DEFAULT
+	}
+	return p.Quoridor
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
@@ -1865,6 +1913,9 @@ func (p *LeaderboardMetric) SetFugitive(val *FugitiveLeaderboardMetric) {
 }
 func (p *LeaderboardMetric) SetWarchest(val *WarChestLeaderboardMetric) {
 	p.Warchest = val
+}
+func (p *LeaderboardMetric) SetQuoridor(val *QuoridorLeaderboardMetric) {
+	p.Quoridor = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -1885,6 +1936,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetWarchest() {
+		count++
+	}
+	if p.IsSetQuoridor() {
 		count++
 	}
 	return count
@@ -1914,6 +1968,10 @@ func (p *LeaderboardMetric) IsSetWarchest() bool {
 	return p.Warchest != nil
 }
 
+func (p *LeaderboardMetric) IsSetQuoridor() bool {
+	return p.Quoridor != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1928,6 +1986,7 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 	4: "othello",
 	5: "fugitive",
 	6: "warchest",
+	7: "quoridor",
 }
 
 type ReplaySnapshot struct {
@@ -1936,6 +1995,7 @@ type ReplaySnapshot struct {
 	Yinsh    *YinshReplaySnapshot    `thrift:"yinsh,3,optional" frugal:"3,optional,YinshReplaySnapshot" json:"yinsh,omitempty"`
 	Othello  *OthelloReplaySnapshot  `thrift:"othello,4,optional" frugal:"4,optional,OthelloReplaySnapshot" json:"othello,omitempty"`
 	Warchest *WarChestReplaySnapshot `thrift:"warchest,5,optional" frugal:"5,optional,WarChestReplaySnapshot" json:"warchest,omitempty"`
+	Quoridor *QuoridorReplaySnapshot `thrift:"quoridor,6,optional" frugal:"6,optional,QuoridorReplaySnapshot" json:"quoridor,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -1989,6 +2049,15 @@ func (p *ReplaySnapshot) GetWarchest() (v *WarChestReplaySnapshot) {
 	}
 	return p.Warchest
 }
+
+var ReplaySnapshot_Quoridor_DEFAULT *QuoridorReplaySnapshot
+
+func (p *ReplaySnapshot) GetQuoridor() (v *QuoridorReplaySnapshot) {
+	if !p.IsSetQuoridor() {
+		return ReplaySnapshot_Quoridor_DEFAULT
+	}
+	return p.Quoridor
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2003,6 +2072,9 @@ func (p *ReplaySnapshot) SetOthello(val *OthelloReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetWarchest(val *WarChestReplaySnapshot) {
 	p.Warchest = val
+}
+func (p *ReplaySnapshot) SetQuoridor(val *QuoridorReplaySnapshot) {
+	p.Quoridor = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2020,6 +2092,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetWarchest() {
+		count++
+	}
+	if p.IsSetQuoridor() {
 		count++
 	}
 	return count
@@ -2045,6 +2120,10 @@ func (p *ReplaySnapshot) IsSetWarchest() bool {
 	return p.Warchest != nil
 }
 
+func (p *ReplaySnapshot) IsSetQuoridor() bool {
+	return p.Quoridor != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2058,4 +2137,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	3: "yinsh",
 	4: "othello",
 	5: "warchest",
+	6: "quoridor",
 }

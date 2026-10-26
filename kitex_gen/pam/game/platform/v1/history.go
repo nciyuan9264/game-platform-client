@@ -744,6 +744,44 @@ var fieldIDToName_FugitiveLeaderboardMetric = map[int16]string{
 	2: "winRate",
 }
 
+type WarChestLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewWarChestLeaderboardMetric() *WarChestLeaderboardMetric {
+	return &WarChestLeaderboardMetric{}
+}
+
+func (p *WarChestLeaderboardMetric) InitDefault() {
+}
+
+func (p *WarChestLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *WarChestLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *WarChestLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *WarChestLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *WarChestLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("WarChestLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_WarChestLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type LeaderboardEntry struct {
 	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
 	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
@@ -1747,6 +1785,7 @@ type LeaderboardMetric struct {
 	Yinsh    *YinshLeaderboardMetric    `thrift:"yinsh,3,optional" frugal:"3,optional,YinshLeaderboardMetric" json:"yinsh,omitempty"`
 	Othello  *OthelloLeaderboardMetric  `thrift:"othello,4,optional" frugal:"4,optional,OthelloLeaderboardMetric" json:"othello,omitempty"`
 	Fugitive *FugitiveLeaderboardMetric `thrift:"fugitive,5,optional" frugal:"5,optional,FugitiveLeaderboardMetric" json:"fugitive,omitempty"`
+	Warchest *WarChestLeaderboardMetric `thrift:"warchest,6,optional" frugal:"6,optional,WarChestLeaderboardMetric" json:"warchest,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1800,6 +1839,15 @@ func (p *LeaderboardMetric) GetFugitive() (v *FugitiveLeaderboardMetric) {
 	}
 	return p.Fugitive
 }
+
+var LeaderboardMetric_Warchest_DEFAULT *WarChestLeaderboardMetric
+
+func (p *LeaderboardMetric) GetWarchest() (v *WarChestLeaderboardMetric) {
+	if !p.IsSetWarchest() {
+		return LeaderboardMetric_Warchest_DEFAULT
+	}
+	return p.Warchest
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
@@ -1814,6 +1862,9 @@ func (p *LeaderboardMetric) SetOthello(val *OthelloLeaderboardMetric) {
 }
 func (p *LeaderboardMetric) SetFugitive(val *FugitiveLeaderboardMetric) {
 	p.Fugitive = val
+}
+func (p *LeaderboardMetric) SetWarchest(val *WarChestLeaderboardMetric) {
+	p.Warchest = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -1831,6 +1882,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetFugitive() {
+		count++
+	}
+	if p.IsSetWarchest() {
 		count++
 	}
 	return count
@@ -1856,6 +1910,10 @@ func (p *LeaderboardMetric) IsSetFugitive() bool {
 	return p.Fugitive != nil
 }
 
+func (p *LeaderboardMetric) IsSetWarchest() bool {
+	return p.Warchest != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1869,6 +1927,7 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 	3: "yinsh",
 	4: "othello",
 	5: "fugitive",
+	6: "warchest",
 }
 
 type ReplaySnapshot struct {
@@ -1876,6 +1935,7 @@ type ReplaySnapshot struct {
 	Splendor *SplendorReplaySnapshot `thrift:"splendor,2,optional" frugal:"2,optional,SplendorReplaySnapshot" json:"splendor,omitempty"`
 	Yinsh    *YinshReplaySnapshot    `thrift:"yinsh,3,optional" frugal:"3,optional,YinshReplaySnapshot" json:"yinsh,omitempty"`
 	Othello  *OthelloReplaySnapshot  `thrift:"othello,4,optional" frugal:"4,optional,OthelloReplaySnapshot" json:"othello,omitempty"`
+	Warchest *WarChestReplaySnapshot `thrift:"warchest,5,optional" frugal:"5,optional,WarChestReplaySnapshot" json:"warchest,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -1920,6 +1980,15 @@ func (p *ReplaySnapshot) GetOthello() (v *OthelloReplaySnapshot) {
 	}
 	return p.Othello
 }
+
+var ReplaySnapshot_Warchest_DEFAULT *WarChestReplaySnapshot
+
+func (p *ReplaySnapshot) GetWarchest() (v *WarChestReplaySnapshot) {
+	if !p.IsSetWarchest() {
+		return ReplaySnapshot_Warchest_DEFAULT
+	}
+	return p.Warchest
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -1931,6 +2000,9 @@ func (p *ReplaySnapshot) SetYinsh(val *YinshReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetOthello(val *OthelloReplaySnapshot) {
 	p.Othello = val
+}
+func (p *ReplaySnapshot) SetWarchest(val *WarChestReplaySnapshot) {
+	p.Warchest = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -1945,6 +2017,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetOthello() {
+		count++
+	}
+	if p.IsSetWarchest() {
 		count++
 	}
 	return count
@@ -1966,6 +2041,10 @@ func (p *ReplaySnapshot) IsSetOthello() bool {
 	return p.Othello != nil
 }
 
+func (p *ReplaySnapshot) IsSetWarchest() bool {
+	return p.Warchest != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1978,4 +2057,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	2: "splendor",
 	3: "yinsh",
 	4: "othello",
+	5: "warchest",
 }

@@ -254,6 +254,7 @@ type MatchSync struct {
 	MaxPlayers    int32                  `thrift:"maxPlayers,10,required" frugal:"10,required,i32" json:"maxPlayers"`
 	Players       map[string]*RoomPlayer `thrift:"players,11,required" frugal:"11,required,map<string:RoomPlayer>" json:"players"`
 	PlayerOrder   []string               `thrift:"playerOrder,12,required" frugal:"12,required,list<string>" json:"playerOrder"`
+	Setup         *MatchSetupView        `thrift:"setup,13,optional" frugal:"13,optional,MatchSetupView" json:"setup,omitempty"`
 }
 
 func NewMatchSync() *MatchSync {
@@ -310,6 +311,15 @@ func (p *MatchSync) GetPlayers() (v map[string]*RoomPlayer) {
 func (p *MatchSync) GetPlayerOrder() (v []string) {
 	return p.PlayerOrder
 }
+
+var MatchSync_Setup_DEFAULT *MatchSetupView
+
+func (p *MatchSync) GetSetup() (v *MatchSetupView) {
+	if !p.IsSetSetup() {
+		return MatchSync_Setup_DEFAULT
+	}
+	return p.Setup
+}
 func (p *MatchSync) SetSchemaVersion(val int32) {
 	p.SchemaVersion = val
 }
@@ -346,6 +356,13 @@ func (p *MatchSync) SetPlayers(val map[string]*RoomPlayer) {
 func (p *MatchSync) SetPlayerOrder(val []string) {
 	p.PlayerOrder = val
 }
+func (p *MatchSync) SetSetup(val *MatchSetupView) {
+	p.Setup = val
+}
+
+func (p *MatchSync) IsSetSetup() bool {
+	return p.Setup != nil
+}
 
 func (p *MatchSync) String() string {
 	if p == nil {
@@ -367,6 +384,7 @@ var fieldIDToName_MatchSync = map[int16]string{
 	10: "maxPlayers",
 	11: "players",
 	12: "playerOrder",
+	13: "setup",
 }
 
 type RoomSync struct {
@@ -846,6 +864,7 @@ type ClientCommandPayload struct {
 	Yinsh    *YinshCommandPayload    `thrift:"yinsh,5,optional" frugal:"5,optional,YinshCommandPayload" json:"yinsh,omitempty"`
 	Othello  *OthelloCommandPayload  `thrift:"othello,6,optional" frugal:"6,optional,OthelloCommandPayload" json:"othello,omitempty"`
 	Fugitive *FugitiveCommandPayload `thrift:"fugitive,7,optional" frugal:"7,optional,FugitiveCommandPayload" json:"fugitive,omitempty"`
+	Warchest *WarChestCommandPayload `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -917,6 +936,15 @@ func (p *ClientCommandPayload) GetFugitive() (v *FugitiveCommandPayload) {
 	}
 	return p.Fugitive
 }
+
+var ClientCommandPayload_Warchest_DEFAULT *WarChestCommandPayload
+
+func (p *ClientCommandPayload) GetWarchest() (v *WarChestCommandPayload) {
+	if !p.IsSetWarchest() {
+		return ClientCommandPayload_Warchest_DEFAULT
+	}
+	return p.Warchest
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -937,6 +965,9 @@ func (p *ClientCommandPayload) SetOthello(val *OthelloCommandPayload) {
 }
 func (p *ClientCommandPayload) SetFugitive(val *FugitiveCommandPayload) {
 	p.Fugitive = val
+}
+func (p *ClientCommandPayload) SetWarchest(val *WarChestCommandPayload) {
+	p.Warchest = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -960,6 +991,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetFugitive() {
+		count++
+	}
+	if p.IsSetWarchest() {
 		count++
 	}
 	return count
@@ -993,6 +1027,10 @@ func (p *ClientCommandPayload) IsSetFugitive() bool {
 	return p.Fugitive != nil
 }
 
+func (p *ClientCommandPayload) IsSetWarchest() bool {
+	return p.Warchest != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1008,6 +1046,53 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	5: "yinsh",
 	6: "othello",
 	7: "fugitive",
+	8: "warchest",
+}
+
+type MatchSetupView struct {
+	Warchest *WarChestMatchSetup `thrift:"warchest,1,optional" frugal:"1,optional,WarChestMatchSetup" json:"warchest,omitempty"`
+}
+
+func NewMatchSetupView() *MatchSetupView {
+	return &MatchSetupView{}
+}
+
+func (p *MatchSetupView) InitDefault() {
+}
+
+var MatchSetupView_Warchest_DEFAULT *WarChestMatchSetup
+
+func (p *MatchSetupView) GetWarchest() (v *WarChestMatchSetup) {
+	if !p.IsSetWarchest() {
+		return MatchSetupView_Warchest_DEFAULT
+	}
+	return p.Warchest
+}
+func (p *MatchSetupView) SetWarchest(val *WarChestMatchSetup) {
+	p.Warchest = val
+}
+
+func (p *MatchSetupView) CountSetFieldsMatchSetupView() int {
+	count := 0
+	if p.IsSetWarchest() {
+		count++
+	}
+	return count
+}
+
+func (p *MatchSetupView) IsSetWarchest() bool {
+	return p.Warchest != nil
+}
+
+func (p *MatchSetupView) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("MatchSetupView(%+v)", *p)
+}
+
+var fieldIDToName_MatchSetupView = map[int16]string{
+	1: "warchest",
 }
 
 type RoomView struct {
@@ -1017,6 +1102,7 @@ type RoomView struct {
 	Yinsh    *YinshRoomView    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomView" json:"yinsh,omitempty"`
 	Othello  *OthelloRoomView  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomView" json:"othello,omitempty"`
 	Fugitive *FugitiveRoomView `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomView" json:"fugitive,omitempty"`
+	Warchest *WarChestRoomView `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1079,6 +1165,15 @@ func (p *RoomView) GetFugitive() (v *FugitiveRoomView) {
 	}
 	return p.Fugitive
 }
+
+var RoomView_Warchest_DEFAULT *WarChestRoomView
+
+func (p *RoomView) GetWarchest() (v *WarChestRoomView) {
+	if !p.IsSetWarchest() {
+		return RoomView_Warchest_DEFAULT
+	}
+	return p.Warchest
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1096,6 +1191,9 @@ func (p *RoomView) SetOthello(val *OthelloRoomView) {
 }
 func (p *RoomView) SetFugitive(val *FugitiveRoomView) {
 	p.Fugitive = val
+}
+func (p *RoomView) SetWarchest(val *WarChestRoomView) {
+	p.Warchest = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1116,6 +1214,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetFugitive() {
+		count++
+	}
+	if p.IsSetWarchest() {
 		count++
 	}
 	return count
@@ -1145,6 +1246,10 @@ func (p *RoomView) IsSetFugitive() bool {
 	return p.Fugitive != nil
 }
 
+func (p *RoomView) IsSetWarchest() bool {
+	return p.Warchest != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1159,6 +1264,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	4: "yinsh",
 	5: "othello",
 	6: "fugitive",
+	7: "warchest",
 }
 
 type ServerMessage struct {

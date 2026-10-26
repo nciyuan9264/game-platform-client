@@ -425,6 +425,53 @@ var fieldIDToName_FugitiveRoomMetrics = map[int16]string{
 	4: "progressTotal",
 }
 
+type WarChestRoomMetrics struct {
+	MaxControlledLocations int32 `thrift:"maxControlledLocations,1,required" frugal:"1,required,i32" json:"maxControlledLocations"`
+	ProgressCurrent        int32 `thrift:"progressCurrent,2,required" frugal:"2,required,i32" json:"progressCurrent"`
+	ProgressTotal          int32 `thrift:"progressTotal,3,required" frugal:"3,required,i32" json:"progressTotal"`
+}
+
+func NewWarChestRoomMetrics() *WarChestRoomMetrics {
+	return &WarChestRoomMetrics{}
+}
+
+func (p *WarChestRoomMetrics) InitDefault() {
+}
+
+func (p *WarChestRoomMetrics) GetMaxControlledLocations() (v int32) {
+	return p.MaxControlledLocations
+}
+
+func (p *WarChestRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *WarChestRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *WarChestRoomMetrics) SetMaxControlledLocations(val int32) {
+	p.MaxControlledLocations = val
+}
+func (p *WarChestRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *WarChestRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *WarChestRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("WarChestRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_WarChestRoomMetrics = map[int16]string{
+	1: "maxControlledLocations",
+	2: "progressCurrent",
+	3: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1156,6 +1203,7 @@ type RoomMetrics struct {
 	Yinsh    *YinshRoomMetrics    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomMetrics" json:"yinsh,omitempty"`
 	Othello  *OthelloRoomMetrics  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomMetrics" json:"othello,omitempty"`
 	Fugitive *FugitiveRoomMetrics `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomMetrics" json:"fugitive,omitempty"`
+	Warchest *WarChestRoomMetrics `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1218,6 +1266,15 @@ func (p *RoomMetrics) GetFugitive() (v *FugitiveRoomMetrics) {
 	}
 	return p.Fugitive
 }
+
+var RoomMetrics_Warchest_DEFAULT *WarChestRoomMetrics
+
+func (p *RoomMetrics) GetWarchest() (v *WarChestRoomMetrics) {
+	if !p.IsSetWarchest() {
+		return RoomMetrics_Warchest_DEFAULT
+	}
+	return p.Warchest
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1235,6 +1292,9 @@ func (p *RoomMetrics) SetOthello(val *OthelloRoomMetrics) {
 }
 func (p *RoomMetrics) SetFugitive(val *FugitiveRoomMetrics) {
 	p.Fugitive = val
+}
+func (p *RoomMetrics) SetWarchest(val *WarChestRoomMetrics) {
+	p.Warchest = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1255,6 +1315,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetFugitive() {
+		count++
+	}
+	if p.IsSetWarchest() {
 		count++
 	}
 	return count
@@ -1284,6 +1347,10 @@ func (p *RoomMetrics) IsSetFugitive() bool {
 	return p.Fugitive != nil
 }
 
+func (p *RoomMetrics) IsSetWarchest() bool {
+	return p.Warchest != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1298,4 +1365,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	4: "yinsh",
 	5: "othello",
 	6: "fugitive",
+	7: "warchest",
 }

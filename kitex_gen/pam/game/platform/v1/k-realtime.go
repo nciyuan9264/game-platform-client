@@ -1058,6 +1058,20 @@ func (p *MatchSync) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 13:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField13(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -1334,6 +1348,18 @@ func (p *MatchSync) FastReadField12(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *MatchSync) FastReadField13(buf []byte) (int, error) {
+	offset := 0
+	_field := NewMatchSetupView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Setup = _field
+	return offset, nil
+}
+
 func (p *MatchSync) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -1353,6 +1379,7 @@ func (p *MatchSync) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField11(buf[offset:], w)
 		offset += p.fastWriteField12(buf[offset:], w)
+		offset += p.fastWriteField13(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -1373,6 +1400,7 @@ func (p *MatchSync) BLength() int {
 		l += p.field10Length()
 		l += p.field11Length()
 		l += p.field12Length()
+		l += p.field13Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -1477,6 +1505,15 @@ func (p *MatchSync) fastWriteField12(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
+func (p *MatchSync) fastWriteField13(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetSetup() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 13)
+		offset += p.Setup.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *MatchSync) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
@@ -1567,6 +1604,15 @@ func (p *MatchSync) field12Length() int {
 	for _, v := range p.PlayerOrder {
 		_ = v
 		l += thrift.Binary.StringLengthNocopy(v)
+	}
+	return l
+}
+
+func (p *MatchSync) field13Length() int {
+	l := 0
+	if p.IsSetSetup() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Setup.BLength()
 	}
 	return l
 }
@@ -3435,6 +3481,20 @@ func (p *ClientCommandPayload) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 8:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField8(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3537,6 +3597,18 @@ func (p *ClientCommandPayload) FastReadField7(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *ClientCommandPayload) FastReadField8(buf []byte) (int, error) {
+	offset := 0
+	_field := NewWarChestCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Warchest = _field
+	return offset, nil
+}
+
 func (p *ClientCommandPayload) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -3557,6 +3629,7 @@ func (p *ClientCommandPayload) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
+		offset += p.fastWriteField8(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3580,6 +3653,7 @@ func (p *ClientCommandPayload) BLength() int {
 		l += p.field5Length()
 		l += p.field6Length()
 		l += p.field7Length()
+		l += p.field8Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3650,6 +3724,15 @@ func (p *ClientCommandPayload) fastWriteField7(buf []byte, w thrift.NocopyWriter
 	return offset
 }
 
+func (p *ClientCommandPayload) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetWarchest() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 8)
+		offset += p.Warchest.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *ClientCommandPayload) field1Length() int {
 	l := 0
 	if p.IsSetCommon() {
@@ -3709,6 +3792,132 @@ func (p *ClientCommandPayload) field7Length() int {
 	if p.IsSetFugitive() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Fugitive.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field8Length() int {
+	l := 0
+	if p.IsSetWarchest() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Warchest.BLength()
+	}
+	return l
+}
+
+func (p *MatchSetupView) FastRead(buf []byte) (int, error) {
+
+	var err error
+	var offset int
+	var l int
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	for {
+		fieldTypeId, fieldId, l, err = thrift.Binary.ReadFieldBegin(buf[offset:])
+		offset += l
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField1(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		default:
+			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+			offset += l
+			if err != nil {
+				goto SkipFieldError
+			}
+		}
+	}
+
+	return offset, nil
+ReadFieldBeginError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_MatchSetupView[fieldId]), err)
+SkipFieldError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+}
+
+func (p *MatchSetupView) FastReadField1(buf []byte) (int, error) {
+	offset := 0
+	_field := NewWarChestMatchSetup()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Warchest = _field
+	return offset, nil
+}
+
+func (p *MatchSetupView) FastWrite(buf []byte) int {
+	return p.FastWriteNocopy(buf, nil)
+}
+
+func (p *MatchSetupView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	var c int
+	if p != nil {
+		if c = p.CountSetFieldsMatchSetupView(); c != 1 {
+			goto CountSetFieldsError
+		}
+	}
+	if p != nil {
+		offset += p.fastWriteField1(buf[offset:], w)
+	}
+	offset += thrift.Binary.WriteFieldStop(buf[offset:])
+	return offset
+CountSetFieldsError:
+	panic(fmt.Errorf("%T write union: exactly one field must be set (%d set).", p, c))
+}
+
+func (p *MatchSetupView) BLength() int {
+	l := 0
+	var c int
+	if p != nil {
+		if c = p.CountSetFieldsMatchSetupView(); c != 1 {
+			goto CountSetFieldsError
+		}
+	}
+	if p != nil {
+		l += p.field1Length()
+	}
+	l += thrift.Binary.FieldStopLength()
+	return l
+CountSetFieldsError:
+	panic(fmt.Errorf("%T write union: exactly one field must be set (%d set).", p, c))
+}
+
+func (p *MatchSetupView) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetWarchest() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 1)
+		offset += p.Warchest.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *MatchSetupView) field1Length() int {
+	l := 0
+	if p.IsSetWarchest() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Warchest.BLength()
 	}
 	return l
 }
@@ -3814,6 +4023,20 @@ func (p *RoomView) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 7:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField7(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3904,6 +4127,18 @@ func (p *RoomView) FastReadField6(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *RoomView) FastReadField7(buf []byte) (int, error) {
+	offset := 0
+	_field := NewWarChestRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Warchest = _field
+	return offset, nil
+}
+
 func (p *RoomView) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -3923,6 +4158,7 @@ func (p *RoomView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
+		offset += p.fastWriteField7(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3945,6 +4181,7 @@ func (p *RoomView) BLength() int {
 		l += p.field4Length()
 		l += p.field5Length()
 		l += p.field6Length()
+		l += p.field7Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4006,6 +4243,15 @@ func (p *RoomView) fastWriteField6(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
+func (p *RoomView) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetWarchest() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 7)
+		offset += p.Warchest.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *RoomView) field1Length() int {
 	l := 0
 	if p.IsSetAcquire() {
@@ -4056,6 +4302,15 @@ func (p *RoomView) field6Length() int {
 	if p.IsSetFugitive() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Fugitive.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field7Length() int {
+	l := 0
+	if p.IsSetWarchest() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Warchest.BLength()
 	}
 	return l
 }

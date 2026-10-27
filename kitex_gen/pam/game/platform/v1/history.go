@@ -858,6 +858,44 @@ var fieldIDToName_HexLeaderboardMetric = map[int16]string{
 	2: "winRate",
 }
 
+type HiveLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewHiveLeaderboardMetric() *HiveLeaderboardMetric {
+	return &HiveLeaderboardMetric{}
+}
+
+func (p *HiveLeaderboardMetric) InitDefault() {
+}
+
+func (p *HiveLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *HiveLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *HiveLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *HiveLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *HiveLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HiveLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_HiveLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type LeaderboardEntry struct {
 	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
 	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
@@ -1864,6 +1902,7 @@ type LeaderboardMetric struct {
 	Warchest *WarChestLeaderboardMetric `thrift:"warchest,6,optional" frugal:"6,optional,WarChestLeaderboardMetric" json:"warchest,omitempty"`
 	Quoridor *QuoridorLeaderboardMetric `thrift:"quoridor,7,optional" frugal:"7,optional,QuoridorLeaderboardMetric" json:"quoridor,omitempty"`
 	Hex      *HexLeaderboardMetric      `thrift:"hex,8,optional" frugal:"8,optional,HexLeaderboardMetric" json:"hex,omitempty"`
+	Hive     *HiveLeaderboardMetric     `thrift:"hive,9,optional" frugal:"9,optional,HiveLeaderboardMetric" json:"hive,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1944,6 +1983,15 @@ func (p *LeaderboardMetric) GetHex() (v *HexLeaderboardMetric) {
 	}
 	return p.Hex
 }
+
+var LeaderboardMetric_Hive_DEFAULT *HiveLeaderboardMetric
+
+func (p *LeaderboardMetric) GetHive() (v *HiveLeaderboardMetric) {
+	if !p.IsSetHive() {
+		return LeaderboardMetric_Hive_DEFAULT
+	}
+	return p.Hive
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
@@ -1967,6 +2015,9 @@ func (p *LeaderboardMetric) SetQuoridor(val *QuoridorLeaderboardMetric) {
 }
 func (p *LeaderboardMetric) SetHex(val *HexLeaderboardMetric) {
 	p.Hex = val
+}
+func (p *LeaderboardMetric) SetHive(val *HiveLeaderboardMetric) {
+	p.Hive = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -1993,6 +2044,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	return count
@@ -2030,6 +2084,10 @@ func (p *LeaderboardMetric) IsSetHex() bool {
 	return p.Hex != nil
 }
 
+func (p *LeaderboardMetric) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2046,6 +2104,7 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 	6: "warchest",
 	7: "quoridor",
 	8: "hex",
+	9: "hive",
 }
 
 type ReplaySnapshot struct {
@@ -2059,6 +2118,7 @@ type ReplaySnapshot struct {
 	Sixnimmt   *SixNimmtReplaySnapshot   `thrift:"sixnimmt,8,optional" frugal:"8,optional,SixNimmtReplaySnapshot" json:"sixnimmt,omitempty"`
 	Hex        *HexReplaySnapshot        `thrift:"hex,9,optional" frugal:"9,optional,HexReplaySnapshot" json:"hex,omitempty"`
 	ForSale    *ForSaleReplaySnapshot    `thrift:"forSale,10,optional" frugal:"10,optional,ForSaleReplaySnapshot" json:"forSale,omitempty"`
+	Hive       *HiveReplaySnapshot       `thrift:"hive,11,optional" frugal:"11,optional,HiveReplaySnapshot" json:"hive,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2157,6 +2217,15 @@ func (p *ReplaySnapshot) GetForSale() (v *ForSaleReplaySnapshot) {
 	}
 	return p.ForSale
 }
+
+var ReplaySnapshot_Hive_DEFAULT *HiveReplaySnapshot
+
+func (p *ReplaySnapshot) GetHive() (v *HiveReplaySnapshot) {
+	if !p.IsSetHive() {
+		return ReplaySnapshot_Hive_DEFAULT
+	}
+	return p.Hive
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2186,6 +2255,9 @@ func (p *ReplaySnapshot) SetHex(val *HexReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetForSale(val *ForSaleReplaySnapshot) {
 	p.ForSale = val
+}
+func (p *ReplaySnapshot) SetHive(val *HiveReplaySnapshot) {
+	p.Hive = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2218,6 +2290,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	return count
@@ -2263,6 +2338,10 @@ func (p *ReplaySnapshot) IsSetForSale() bool {
 	return p.ForSale != nil
 }
 
+func (p *ReplaySnapshot) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2281,4 +2360,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	8:  "sixnimmt",
 	9:  "hex",
 	10: "forSale",
+	11: "hive",
 }

@@ -3436,6 +3436,164 @@ func (p *HexLeaderboardMetric) field2Length() int {
 	return l
 }
 
+func (p *HiveLeaderboardMetric) FastRead(buf []byte) (int, error) {
+
+	var err error
+	var offset int
+	var l int
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetWins bool = false
+	var issetWinRate bool = false
+	for {
+		fieldTypeId, fieldId, l, err = thrift.Binary.ReadFieldBegin(buf[offset:])
+		offset += l
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				l, err = p.FastReadField1(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetWins = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.DOUBLE {
+				l, err = p.FastReadField2(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetWinRate = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		default:
+			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+			offset += l
+			if err != nil {
+				goto SkipFieldError
+			}
+		}
+	}
+
+	if !issetWins {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetWinRate {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+	return offset, nil
+ReadFieldBeginError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_HiveLeaderboardMetric[fieldId]), err)
+SkipFieldError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+RequiredFieldNotSetError:
+	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_HiveLeaderboardMetric[fieldId]))
+}
+
+func (p *HiveLeaderboardMetric) FastReadField1(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int32
+	if v, l, err := thrift.Binary.ReadI32(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Wins = _field
+	return offset, nil
+}
+
+func (p *HiveLeaderboardMetric) FastReadField2(buf []byte) (int, error) {
+	offset := 0
+
+	var _field float64
+	if v, l, err := thrift.Binary.ReadDouble(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.WinRate = _field
+	return offset, nil
+}
+
+func (p *HiveLeaderboardMetric) FastWrite(buf []byte) int {
+	return p.FastWriteNocopy(buf, nil)
+}
+
+func (p *HiveLeaderboardMetric) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p != nil {
+		offset += p.fastWriteField1(buf[offset:], w)
+		offset += p.fastWriteField2(buf[offset:], w)
+	}
+	offset += thrift.Binary.WriteFieldStop(buf[offset:])
+	return offset
+}
+
+func (p *HiveLeaderboardMetric) BLength() int {
+	l := 0
+	if p != nil {
+		l += p.field1Length()
+		l += p.field2Length()
+	}
+	l += thrift.Binary.FieldStopLength()
+	return l
+}
+
+func (p *HiveLeaderboardMetric) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I32, 1)
+	offset += thrift.Binary.WriteI32(buf[offset:], p.Wins)
+	return offset
+}
+
+func (p *HiveLeaderboardMetric) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.DOUBLE, 2)
+	offset += thrift.Binary.WriteDouble(buf[offset:], p.WinRate)
+	return offset
+}
+
+func (p *HiveLeaderboardMetric) field1Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.I32Length()
+	return l
+}
+
+func (p *HiveLeaderboardMetric) field2Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.DoubleLength()
+	return l
+}
+
 func (p *LeaderboardEntry) FastRead(buf []byte) (int, error) {
 
 	var err error
@@ -7281,6 +7439,20 @@ func (p *LeaderboardMetric) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 9:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField9(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -7395,6 +7567,18 @@ func (p *LeaderboardMetric) FastReadField8(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *LeaderboardMetric) FastReadField9(buf []byte) (int, error) {
+	offset := 0
+	_field := NewHiveLeaderboardMetric()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hive = _field
+	return offset, nil
+}
+
 func (p *LeaderboardMetric) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -7416,6 +7600,7 @@ func (p *LeaderboardMetric) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) i
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
+		offset += p.fastWriteField9(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -7440,6 +7625,7 @@ func (p *LeaderboardMetric) BLength() int {
 		l += p.field6Length()
 		l += p.field7Length()
 		l += p.field8Length()
+		l += p.field9Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -7519,6 +7705,15 @@ func (p *LeaderboardMetric) fastWriteField8(buf []byte, w thrift.NocopyWriter) i
 	return offset
 }
 
+func (p *LeaderboardMetric) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetHive() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 9)
+		offset += p.Hive.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *LeaderboardMetric) field1Length() int {
 	l := 0
 	if p.IsSetDavinci() {
@@ -7587,6 +7782,15 @@ func (p *LeaderboardMetric) field8Length() int {
 	if p.IsSetHex() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Hex.BLength()
+	}
+	return l
+}
+
+func (p *LeaderboardMetric) field9Length() int {
+	l := 0
+	if p.IsSetHive() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hive.BLength()
 	}
 	return l
 }
@@ -7748,6 +7952,20 @@ func (p *ReplaySnapshot) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 11:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField11(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -7886,6 +8104,18 @@ func (p *ReplaySnapshot) FastReadField10(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *ReplaySnapshot) FastReadField11(buf []byte) (int, error) {
+	offset := 0
+	_field := NewHiveReplaySnapshot()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hive = _field
+	return offset, nil
+}
+
 func (p *ReplaySnapshot) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -7909,6 +8139,7 @@ func (p *ReplaySnapshot) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int 
 		offset += p.fastWriteField8(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField10(buf[offset:], w)
+		offset += p.fastWriteField11(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -7935,6 +8166,7 @@ func (p *ReplaySnapshot) BLength() int {
 		l += p.field8Length()
 		l += p.field9Length()
 		l += p.field10Length()
+		l += p.field11Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -8032,6 +8264,15 @@ func (p *ReplaySnapshot) fastWriteField10(buf []byte, w thrift.NocopyWriter) int
 	return offset
 }
 
+func (p *ReplaySnapshot) fastWriteField11(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetHive() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 11)
+		offset += p.Hive.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *ReplaySnapshot) field1Length() int {
 	l := 0
 	if p.IsSetAcquire() {
@@ -8118,6 +8359,15 @@ func (p *ReplaySnapshot) field10Length() int {
 	if p.IsSetForSale() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.ForSale.BLength()
+	}
+	return l
+}
+
+func (p *ReplaySnapshot) field11Length() int {
+	l := 0
+	if p.IsSetHive() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hive.BLength()
 	}
 	return l
 }

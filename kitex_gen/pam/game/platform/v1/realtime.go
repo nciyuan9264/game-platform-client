@@ -870,6 +870,7 @@ type ClientCommandPayload struct {
 	Sixnimmt   *SixNimmtCommandPayload   `thrift:"sixnimmt,11,optional" frugal:"11,optional,SixNimmtCommandPayload" json:"sixnimmt,omitempty"`
 	Hex        *HexCommandPayload        `thrift:"hex,12,optional" frugal:"12,optional,HexCommandPayload" json:"hex,omitempty"`
 	ForSale    *ForSaleCommandPayload    `thrift:"forSale,13,optional" frugal:"13,optional,ForSaleCommandPayload" json:"forSale,omitempty"`
+	Hive       *HiveCommandPayload       `thrift:"hive,14,optional" frugal:"14,optional,HiveCommandPayload" json:"hive,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -995,6 +996,15 @@ func (p *ClientCommandPayload) GetForSale() (v *ForSaleCommandPayload) {
 	}
 	return p.ForSale
 }
+
+var ClientCommandPayload_Hive_DEFAULT *HiveCommandPayload
+
+func (p *ClientCommandPayload) GetHive() (v *HiveCommandPayload) {
+	if !p.IsSetHive() {
+		return ClientCommandPayload_Hive_DEFAULT
+	}
+	return p.Hive
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -1033,6 +1043,9 @@ func (p *ClientCommandPayload) SetHex(val *HexCommandPayload) {
 }
 func (p *ClientCommandPayload) SetForSale(val *ForSaleCommandPayload) {
 	p.ForSale = val
+}
+func (p *ClientCommandPayload) SetHive(val *HiveCommandPayload) {
+	p.Hive = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -1074,6 +1087,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	return count
@@ -1131,6 +1147,10 @@ func (p *ClientCommandPayload) IsSetForSale() bool {
 	return p.ForSale != nil
 }
 
+func (p *ClientCommandPayload) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1152,6 +1172,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	11: "sixnimmt",
 	12: "hex",
 	13: "forSale",
+	14: "hive",
 }
 
 type MatchSetupView struct {
@@ -1213,6 +1234,7 @@ type RoomView struct {
 	Sixnimmt   *SixNimmtRoomView   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomView" json:"sixnimmt,omitempty"`
 	Hex        *HexRoomView        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomView" json:"hex,omitempty"`
 	ForSale    *ForSaleRoomView    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomView" json:"forSale,omitempty"`
+	Hive       *HiveRoomView       `thrift:"hive,13,optional" frugal:"13,optional,HiveRoomView" json:"hive,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1329,6 +1351,15 @@ func (p *RoomView) GetForSale() (v *ForSaleRoomView) {
 	}
 	return p.ForSale
 }
+
+var RoomView_Hive_DEFAULT *HiveRoomView
+
+func (p *RoomView) GetHive() (v *HiveRoomView) {
+	if !p.IsSetHive() {
+		return RoomView_Hive_DEFAULT
+	}
+	return p.Hive
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1364,6 +1395,9 @@ func (p *RoomView) SetHex(val *HexRoomView) {
 }
 func (p *RoomView) SetForSale(val *ForSaleRoomView) {
 	p.ForSale = val
+}
+func (p *RoomView) SetHive(val *HiveRoomView) {
+	p.Hive = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1402,6 +1436,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	return count
@@ -1455,6 +1492,10 @@ func (p *RoomView) IsSetForSale() bool {
 	return p.ForSale != nil
 }
 
+func (p *RoomView) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1475,6 +1516,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	10: "sixnimmt",
 	11: "hex",
 	12: "forSale",
+	13: "hive",
 }
 
 type ServerMessage struct {

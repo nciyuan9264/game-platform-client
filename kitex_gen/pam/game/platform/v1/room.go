@@ -622,6 +622,129 @@ var fieldIDToName_SixNimmtRoomMetrics = map[int16]string{
 	4: "progressTotal",
 }
 
+type HiveRoomMetrics struct {
+	TurnCount        int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
+	PlacedPieceCount int32 `thrift:"placedPieceCount,2,required" frugal:"2,required,i32" json:"placedPieceCount"`
+	ProgressCurrent  int32 `thrift:"progressCurrent,3,required" frugal:"3,required,i32" json:"progressCurrent"`
+	ProgressTotal    int32 `thrift:"progressTotal,4,required" frugal:"4,required,i32" json:"progressTotal"`
+}
+
+func NewHiveRoomMetrics() *HiveRoomMetrics {
+	return &HiveRoomMetrics{}
+}
+
+func (p *HiveRoomMetrics) InitDefault() {
+}
+
+func (p *HiveRoomMetrics) GetTurnCount() (v int32) {
+	return p.TurnCount
+}
+
+func (p *HiveRoomMetrics) GetPlacedPieceCount() (v int32) {
+	return p.PlacedPieceCount
+}
+
+func (p *HiveRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *HiveRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *HiveRoomMetrics) SetTurnCount(val int32) {
+	p.TurnCount = val
+}
+func (p *HiveRoomMetrics) SetPlacedPieceCount(val int32) {
+	p.PlacedPieceCount = val
+}
+func (p *HiveRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *HiveRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *HiveRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HiveRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_HiveRoomMetrics = map[int16]string{
+	1: "turnCount",
+	2: "placedPieceCount",
+	3: "progressCurrent",
+	4: "progressTotal",
+}
+
+type HexRoomMetrics struct {
+	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
+}
+
+func NewHexRoomMetrics() *HexRoomMetrics {
+	return &HexRoomMetrics{}
+}
+
+func (p *HexRoomMetrics) InitDefault() {
+}
+
+func (p *HexRoomMetrics) GetTurnCount() (v int32) {
+	return p.TurnCount
+}
+func (p *HexRoomMetrics) SetTurnCount(val int32) {
+	p.TurnCount = val
+}
+
+func (p *HexRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HexRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_HexRoomMetrics = map[int16]string{
+	1: "turnCount",
+}
+
+type ForSaleRoomMetrics struct {
+	ProgressCurrent int32 `thrift:"progressCurrent,1,required" frugal:"1,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,2,required" frugal:"2,required,i32" json:"progressTotal"`
+}
+
+func NewForSaleRoomMetrics() *ForSaleRoomMetrics {
+	return &ForSaleRoomMetrics{}
+}
+
+func (p *ForSaleRoomMetrics) InitDefault() {
+}
+
+func (p *ForSaleRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *ForSaleRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *ForSaleRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *ForSaleRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *ForSaleRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ForSaleRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_ForSaleRoomMetrics = map[int16]string{
+	1: "progressCurrent",
+	2: "progressTotal",
+}
+
 type OnitamaRoomMetrics struct {
 	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
 }
@@ -1386,7 +1509,10 @@ type RoomMetrics struct {
 	Quoridor   *QuoridorRoomMetrics   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtRoomMetrics   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomMetrics" json:"sixnimmt,omitempty"`
-	Onitama    *OnitamaRoomMetrics    `thrift:"onitama,11,optional" frugal:"11,optional,OnitamaRoomMetrics" json:"onitama,omitempty"`
+	Hex        *HexRoomMetrics        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomMetrics" json:"hex,omitempty"`
+	ForSale    *ForSaleRoomMetrics    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomMetrics" json:"forSale,omitempty"`
+	Hive       *HiveRoomMetrics       `thrift:"hive,13,optional" frugal:"13,optional,HiveRoomMetrics" json:"hive,omitempty"`
+	Onitama    *OnitamaRoomMetrics    `thrift:"onitama,14,optional" frugal:"14,optional,OnitamaRoomMetrics" json:"onitama,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1486,6 +1612,33 @@ func (p *RoomMetrics) GetSixnimmt() (v *SixNimmtRoomMetrics) {
 	return p.Sixnimmt
 }
 
+var RoomMetrics_Hex_DEFAULT *HexRoomMetrics
+
+func (p *RoomMetrics) GetHex() (v *HexRoomMetrics) {
+	if !p.IsSetHex() {
+		return RoomMetrics_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
+var RoomMetrics_ForSale_DEFAULT *ForSaleRoomMetrics
+
+func (p *RoomMetrics) GetForSale() (v *ForSaleRoomMetrics) {
+	if !p.IsSetForSale() {
+		return RoomMetrics_ForSale_DEFAULT
+	}
+	return p.ForSale
+}
+
+var RoomMetrics_Hive_DEFAULT *HiveRoomMetrics
+
+func (p *RoomMetrics) GetHive() (v *HiveRoomMetrics) {
+	if !p.IsSetHive() {
+		return RoomMetrics_Hive_DEFAULT
+	}
+	return p.Hive
+}
+
 var RoomMetrics_Onitama_DEFAULT *OnitamaRoomMetrics
 
 func (p *RoomMetrics) GetOnitama() (v *OnitamaRoomMetrics) {
@@ -1524,6 +1677,15 @@ func (p *RoomMetrics) SetLoveletter(val *LoveLetterRoomMetrics) {
 func (p *RoomMetrics) SetSixnimmt(val *SixNimmtRoomMetrics) {
 	p.Sixnimmt = val
 }
+func (p *RoomMetrics) SetHex(val *HexRoomMetrics) {
+	p.Hex = val
+}
+func (p *RoomMetrics) SetForSale(val *ForSaleRoomMetrics) {
+	p.ForSale = val
+}
+func (p *RoomMetrics) SetHive(val *HiveRoomMetrics) {
+	p.Hive = val
+}
 func (p *RoomMetrics) SetOnitama(val *OnitamaRoomMetrics) {
 	p.Onitama = val
 }
@@ -1558,6 +1720,15 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -1606,6 +1777,18 @@ func (p *RoomMetrics) IsSetSixnimmt() bool {
 	return p.Sixnimmt != nil
 }
 
+func (p *RoomMetrics) IsSetHex() bool {
+	return p.Hex != nil
+}
+
+func (p *RoomMetrics) IsSetForSale() bool {
+	return p.ForSale != nil
+}
+
+func (p *RoomMetrics) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *RoomMetrics) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -1628,5 +1811,8 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	8:  "quoridor",
 	9:  "loveletter",
 	10: "sixnimmt",
-	11: "onitama",
+	11: "hex",
+	12: "forSale",
+	13: "hive",
+	14: "onitama",
 }

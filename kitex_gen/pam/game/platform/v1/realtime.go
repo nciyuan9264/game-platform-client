@@ -868,7 +868,10 @@ type ClientCommandPayload struct {
 	Quoridor   *QuoridorCommandPayload   `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterCommandPayload `thrift:"loveletter,10,optional" frugal:"10,optional,LoveLetterCommandPayload" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtCommandPayload   `thrift:"sixnimmt,11,optional" frugal:"11,optional,SixNimmtCommandPayload" json:"sixnimmt,omitempty"`
-	Onitama    *OnitamaCommandPayload    `thrift:"onitama,12,optional" frugal:"12,optional,OnitamaCommandPayload" json:"onitama,omitempty"`
+	Hex        *HexCommandPayload        `thrift:"hex,12,optional" frugal:"12,optional,HexCommandPayload" json:"hex,omitempty"`
+	ForSale    *ForSaleCommandPayload    `thrift:"forSale,13,optional" frugal:"13,optional,ForSaleCommandPayload" json:"forSale,omitempty"`
+	Hive       *HiveCommandPayload       `thrift:"hive,14,optional" frugal:"14,optional,HiveCommandPayload" json:"hive,omitempty"`
+	Onitama    *OnitamaCommandPayload    `thrift:"onitama,15,optional" frugal:"15,optional,OnitamaCommandPayload" json:"onitama,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -977,6 +980,33 @@ func (p *ClientCommandPayload) GetSixnimmt() (v *SixNimmtCommandPayload) {
 	return p.Sixnimmt
 }
 
+var ClientCommandPayload_Hex_DEFAULT *HexCommandPayload
+
+func (p *ClientCommandPayload) GetHex() (v *HexCommandPayload) {
+	if !p.IsSetHex() {
+		return ClientCommandPayload_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
+var ClientCommandPayload_ForSale_DEFAULT *ForSaleCommandPayload
+
+func (p *ClientCommandPayload) GetForSale() (v *ForSaleCommandPayload) {
+	if !p.IsSetForSale() {
+		return ClientCommandPayload_ForSale_DEFAULT
+	}
+	return p.ForSale
+}
+
+var ClientCommandPayload_Hive_DEFAULT *HiveCommandPayload
+
+func (p *ClientCommandPayload) GetHive() (v *HiveCommandPayload) {
+	if !p.IsSetHive() {
+		return ClientCommandPayload_Hive_DEFAULT
+	}
+	return p.Hive
+}
+
 var ClientCommandPayload_Onitama_DEFAULT *OnitamaCommandPayload
 
 func (p *ClientCommandPayload) GetOnitama() (v *OnitamaCommandPayload) {
@@ -1018,6 +1048,15 @@ func (p *ClientCommandPayload) SetLoveletter(val *LoveLetterCommandPayload) {
 func (p *ClientCommandPayload) SetSixnimmt(val *SixNimmtCommandPayload) {
 	p.Sixnimmt = val
 }
+func (p *ClientCommandPayload) SetHex(val *HexCommandPayload) {
+	p.Hex = val
+}
+func (p *ClientCommandPayload) SetForSale(val *ForSaleCommandPayload) {
+	p.ForSale = val
+}
+func (p *ClientCommandPayload) SetHive(val *HiveCommandPayload) {
+	p.Hive = val
+}
 func (p *ClientCommandPayload) SetOnitama(val *OnitamaCommandPayload) {
 	p.Onitama = val
 }
@@ -1055,6 +1094,15 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -1107,6 +1155,18 @@ func (p *ClientCommandPayload) IsSetSixnimmt() bool {
 	return p.Sixnimmt != nil
 }
 
+func (p *ClientCommandPayload) IsSetHex() bool {
+	return p.Hex != nil
+}
+
+func (p *ClientCommandPayload) IsSetForSale() bool {
+	return p.ForSale != nil
+}
+
+func (p *ClientCommandPayload) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *ClientCommandPayload) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -1130,7 +1190,10 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	9:  "quoridor",
 	10: "loveletter",
 	11: "sixnimmt",
-	12: "onitama",
+	12: "hex",
+	13: "forSale",
+	14: "hive",
+	15: "onitama",
 }
 
 type MatchSetupView struct {
@@ -1190,7 +1253,10 @@ type RoomView struct {
 	Quoridor   *QuoridorRoomView   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomView `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomView" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtRoomView   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomView" json:"sixnimmt,omitempty"`
-	Onitama    *OnitamaRoomView    `thrift:"onitama,11,optional" frugal:"11,optional,OnitamaRoomView" json:"onitama,omitempty"`
+	Hex        *HexRoomView        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomView" json:"hex,omitempty"`
+	ForSale    *ForSaleRoomView    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomView" json:"forSale,omitempty"`
+	Hive       *HiveRoomView       `thrift:"hive,13,optional" frugal:"13,optional,HiveRoomView" json:"hive,omitempty"`
+	Onitama    *OnitamaRoomView    `thrift:"onitama,14,optional" frugal:"14,optional,OnitamaRoomView" json:"onitama,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1290,6 +1356,33 @@ func (p *RoomView) GetSixnimmt() (v *SixNimmtRoomView) {
 	return p.Sixnimmt
 }
 
+var RoomView_Hex_DEFAULT *HexRoomView
+
+func (p *RoomView) GetHex() (v *HexRoomView) {
+	if !p.IsSetHex() {
+		return RoomView_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
+var RoomView_ForSale_DEFAULT *ForSaleRoomView
+
+func (p *RoomView) GetForSale() (v *ForSaleRoomView) {
+	if !p.IsSetForSale() {
+		return RoomView_ForSale_DEFAULT
+	}
+	return p.ForSale
+}
+
+var RoomView_Hive_DEFAULT *HiveRoomView
+
+func (p *RoomView) GetHive() (v *HiveRoomView) {
+	if !p.IsSetHive() {
+		return RoomView_Hive_DEFAULT
+	}
+	return p.Hive
+}
+
 var RoomView_Onitama_DEFAULT *OnitamaRoomView
 
 func (p *RoomView) GetOnitama() (v *OnitamaRoomView) {
@@ -1328,6 +1421,15 @@ func (p *RoomView) SetLoveletter(val *LoveLetterRoomView) {
 func (p *RoomView) SetSixnimmt(val *SixNimmtRoomView) {
 	p.Sixnimmt = val
 }
+func (p *RoomView) SetHex(val *HexRoomView) {
+	p.Hex = val
+}
+func (p *RoomView) SetForSale(val *ForSaleRoomView) {
+	p.ForSale = val
+}
+func (p *RoomView) SetHive(val *HiveRoomView) {
+	p.Hive = val
+}
 func (p *RoomView) SetOnitama(val *OnitamaRoomView) {
 	p.Onitama = val
 }
@@ -1362,6 +1464,15 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -1410,6 +1521,18 @@ func (p *RoomView) IsSetSixnimmt() bool {
 	return p.Sixnimmt != nil
 }
 
+func (p *RoomView) IsSetHex() bool {
+	return p.Hex != nil
+}
+
+func (p *RoomView) IsSetForSale() bool {
+	return p.ForSale != nil
+}
+
+func (p *RoomView) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *RoomView) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -1432,7 +1555,10 @@ var fieldIDToName_RoomView = map[int16]string{
 	8:  "quoridor",
 	9:  "loveletter",
 	10: "sixnimmt",
-	11: "onitama",
+	11: "hex",
+	12: "forSale",
+	13: "hive",
+	14: "onitama",
 }
 
 type ServerMessage struct {

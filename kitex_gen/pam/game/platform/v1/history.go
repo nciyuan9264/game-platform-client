@@ -2058,6 +2058,7 @@ type ReplaySnapshot struct {
 	Loveletter *LoveLetterReplaySnapshot `thrift:"loveletter,7,optional" frugal:"7,optional,LoveLetterReplaySnapshot" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtReplaySnapshot   `thrift:"sixnimmt,8,optional" frugal:"8,optional,SixNimmtReplaySnapshot" json:"sixnimmt,omitempty"`
 	Hex        *HexReplaySnapshot        `thrift:"hex,9,optional" frugal:"9,optional,HexReplaySnapshot" json:"hex,omitempty"`
+	ForSale    *ForSaleReplaySnapshot    `thrift:"forSale,10,optional" frugal:"10,optional,ForSaleReplaySnapshot" json:"forSale,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2147,6 +2148,15 @@ func (p *ReplaySnapshot) GetHex() (v *HexReplaySnapshot) {
 	}
 	return p.Hex
 }
+
+var ReplaySnapshot_ForSale_DEFAULT *ForSaleReplaySnapshot
+
+func (p *ReplaySnapshot) GetForSale() (v *ForSaleReplaySnapshot) {
+	if !p.IsSetForSale() {
+		return ReplaySnapshot_ForSale_DEFAULT
+	}
+	return p.ForSale
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2173,6 +2183,9 @@ func (p *ReplaySnapshot) SetSixnimmt(val *SixNimmtReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetHex(val *HexReplaySnapshot) {
 	p.Hex = val
+}
+func (p *ReplaySnapshot) SetForSale(val *ForSaleReplaySnapshot) {
+	p.ForSale = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2202,6 +2215,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetForSale() {
 		count++
 	}
 	return count
@@ -2243,6 +2259,10 @@ func (p *ReplaySnapshot) IsSetHex() bool {
 	return p.Hex != nil
 }
 
+func (p *ReplaySnapshot) IsSetForSale() bool {
+	return p.ForSale != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2251,13 +2271,14 @@ func (p *ReplaySnapshot) String() string {
 }
 
 var fieldIDToName_ReplaySnapshot = map[int16]string{
-	1: "acquire",
-	2: "splendor",
-	3: "yinsh",
-	4: "othello",
-	5: "warchest",
-	6: "quoridor",
-	7: "loveletter",
-	8: "sixnimmt",
-	9: "hex",
+	1:  "acquire",
+	2:  "splendor",
+	3:  "yinsh",
+	4:  "othello",
+	5:  "warchest",
+	6:  "quoridor",
+	7:  "loveletter",
+	8:  "sixnimmt",
+	9:  "hex",
+	10: "forSale",
 }

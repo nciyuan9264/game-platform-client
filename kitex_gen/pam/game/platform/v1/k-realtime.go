@@ -3551,6 +3551,48 @@ func (p *ClientCommandPayload) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 13:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField13(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 14:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField14(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 15:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField15(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3703,6 +3745,42 @@ func (p *ClientCommandPayload) FastReadField11(buf []byte) (int, error) {
 
 func (p *ClientCommandPayload) FastReadField12(buf []byte) (int, error) {
 	offset := 0
+	_field := NewHexCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hex = _field
+	return offset, nil
+}
+
+func (p *ClientCommandPayload) FastReadField13(buf []byte) (int, error) {
+	offset := 0
+	_field := NewForSaleCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.ForSale = _field
+	return offset, nil
+}
+
+func (p *ClientCommandPayload) FastReadField14(buf []byte) (int, error) {
+	offset := 0
+	_field := NewHiveCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hive = _field
+	return offset, nil
+}
+
+func (p *ClientCommandPayload) FastReadField15(buf []byte) (int, error) {
+	offset := 0
 	_field := NewOnitamaCommandPayload()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
@@ -3738,6 +3816,9 @@ func (p *ClientCommandPayload) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 		offset += p.fastWriteField10(buf[offset:], w)
 		offset += p.fastWriteField11(buf[offset:], w)
 		offset += p.fastWriteField12(buf[offset:], w)
+		offset += p.fastWriteField13(buf[offset:], w)
+		offset += p.fastWriteField14(buf[offset:], w)
+		offset += p.fastWriteField15(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3766,6 +3847,9 @@ func (p *ClientCommandPayload) BLength() int {
 		l += p.field10Length()
 		l += p.field11Length()
 		l += p.field12Length()
+		l += p.field13Length()
+		l += p.field14Length()
+		l += p.field15Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3874,8 +3958,35 @@ func (p *ClientCommandPayload) fastWriteField11(buf []byte, w thrift.NocopyWrite
 
 func (p *ClientCommandPayload) fastWriteField12(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetOnitama() {
+	if p.IsSetHex() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 12)
+		offset += p.Hex.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *ClientCommandPayload) fastWriteField13(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetForSale() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 13)
+		offset += p.ForSale.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *ClientCommandPayload) fastWriteField14(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetHive() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 14)
+		offset += p.Hive.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *ClientCommandPayload) fastWriteField15(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetOnitama() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 15)
 		offset += p.Onitama.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
@@ -3981,6 +4092,33 @@ func (p *ClientCommandPayload) field11Length() int {
 }
 
 func (p *ClientCommandPayload) field12Length() int {
+	l := 0
+	if p.IsSetHex() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hex.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field13Length() int {
+	l := 0
+	if p.IsSetForSale() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.ForSale.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field14Length() int {
+	l := 0
+	if p.IsSetHive() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hive.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field15Length() int {
 	l := 0
 	if p.IsSetOnitama() {
 		l += thrift.Binary.FieldBeginLength()
@@ -4277,6 +4415,48 @@ func (p *RoomView) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 12:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField12(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 13:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField13(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 14:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField14(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -4417,6 +4597,42 @@ func (p *RoomView) FastReadField10(buf []byte) (int, error) {
 
 func (p *RoomView) FastReadField11(buf []byte) (int, error) {
 	offset := 0
+	_field := NewHexRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hex = _field
+	return offset, nil
+}
+
+func (p *RoomView) FastReadField12(buf []byte) (int, error) {
+	offset := 0
+	_field := NewForSaleRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.ForSale = _field
+	return offset, nil
+}
+
+func (p *RoomView) FastReadField13(buf []byte) (int, error) {
+	offset := 0
+	_field := NewHiveRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hive = _field
+	return offset, nil
+}
+
+func (p *RoomView) FastReadField14(buf []byte) (int, error) {
+	offset := 0
 	_field := NewOnitamaRoomView()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
@@ -4451,6 +4667,9 @@ func (p *RoomView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField10(buf[offset:], w)
 		offset += p.fastWriteField11(buf[offset:], w)
+		offset += p.fastWriteField12(buf[offset:], w)
+		offset += p.fastWriteField13(buf[offset:], w)
+		offset += p.fastWriteField14(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4478,6 +4697,9 @@ func (p *RoomView) BLength() int {
 		l += p.field9Length()
 		l += p.field10Length()
 		l += p.field11Length()
+		l += p.field12Length()
+		l += p.field13Length()
+		l += p.field14Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4577,8 +4799,35 @@ func (p *RoomView) fastWriteField10(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *RoomView) fastWriteField11(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetOnitama() {
+	if p.IsSetHex() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 11)
+		offset += p.Hex.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *RoomView) fastWriteField12(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetForSale() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 12)
+		offset += p.ForSale.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *RoomView) fastWriteField13(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetHive() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 13)
+		offset += p.Hive.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *RoomView) fastWriteField14(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetOnitama() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 14)
 		offset += p.Onitama.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
@@ -4675,6 +4924,33 @@ func (p *RoomView) field10Length() int {
 }
 
 func (p *RoomView) field11Length() int {
+	l := 0
+	if p.IsSetHex() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hex.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field12Length() int {
+	l := 0
+	if p.IsSetForSale() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.ForSale.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field13Length() int {
+	l := 0
+	if p.IsSetHive() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hive.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field14Length() int {
 	l := 0
 	if p.IsSetOnitama() {
 		l += thrift.Binary.FieldBeginLength()

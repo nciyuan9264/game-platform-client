@@ -820,6 +820,82 @@ var fieldIDToName_QuoridorLeaderboardMetric = map[int16]string{
 	2: "winRate",
 }
 
+type HexLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewHexLeaderboardMetric() *HexLeaderboardMetric {
+	return &HexLeaderboardMetric{}
+}
+
+func (p *HexLeaderboardMetric) InitDefault() {
+}
+
+func (p *HexLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *HexLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *HexLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *HexLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *HexLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HexLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_HexLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
+type HiveLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewHiveLeaderboardMetric() *HiveLeaderboardMetric {
+	return &HiveLeaderboardMetric{}
+}
+
+func (p *HiveLeaderboardMetric) InitDefault() {
+}
+
+func (p *HiveLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *HiveLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *HiveLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *HiveLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *HiveLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HiveLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_HiveLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type OnitamaLeaderboardMetric struct {
 	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
 	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
@@ -1863,7 +1939,9 @@ type LeaderboardMetric struct {
 	Fugitive *FugitiveLeaderboardMetric `thrift:"fugitive,5,optional" frugal:"5,optional,FugitiveLeaderboardMetric" json:"fugitive,omitempty"`
 	Warchest *WarChestLeaderboardMetric `thrift:"warchest,6,optional" frugal:"6,optional,WarChestLeaderboardMetric" json:"warchest,omitempty"`
 	Quoridor *QuoridorLeaderboardMetric `thrift:"quoridor,7,optional" frugal:"7,optional,QuoridorLeaderboardMetric" json:"quoridor,omitempty"`
-	Onitama  *OnitamaLeaderboardMetric  `thrift:"onitama,8,optional" frugal:"8,optional,OnitamaLeaderboardMetric" json:"onitama,omitempty"`
+	Hex      *HexLeaderboardMetric      `thrift:"hex,8,optional" frugal:"8,optional,HexLeaderboardMetric" json:"hex,omitempty"`
+	Hive     *HiveLeaderboardMetric     `thrift:"hive,9,optional" frugal:"9,optional,HiveLeaderboardMetric" json:"hive,omitempty"`
+	Onitama  *OnitamaLeaderboardMetric  `thrift:"onitama,10,optional" frugal:"10,optional,OnitamaLeaderboardMetric" json:"onitama,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1936,6 +2014,24 @@ func (p *LeaderboardMetric) GetQuoridor() (v *QuoridorLeaderboardMetric) {
 	return p.Quoridor
 }
 
+var LeaderboardMetric_Hex_DEFAULT *HexLeaderboardMetric
+
+func (p *LeaderboardMetric) GetHex() (v *HexLeaderboardMetric) {
+	if !p.IsSetHex() {
+		return LeaderboardMetric_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
+var LeaderboardMetric_Hive_DEFAULT *HiveLeaderboardMetric
+
+func (p *LeaderboardMetric) GetHive() (v *HiveLeaderboardMetric) {
+	if !p.IsSetHive() {
+		return LeaderboardMetric_Hive_DEFAULT
+	}
+	return p.Hive
+}
+
 var LeaderboardMetric_Onitama_DEFAULT *OnitamaLeaderboardMetric
 
 func (p *LeaderboardMetric) GetOnitama() (v *OnitamaLeaderboardMetric) {
@@ -1965,6 +2061,12 @@ func (p *LeaderboardMetric) SetWarchest(val *WarChestLeaderboardMetric) {
 func (p *LeaderboardMetric) SetQuoridor(val *QuoridorLeaderboardMetric) {
 	p.Quoridor = val
 }
+func (p *LeaderboardMetric) SetHex(val *HexLeaderboardMetric) {
+	p.Hex = val
+}
+func (p *LeaderboardMetric) SetHive(val *HiveLeaderboardMetric) {
+	p.Hive = val
+}
 func (p *LeaderboardMetric) SetOnitama(val *OnitamaLeaderboardMetric) {
 	p.Onitama = val
 }
@@ -1990,6 +2092,12 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetQuoridor() {
+		count++
+	}
+	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -2026,6 +2134,14 @@ func (p *LeaderboardMetric) IsSetQuoridor() bool {
 	return p.Quoridor != nil
 }
 
+func (p *LeaderboardMetric) IsSetHex() bool {
+	return p.Hex != nil
+}
+
+func (p *LeaderboardMetric) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *LeaderboardMetric) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -2038,14 +2154,16 @@ func (p *LeaderboardMetric) String() string {
 }
 
 var fieldIDToName_LeaderboardMetric = map[int16]string{
-	1: "davinci",
-	2: "rank",
-	3: "yinsh",
-	4: "othello",
-	5: "fugitive",
-	6: "warchest",
-	7: "quoridor",
-	8: "onitama",
+	1:  "davinci",
+	2:  "rank",
+	3:  "yinsh",
+	4:  "othello",
+	5:  "fugitive",
+	6:  "warchest",
+	7:  "quoridor",
+	8:  "hex",
+	9:  "hive",
+	10: "onitama",
 }
 
 type ReplaySnapshot struct {
@@ -2057,7 +2175,10 @@ type ReplaySnapshot struct {
 	Quoridor   *QuoridorReplaySnapshot   `thrift:"quoridor,6,optional" frugal:"6,optional,QuoridorReplaySnapshot" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterReplaySnapshot `thrift:"loveletter,7,optional" frugal:"7,optional,LoveLetterReplaySnapshot" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtReplaySnapshot   `thrift:"sixnimmt,8,optional" frugal:"8,optional,SixNimmtReplaySnapshot" json:"sixnimmt,omitempty"`
-	Onitama    *OnitamaReplaySnapshot    `thrift:"onitama,9,optional" frugal:"9,optional,OnitamaReplaySnapshot" json:"onitama,omitempty"`
+	Hex        *HexReplaySnapshot        `thrift:"hex,9,optional" frugal:"9,optional,HexReplaySnapshot" json:"hex,omitempty"`
+	ForSale    *ForSaleReplaySnapshot    `thrift:"forSale,10,optional" frugal:"10,optional,ForSaleReplaySnapshot" json:"forSale,omitempty"`
+	Hive       *HiveReplaySnapshot       `thrift:"hive,11,optional" frugal:"11,optional,HiveReplaySnapshot" json:"hive,omitempty"`
+	Onitama    *OnitamaReplaySnapshot    `thrift:"onitama,12,optional" frugal:"12,optional,OnitamaReplaySnapshot" json:"onitama,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2139,6 +2260,33 @@ func (p *ReplaySnapshot) GetSixnimmt() (v *SixNimmtReplaySnapshot) {
 	return p.Sixnimmt
 }
 
+var ReplaySnapshot_Hex_DEFAULT *HexReplaySnapshot
+
+func (p *ReplaySnapshot) GetHex() (v *HexReplaySnapshot) {
+	if !p.IsSetHex() {
+		return ReplaySnapshot_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
+var ReplaySnapshot_ForSale_DEFAULT *ForSaleReplaySnapshot
+
+func (p *ReplaySnapshot) GetForSale() (v *ForSaleReplaySnapshot) {
+	if !p.IsSetForSale() {
+		return ReplaySnapshot_ForSale_DEFAULT
+	}
+	return p.ForSale
+}
+
+var ReplaySnapshot_Hive_DEFAULT *HiveReplaySnapshot
+
+func (p *ReplaySnapshot) GetHive() (v *HiveReplaySnapshot) {
+	if !p.IsSetHive() {
+		return ReplaySnapshot_Hive_DEFAULT
+	}
+	return p.Hive
+}
+
 var ReplaySnapshot_Onitama_DEFAULT *OnitamaReplaySnapshot
 
 func (p *ReplaySnapshot) GetOnitama() (v *OnitamaReplaySnapshot) {
@@ -2171,6 +2319,15 @@ func (p *ReplaySnapshot) SetLoveletter(val *LoveLetterReplaySnapshot) {
 func (p *ReplaySnapshot) SetSixnimmt(val *SixNimmtReplaySnapshot) {
 	p.Sixnimmt = val
 }
+func (p *ReplaySnapshot) SetHex(val *HexReplaySnapshot) {
+	p.Hex = val
+}
+func (p *ReplaySnapshot) SetForSale(val *ForSaleReplaySnapshot) {
+	p.ForSale = val
+}
+func (p *ReplaySnapshot) SetHive(val *HiveReplaySnapshot) {
+	p.Hive = val
+}
 func (p *ReplaySnapshot) SetOnitama(val *OnitamaReplaySnapshot) {
 	p.Onitama = val
 }
@@ -2199,6 +2356,15 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetForSale() {
+		count++
+	}
+	if p.IsSetHive() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -2239,6 +2405,18 @@ func (p *ReplaySnapshot) IsSetSixnimmt() bool {
 	return p.Sixnimmt != nil
 }
 
+func (p *ReplaySnapshot) IsSetHex() bool {
+	return p.Hex != nil
+}
+
+func (p *ReplaySnapshot) IsSetForSale() bool {
+	return p.ForSale != nil
+}
+
+func (p *ReplaySnapshot) IsSetHive() bool {
+	return p.Hive != nil
+}
+
 func (p *ReplaySnapshot) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -2251,13 +2429,16 @@ func (p *ReplaySnapshot) String() string {
 }
 
 var fieldIDToName_ReplaySnapshot = map[int16]string{
-	1: "acquire",
-	2: "splendor",
-	3: "yinsh",
-	4: "othello",
-	5: "warchest",
-	6: "quoridor",
-	7: "loveletter",
-	8: "sixnimmt",
-	9: "onitama",
+	1:  "acquire",
+	2:  "splendor",
+	3:  "yinsh",
+	4:  "othello",
+	5:  "warchest",
+	6:  "quoridor",
+	7:  "loveletter",
+	8:  "sixnimmt",
+	9:  "hex",
+	10: "forSale",
+	11: "hive",
+	12: "onitama",
 }

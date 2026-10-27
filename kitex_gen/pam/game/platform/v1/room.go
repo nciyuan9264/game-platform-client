@@ -651,6 +651,44 @@ var fieldIDToName_HexRoomMetrics = map[int16]string{
 	1: "turnCount",
 }
 
+type ForSaleRoomMetrics struct {
+	ProgressCurrent int32 `thrift:"progressCurrent,1,required" frugal:"1,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,2,required" frugal:"2,required,i32" json:"progressTotal"`
+}
+
+func NewForSaleRoomMetrics() *ForSaleRoomMetrics {
+	return &ForSaleRoomMetrics{}
+}
+
+func (p *ForSaleRoomMetrics) InitDefault() {
+}
+
+func (p *ForSaleRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *ForSaleRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *ForSaleRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *ForSaleRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *ForSaleRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ForSaleRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_ForSaleRoomMetrics = map[int16]string{
+	1: "progressCurrent",
+	2: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1387,6 +1425,7 @@ type RoomMetrics struct {
 	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtRoomMetrics   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomMetrics" json:"sixnimmt,omitempty"`
 	Hex        *HexRoomMetrics        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomMetrics" json:"hex,omitempty"`
+	ForSale    *ForSaleRoomMetrics    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomMetrics" json:"forSale,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1494,6 +1533,15 @@ func (p *RoomMetrics) GetHex() (v *HexRoomMetrics) {
 	}
 	return p.Hex
 }
+
+var RoomMetrics_ForSale_DEFAULT *ForSaleRoomMetrics
+
+func (p *RoomMetrics) GetForSale() (v *ForSaleRoomMetrics) {
+	if !p.IsSetForSale() {
+		return RoomMetrics_ForSale_DEFAULT
+	}
+	return p.ForSale
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1526,6 +1574,9 @@ func (p *RoomMetrics) SetSixnimmt(val *SixNimmtRoomMetrics) {
 }
 func (p *RoomMetrics) SetHex(val *HexRoomMetrics) {
 	p.Hex = val
+}
+func (p *RoomMetrics) SetForSale(val *ForSaleRoomMetrics) {
+	p.ForSale = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1561,6 +1612,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetHex() {
+		count++
+	}
+	if p.IsSetForSale() {
 		count++
 	}
 	return count
@@ -1610,6 +1664,10 @@ func (p *RoomMetrics) IsSetHex() bool {
 	return p.Hex != nil
 }
 
+func (p *RoomMetrics) IsSetForSale() bool {
+	return p.ForSale != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1629,4 +1687,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	9:  "loveletter",
 	10: "sixnimmt",
 	11: "hex",
+	12: "forSale",
 }

@@ -20,6 +20,7 @@ fi
 cd "$ROOT"
 "$KITEX_BIN" \
   -module github.com/nciyuan9264/game-platform-client \
+  -thrift with_reflection \
   -I "$PAM_IDL_ROOT/idl" \
   "$idl"
 

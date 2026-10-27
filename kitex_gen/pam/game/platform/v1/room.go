@@ -622,6 +622,35 @@ var fieldIDToName_SixNimmtRoomMetrics = map[int16]string{
 	4: "progressTotal",
 }
 
+type HexRoomMetrics struct {
+	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
+}
+
+func NewHexRoomMetrics() *HexRoomMetrics {
+	return &HexRoomMetrics{}
+}
+
+func (p *HexRoomMetrics) InitDefault() {
+}
+
+func (p *HexRoomMetrics) GetTurnCount() (v int32) {
+	return p.TurnCount
+}
+func (p *HexRoomMetrics) SetTurnCount(val int32) {
+	p.TurnCount = val
+}
+
+func (p *HexRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HexRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_HexRoomMetrics = map[int16]string{
+	1: "turnCount",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1357,6 +1386,7 @@ type RoomMetrics struct {
 	Quoridor   *QuoridorRoomMetrics   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
 	Sixnimmt   *SixNimmtRoomMetrics   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomMetrics" json:"sixnimmt,omitempty"`
+	Hex        *HexRoomMetrics        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomMetrics" json:"hex,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1455,6 +1485,15 @@ func (p *RoomMetrics) GetSixnimmt() (v *SixNimmtRoomMetrics) {
 	}
 	return p.Sixnimmt
 }
+
+var RoomMetrics_Hex_DEFAULT *HexRoomMetrics
+
+func (p *RoomMetrics) GetHex() (v *HexRoomMetrics) {
+	if !p.IsSetHex() {
+		return RoomMetrics_Hex_DEFAULT
+	}
+	return p.Hex
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1484,6 +1523,9 @@ func (p *RoomMetrics) SetLoveletter(val *LoveLetterRoomMetrics) {
 }
 func (p *RoomMetrics) SetSixnimmt(val *SixNimmtRoomMetrics) {
 	p.Sixnimmt = val
+}
+func (p *RoomMetrics) SetHex(val *HexRoomMetrics) {
+	p.Hex = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1516,6 +1558,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
 		count++
 	}
 	return count
@@ -1561,6 +1606,10 @@ func (p *RoomMetrics) IsSetSixnimmt() bool {
 	return p.Sixnimmt != nil
 }
 
+func (p *RoomMetrics) IsSetHex() bool {
+	return p.Hex != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1579,4 +1628,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	8:  "quoridor",
 	9:  "loveletter",
 	10: "sixnimmt",
+	11: "hex",
 }

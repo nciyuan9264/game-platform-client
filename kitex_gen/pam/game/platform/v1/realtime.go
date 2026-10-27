@@ -872,6 +872,7 @@ type ClientCommandPayload struct {
 	ForSale    *ForSaleCommandPayload    `thrift:"forSale,13,optional" frugal:"13,optional,ForSaleCommandPayload" json:"forSale,omitempty"`
 	Hive       *HiveCommandPayload       `thrift:"hive,14,optional" frugal:"14,optional,HiveCommandPayload" json:"hive,omitempty"`
 	Onitama    *OnitamaCommandPayload    `thrift:"onitama,15,optional" frugal:"15,optional,OnitamaCommandPayload" json:"onitama,omitempty"`
+	Cantstop   *CantStopCommandPayload   `thrift:"cantstop,16,optional" frugal:"16,optional,CantStopCommandPayload" json:"cantstop,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -1015,6 +1016,15 @@ func (p *ClientCommandPayload) GetOnitama() (v *OnitamaCommandPayload) {
 	}
 	return p.Onitama
 }
+
+var ClientCommandPayload_Cantstop_DEFAULT *CantStopCommandPayload
+
+func (p *ClientCommandPayload) GetCantstop() (v *CantStopCommandPayload) {
+	if !p.IsSetCantstop() {
+		return ClientCommandPayload_Cantstop_DEFAULT
+	}
+	return p.Cantstop
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -1059,6 +1069,9 @@ func (p *ClientCommandPayload) SetHive(val *HiveCommandPayload) {
 }
 func (p *ClientCommandPayload) SetOnitama(val *OnitamaCommandPayload) {
 	p.Onitama = val
+}
+func (p *ClientCommandPayload) SetCantstop(val *CantStopCommandPayload) {
+	p.Cantstop = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -1106,6 +1119,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetOnitama() {
+		count++
+	}
+	if p.IsSetCantstop() {
 		count++
 	}
 	return count
@@ -1171,6 +1187,10 @@ func (p *ClientCommandPayload) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
 
+func (p *ClientCommandPayload) IsSetCantstop() bool {
+	return p.Cantstop != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1194,6 +1214,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	13: "forSale",
 	14: "hive",
 	15: "onitama",
+	16: "cantstop",
 }
 
 type MatchSetupView struct {
@@ -1257,6 +1278,7 @@ type RoomView struct {
 	ForSale    *ForSaleRoomView    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomView" json:"forSale,omitempty"`
 	Hive       *HiveRoomView       `thrift:"hive,13,optional" frugal:"13,optional,HiveRoomView" json:"hive,omitempty"`
 	Onitama    *OnitamaRoomView    `thrift:"onitama,14,optional" frugal:"14,optional,OnitamaRoomView" json:"onitama,omitempty"`
+	Cantstop   *CantStopRoomView   `thrift:"cantstop,15,optional" frugal:"15,optional,CantStopRoomView" json:"cantstop,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1391,6 +1413,15 @@ func (p *RoomView) GetOnitama() (v *OnitamaRoomView) {
 	}
 	return p.Onitama
 }
+
+var RoomView_Cantstop_DEFAULT *CantStopRoomView
+
+func (p *RoomView) GetCantstop() (v *CantStopRoomView) {
+	if !p.IsSetCantstop() {
+		return RoomView_Cantstop_DEFAULT
+	}
+	return p.Cantstop
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1432,6 +1463,9 @@ func (p *RoomView) SetHive(val *HiveRoomView) {
 }
 func (p *RoomView) SetOnitama(val *OnitamaRoomView) {
 	p.Onitama = val
+}
+func (p *RoomView) SetCantstop(val *CantStopRoomView) {
+	p.Cantstop = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1476,6 +1510,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetOnitama() {
+		count++
+	}
+	if p.IsSetCantstop() {
 		count++
 	}
 	return count
@@ -1537,6 +1574,10 @@ func (p *RoomView) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
 
+func (p *RoomView) IsSetCantstop() bool {
+	return p.Cantstop != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1559,6 +1600,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	12: "forSale",
 	13: "hive",
 	14: "onitama",
+	15: "cantstop",
 }
 
 type ServerMessage struct {

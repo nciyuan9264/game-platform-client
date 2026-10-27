@@ -774,6 +774,62 @@ var fieldIDToName_OnitamaRoomMetrics = map[int16]string{
 	1: "turnCount",
 }
 
+type CantStopRoomMetrics struct {
+	MaxClaimedColumns int32 `thrift:"maxClaimedColumns,1,required" frugal:"1,required,i32" json:"maxClaimedColumns"`
+	TargetColumns     int32 `thrift:"targetColumns,2,required" frugal:"2,required,i32" json:"targetColumns"`
+	ProgressCurrent   int32 `thrift:"progressCurrent,3,required" frugal:"3,required,i32" json:"progressCurrent"`
+	ProgressTotal     int32 `thrift:"progressTotal,4,required" frugal:"4,required,i32" json:"progressTotal"`
+}
+
+func NewCantStopRoomMetrics() *CantStopRoomMetrics {
+	return &CantStopRoomMetrics{}
+}
+
+func (p *CantStopRoomMetrics) InitDefault() {
+}
+
+func (p *CantStopRoomMetrics) GetMaxClaimedColumns() (v int32) {
+	return p.MaxClaimedColumns
+}
+
+func (p *CantStopRoomMetrics) GetTargetColumns() (v int32) {
+	return p.TargetColumns
+}
+
+func (p *CantStopRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *CantStopRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *CantStopRoomMetrics) SetMaxClaimedColumns(val int32) {
+	p.MaxClaimedColumns = val
+}
+func (p *CantStopRoomMetrics) SetTargetColumns(val int32) {
+	p.TargetColumns = val
+}
+func (p *CantStopRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *CantStopRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *CantStopRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CantStopRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_CantStopRoomMetrics = map[int16]string{
+	1: "maxClaimedColumns",
+	2: "targetColumns",
+	3: "progressCurrent",
+	4: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1513,6 +1569,7 @@ type RoomMetrics struct {
 	ForSale    *ForSaleRoomMetrics    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomMetrics" json:"forSale,omitempty"`
 	Hive       *HiveRoomMetrics       `thrift:"hive,13,optional" frugal:"13,optional,HiveRoomMetrics" json:"hive,omitempty"`
 	Onitama    *OnitamaRoomMetrics    `thrift:"onitama,14,optional" frugal:"14,optional,OnitamaRoomMetrics" json:"onitama,omitempty"`
+	Cantstop   *CantStopRoomMetrics   `thrift:"cantstop,15,optional" frugal:"15,optional,CantStopRoomMetrics" json:"cantstop,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1647,6 +1704,15 @@ func (p *RoomMetrics) GetOnitama() (v *OnitamaRoomMetrics) {
 	}
 	return p.Onitama
 }
+
+var RoomMetrics_Cantstop_DEFAULT *CantStopRoomMetrics
+
+func (p *RoomMetrics) GetCantstop() (v *CantStopRoomMetrics) {
+	if !p.IsSetCantstop() {
+		return RoomMetrics_Cantstop_DEFAULT
+	}
+	return p.Cantstop
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1688,6 +1754,9 @@ func (p *RoomMetrics) SetHive(val *HiveRoomMetrics) {
 }
 func (p *RoomMetrics) SetOnitama(val *OnitamaRoomMetrics) {
 	p.Onitama = val
+}
+func (p *RoomMetrics) SetCantstop(val *CantStopRoomMetrics) {
+	p.Cantstop = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1732,6 +1801,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetOnitama() {
+		count++
+	}
+	if p.IsSetCantstop() {
 		count++
 	}
 	return count
@@ -1793,6 +1865,10 @@ func (p *RoomMetrics) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
 
+func (p *RoomMetrics) IsSetCantstop() bool {
+	return p.Cantstop != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1815,4 +1891,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	12: "forSale",
 	13: "hive",
 	14: "onitama",
+	15: "cantstop",
 }

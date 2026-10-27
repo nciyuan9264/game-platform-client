@@ -934,6 +934,44 @@ var fieldIDToName_OnitamaLeaderboardMetric = map[int16]string{
 	2: "winRate",
 }
 
+type CantStopLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewCantStopLeaderboardMetric() *CantStopLeaderboardMetric {
+	return &CantStopLeaderboardMetric{}
+}
+
+func (p *CantStopLeaderboardMetric) InitDefault() {
+}
+
+func (p *CantStopLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *CantStopLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *CantStopLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *CantStopLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *CantStopLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("CantStopLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_CantStopLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type LeaderboardEntry struct {
 	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
 	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
@@ -1942,6 +1980,7 @@ type LeaderboardMetric struct {
 	Hex      *HexLeaderboardMetric      `thrift:"hex,8,optional" frugal:"8,optional,HexLeaderboardMetric" json:"hex,omitempty"`
 	Hive     *HiveLeaderboardMetric     `thrift:"hive,9,optional" frugal:"9,optional,HiveLeaderboardMetric" json:"hive,omitempty"`
 	Onitama  *OnitamaLeaderboardMetric  `thrift:"onitama,10,optional" frugal:"10,optional,OnitamaLeaderboardMetric" json:"onitama,omitempty"`
+	Cantstop *CantStopLeaderboardMetric `thrift:"cantstop,11,optional" frugal:"11,optional,CantStopLeaderboardMetric" json:"cantstop,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -2040,6 +2079,15 @@ func (p *LeaderboardMetric) GetOnitama() (v *OnitamaLeaderboardMetric) {
 	}
 	return p.Onitama
 }
+
+var LeaderboardMetric_Cantstop_DEFAULT *CantStopLeaderboardMetric
+
+func (p *LeaderboardMetric) GetCantstop() (v *CantStopLeaderboardMetric) {
+	if !p.IsSetCantstop() {
+		return LeaderboardMetric_Cantstop_DEFAULT
+	}
+	return p.Cantstop
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
@@ -2069,6 +2117,9 @@ func (p *LeaderboardMetric) SetHive(val *HiveLeaderboardMetric) {
 }
 func (p *LeaderboardMetric) SetOnitama(val *OnitamaLeaderboardMetric) {
 	p.Onitama = val
+}
+func (p *LeaderboardMetric) SetCantstop(val *CantStopLeaderboardMetric) {
+	p.Cantstop = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -2101,6 +2152,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetOnitama() {
+		count++
+	}
+	if p.IsSetCantstop() {
 		count++
 	}
 	return count
@@ -2146,6 +2200,10 @@ func (p *LeaderboardMetric) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
 
+func (p *LeaderboardMetric) IsSetCantstop() bool {
+	return p.Cantstop != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2164,6 +2222,7 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 	8:  "hex",
 	9:  "hive",
 	10: "onitama",
+	11: "cantstop",
 }
 
 type ReplaySnapshot struct {
@@ -2179,6 +2238,7 @@ type ReplaySnapshot struct {
 	ForSale    *ForSaleReplaySnapshot    `thrift:"forSale,10,optional" frugal:"10,optional,ForSaleReplaySnapshot" json:"forSale,omitempty"`
 	Hive       *HiveReplaySnapshot       `thrift:"hive,11,optional" frugal:"11,optional,HiveReplaySnapshot" json:"hive,omitempty"`
 	Onitama    *OnitamaReplaySnapshot    `thrift:"onitama,12,optional" frugal:"12,optional,OnitamaReplaySnapshot" json:"onitama,omitempty"`
+	Cantstop   *CantStopReplaySnapshot   `thrift:"cantstop,13,optional" frugal:"13,optional,CantStopReplaySnapshot" json:"cantstop,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2295,6 +2355,15 @@ func (p *ReplaySnapshot) GetOnitama() (v *OnitamaReplaySnapshot) {
 	}
 	return p.Onitama
 }
+
+var ReplaySnapshot_Cantstop_DEFAULT *CantStopReplaySnapshot
+
+func (p *ReplaySnapshot) GetCantstop() (v *CantStopReplaySnapshot) {
+	if !p.IsSetCantstop() {
+		return ReplaySnapshot_Cantstop_DEFAULT
+	}
+	return p.Cantstop
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2330,6 +2399,9 @@ func (p *ReplaySnapshot) SetHive(val *HiveReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetOnitama(val *OnitamaReplaySnapshot) {
 	p.Onitama = val
+}
+func (p *ReplaySnapshot) SetCantstop(val *CantStopReplaySnapshot) {
+	p.Cantstop = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2368,6 +2440,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetOnitama() {
+		count++
+	}
+	if p.IsSetCantstop() {
 		count++
 	}
 	return count
@@ -2421,6 +2496,10 @@ func (p *ReplaySnapshot) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
 
+func (p *ReplaySnapshot) IsSetCantstop() bool {
+	return p.Cantstop != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2441,4 +2520,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	10: "forSale",
 	11: "hive",
 	12: "onitama",
+	13: "cantstop",
 }

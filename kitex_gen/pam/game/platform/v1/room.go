@@ -566,6 +566,35 @@ var fieldIDToName_LoveLetterRoomMetrics = map[int16]string{
 	5: "progressTotal",
 }
 
+type HexRoomMetrics struct {
+	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
+}
+
+func NewHexRoomMetrics() *HexRoomMetrics {
+	return &HexRoomMetrics{}
+}
+
+func (p *HexRoomMetrics) InitDefault() {
+}
+
+func (p *HexRoomMetrics) GetTurnCount() (v int32) {
+	return p.TurnCount
+}
+func (p *HexRoomMetrics) SetTurnCount(val int32) {
+	p.TurnCount = val
+}
+
+func (p *HexRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HexRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_HexRoomMetrics = map[int16]string{
+	1: "turnCount",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1300,6 +1329,7 @@ type RoomMetrics struct {
 	Warchest   *WarChestRoomMetrics   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomMetrics   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
+	Hex        *HexRoomMetrics        `thrift:"hex,10,optional" frugal:"10,optional,HexRoomMetrics" json:"hex,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1389,6 +1419,15 @@ func (p *RoomMetrics) GetLoveletter() (v *LoveLetterRoomMetrics) {
 	}
 	return p.Loveletter
 }
+
+var RoomMetrics_Hex_DEFAULT *HexRoomMetrics
+
+func (p *RoomMetrics) GetHex() (v *HexRoomMetrics) {
+	if !p.IsSetHex() {
+		return RoomMetrics_Hex_DEFAULT
+	}
+	return p.Hex
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1415,6 +1454,9 @@ func (p *RoomMetrics) SetQuoridor(val *QuoridorRoomMetrics) {
 }
 func (p *RoomMetrics) SetLoveletter(val *LoveLetterRoomMetrics) {
 	p.Loveletter = val
+}
+func (p *RoomMetrics) SetHex(val *HexRoomMetrics) {
+	p.Hex = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1444,6 +1486,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetHex() {
 		count++
 	}
 	return count
@@ -1485,6 +1530,10 @@ func (p *RoomMetrics) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomMetrics) IsSetHex() bool {
+	return p.Hex != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1493,13 +1542,14 @@ func (p *RoomMetrics) String() string {
 }
 
 var fieldIDToName_RoomMetrics = map[int16]string{
-	1: "acquire",
-	2: "davinci",
-	3: "splendor",
-	4: "yinsh",
-	5: "othello",
-	6: "fugitive",
-	7: "warchest",
-	8: "quoridor",
-	9: "loveletter",
+	1:  "acquire",
+	2:  "davinci",
+	3:  "splendor",
+	4:  "yinsh",
+	5:  "othello",
+	6:  "fugitive",
+	7:  "warchest",
+	8:  "quoridor",
+	9:  "loveletter",
+	10: "hex",
 }

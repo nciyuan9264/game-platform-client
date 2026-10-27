@@ -7720,6 +7720,20 @@ func (p *ReplaySnapshot) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 9:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField9(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -7824,6 +7838,18 @@ func (p *ReplaySnapshot) FastReadField7(buf []byte) (int, error) {
 
 func (p *ReplaySnapshot) FastReadField8(buf []byte) (int, error) {
 	offset := 0
+	_field := NewSixNimmtReplaySnapshot()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Sixnimmt = _field
+	return offset, nil
+}
+
+func (p *ReplaySnapshot) FastReadField9(buf []byte) (int, error) {
+	offset := 0
 	_field := NewOnitamaReplaySnapshot()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
@@ -7855,6 +7881,7 @@ func (p *ReplaySnapshot) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int 
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
+		offset += p.fastWriteField9(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -7879,6 +7906,7 @@ func (p *ReplaySnapshot) BLength() int {
 		l += p.field6Length()
 		l += p.field7Length()
 		l += p.field8Length()
+		l += p.field9Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -7951,8 +7979,17 @@ func (p *ReplaySnapshot) fastWriteField7(buf []byte, w thrift.NocopyWriter) int 
 
 func (p *ReplaySnapshot) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetOnitama() {
+	if p.IsSetSixnimmt() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 8)
+		offset += p.Sixnimmt.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *ReplaySnapshot) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetOnitama() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 9)
 		offset += p.Onitama.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
@@ -8022,6 +8059,15 @@ func (p *ReplaySnapshot) field7Length() int {
 }
 
 func (p *ReplaySnapshot) field8Length() int {
+	l := 0
+	if p.IsSetSixnimmt() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Sixnimmt.BLength()
+	}
+	return l
+}
+
+func (p *ReplaySnapshot) field9Length() int {
 	l := 0
 	if p.IsSetOnitama() {
 		l += thrift.Binary.FieldBeginLength()

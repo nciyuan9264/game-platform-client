@@ -867,7 +867,8 @@ type ClientCommandPayload struct {
 	Warchest   *WarChestCommandPayload   `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
 	Quoridor   *QuoridorCommandPayload   `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterCommandPayload `thrift:"loveletter,10,optional" frugal:"10,optional,LoveLetterCommandPayload" json:"loveletter,omitempty"`
-	Onitama    *OnitamaCommandPayload    `thrift:"onitama,11,optional" frugal:"11,optional,OnitamaCommandPayload" json:"onitama,omitempty"`
+	Sixnimmt   *SixNimmtCommandPayload   `thrift:"sixnimmt,11,optional" frugal:"11,optional,SixNimmtCommandPayload" json:"sixnimmt,omitempty"`
+	Onitama    *OnitamaCommandPayload    `thrift:"onitama,12,optional" frugal:"12,optional,OnitamaCommandPayload" json:"onitama,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -967,6 +968,15 @@ func (p *ClientCommandPayload) GetLoveletter() (v *LoveLetterCommandPayload) {
 	return p.Loveletter
 }
 
+var ClientCommandPayload_Sixnimmt_DEFAULT *SixNimmtCommandPayload
+
+func (p *ClientCommandPayload) GetSixnimmt() (v *SixNimmtCommandPayload) {
+	if !p.IsSetSixnimmt() {
+		return ClientCommandPayload_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
+
 var ClientCommandPayload_Onitama_DEFAULT *OnitamaCommandPayload
 
 func (p *ClientCommandPayload) GetOnitama() (v *OnitamaCommandPayload) {
@@ -1005,6 +1015,9 @@ func (p *ClientCommandPayload) SetQuoridor(val *QuoridorCommandPayload) {
 func (p *ClientCommandPayload) SetLoveletter(val *LoveLetterCommandPayload) {
 	p.Loveletter = val
 }
+func (p *ClientCommandPayload) SetSixnimmt(val *SixNimmtCommandPayload) {
+	p.Sixnimmt = val
+}
 func (p *ClientCommandPayload) SetOnitama(val *OnitamaCommandPayload) {
 	p.Onitama = val
 }
@@ -1039,6 +1052,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -1087,6 +1103,10 @@ func (p *ClientCommandPayload) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *ClientCommandPayload) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
 func (p *ClientCommandPayload) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -1109,7 +1129,8 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	8:  "warchest",
 	9:  "quoridor",
 	10: "loveletter",
-	11: "onitama",
+	11: "sixnimmt",
+	12: "onitama",
 }
 
 type MatchSetupView struct {
@@ -1168,7 +1189,8 @@ type RoomView struct {
 	Warchest   *WarChestRoomView   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomView   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomView `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomView" json:"loveletter,omitempty"`
-	Onitama    *OnitamaRoomView    `thrift:"onitama,10,optional" frugal:"10,optional,OnitamaRoomView" json:"onitama,omitempty"`
+	Sixnimmt   *SixNimmtRoomView   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomView" json:"sixnimmt,omitempty"`
+	Onitama    *OnitamaRoomView    `thrift:"onitama,11,optional" frugal:"11,optional,OnitamaRoomView" json:"onitama,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1259,6 +1281,15 @@ func (p *RoomView) GetLoveletter() (v *LoveLetterRoomView) {
 	return p.Loveletter
 }
 
+var RoomView_Sixnimmt_DEFAULT *SixNimmtRoomView
+
+func (p *RoomView) GetSixnimmt() (v *SixNimmtRoomView) {
+	if !p.IsSetSixnimmt() {
+		return RoomView_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
+
 var RoomView_Onitama_DEFAULT *OnitamaRoomView
 
 func (p *RoomView) GetOnitama() (v *OnitamaRoomView) {
@@ -1294,6 +1325,9 @@ func (p *RoomView) SetQuoridor(val *QuoridorRoomView) {
 func (p *RoomView) SetLoveletter(val *LoveLetterRoomView) {
 	p.Loveletter = val
 }
+func (p *RoomView) SetSixnimmt(val *SixNimmtRoomView) {
+	p.Sixnimmt = val
+}
 func (p *RoomView) SetOnitama(val *OnitamaRoomView) {
 	p.Onitama = val
 }
@@ -1325,6 +1359,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -1369,6 +1406,10 @@ func (p *RoomView) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomView) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
 func (p *RoomView) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -1390,7 +1431,8 @@ var fieldIDToName_RoomView = map[int16]string{
 	7:  "warchest",
 	8:  "quoridor",
 	9:  "loveletter",
-	10: "onitama",
+	10: "sixnimmt",
+	11: "onitama",
 }
 
 type ServerMessage struct {

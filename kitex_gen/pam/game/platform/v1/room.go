@@ -566,6 +566,62 @@ var fieldIDToName_LoveLetterRoomMetrics = map[int16]string{
 	5: "progressTotal",
 }
 
+type SixNimmtRoomMetrics struct {
+	MaxPenalty      int32 `thrift:"maxPenalty,1,required" frugal:"1,required,i32" json:"maxPenalty"`
+	TargetPenalty   int32 `thrift:"targetPenalty,2,required" frugal:"2,required,i32" json:"targetPenalty"`
+	ProgressCurrent int32 `thrift:"progressCurrent,3,required" frugal:"3,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,4,required" frugal:"4,required,i32" json:"progressTotal"`
+}
+
+func NewSixNimmtRoomMetrics() *SixNimmtRoomMetrics {
+	return &SixNimmtRoomMetrics{}
+}
+
+func (p *SixNimmtRoomMetrics) InitDefault() {
+}
+
+func (p *SixNimmtRoomMetrics) GetMaxPenalty() (v int32) {
+	return p.MaxPenalty
+}
+
+func (p *SixNimmtRoomMetrics) GetTargetPenalty() (v int32) {
+	return p.TargetPenalty
+}
+
+func (p *SixNimmtRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *SixNimmtRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *SixNimmtRoomMetrics) SetMaxPenalty(val int32) {
+	p.MaxPenalty = val
+}
+func (p *SixNimmtRoomMetrics) SetTargetPenalty(val int32) {
+	p.TargetPenalty = val
+}
+func (p *SixNimmtRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *SixNimmtRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *SixNimmtRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SixNimmtRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_SixNimmtRoomMetrics = map[int16]string{
+	1: "maxPenalty",
+	2: "targetPenalty",
+	3: "progressCurrent",
+	4: "progressTotal",
+}
+
 type OnitamaRoomMetrics struct {
 	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
 }
@@ -1329,7 +1385,8 @@ type RoomMetrics struct {
 	Warchest   *WarChestRoomMetrics   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomMetrics   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
-	Onitama    *OnitamaRoomMetrics    `thrift:"onitama,10,optional" frugal:"10,optional,OnitamaRoomMetrics" json:"onitama,omitempty"`
+	Sixnimmt   *SixNimmtRoomMetrics   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomMetrics" json:"sixnimmt,omitempty"`
+	Onitama    *OnitamaRoomMetrics    `thrift:"onitama,11,optional" frugal:"11,optional,OnitamaRoomMetrics" json:"onitama,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1420,6 +1477,15 @@ func (p *RoomMetrics) GetLoveletter() (v *LoveLetterRoomMetrics) {
 	return p.Loveletter
 }
 
+var RoomMetrics_Sixnimmt_DEFAULT *SixNimmtRoomMetrics
+
+func (p *RoomMetrics) GetSixnimmt() (v *SixNimmtRoomMetrics) {
+	if !p.IsSetSixnimmt() {
+		return RoomMetrics_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
+
 var RoomMetrics_Onitama_DEFAULT *OnitamaRoomMetrics
 
 func (p *RoomMetrics) GetOnitama() (v *OnitamaRoomMetrics) {
@@ -1455,6 +1521,9 @@ func (p *RoomMetrics) SetQuoridor(val *QuoridorRoomMetrics) {
 func (p *RoomMetrics) SetLoveletter(val *LoveLetterRoomMetrics) {
 	p.Loveletter = val
 }
+func (p *RoomMetrics) SetSixnimmt(val *SixNimmtRoomMetrics) {
+	p.Sixnimmt = val
+}
 func (p *RoomMetrics) SetOnitama(val *OnitamaRoomMetrics) {
 	p.Onitama = val
 }
@@ -1486,6 +1555,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
 		count++
 	}
 	if p.IsSetOnitama() {
@@ -1530,6 +1602,10 @@ func (p *RoomMetrics) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomMetrics) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
 func (p *RoomMetrics) IsSetOnitama() bool {
 	return p.Onitama != nil
 }
@@ -1551,5 +1627,6 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	7:  "warchest",
 	8:  "quoridor",
 	9:  "loveletter",
-	10: "onitama",
+	10: "sixnimmt",
+	11: "onitama",
 }

@@ -3537,6 +3537,20 @@ func (p *ClientCommandPayload) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 12:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField12(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3677,6 +3691,18 @@ func (p *ClientCommandPayload) FastReadField10(buf []byte) (int, error) {
 
 func (p *ClientCommandPayload) FastReadField11(buf []byte) (int, error) {
 	offset := 0
+	_field := NewSixNimmtCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Sixnimmt = _field
+	return offset, nil
+}
+
+func (p *ClientCommandPayload) FastReadField12(buf []byte) (int, error) {
+	offset := 0
 	_field := NewOnitamaCommandPayload()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
@@ -3711,6 +3737,7 @@ func (p *ClientCommandPayload) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField10(buf[offset:], w)
 		offset += p.fastWriteField11(buf[offset:], w)
+		offset += p.fastWriteField12(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3738,6 +3765,7 @@ func (p *ClientCommandPayload) BLength() int {
 		l += p.field9Length()
 		l += p.field10Length()
 		l += p.field11Length()
+		l += p.field12Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3837,8 +3865,17 @@ func (p *ClientCommandPayload) fastWriteField10(buf []byte, w thrift.NocopyWrite
 
 func (p *ClientCommandPayload) fastWriteField11(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetOnitama() {
+	if p.IsSetSixnimmt() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 11)
+		offset += p.Sixnimmt.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *ClientCommandPayload) fastWriteField12(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetOnitama() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 12)
 		offset += p.Onitama.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
@@ -3935,6 +3972,15 @@ func (p *ClientCommandPayload) field10Length() int {
 }
 
 func (p *ClientCommandPayload) field11Length() int {
+	l := 0
+	if p.IsSetSixnimmt() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Sixnimmt.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field12Length() int {
 	l := 0
 	if p.IsSetOnitama() {
 		l += thrift.Binary.FieldBeginLength()
@@ -4217,6 +4263,20 @@ func (p *RoomView) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 11:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField11(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -4345,6 +4405,18 @@ func (p *RoomView) FastReadField9(buf []byte) (int, error) {
 
 func (p *RoomView) FastReadField10(buf []byte) (int, error) {
 	offset := 0
+	_field := NewSixNimmtRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Sixnimmt = _field
+	return offset, nil
+}
+
+func (p *RoomView) FastReadField11(buf []byte) (int, error) {
+	offset := 0
 	_field := NewOnitamaRoomView()
 	if l, err := _field.FastRead(buf[offset:]); err != nil {
 		return offset, err
@@ -4378,6 +4450,7 @@ func (p *RoomView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField8(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField10(buf[offset:], w)
+		offset += p.fastWriteField11(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4404,6 +4477,7 @@ func (p *RoomView) BLength() int {
 		l += p.field8Length()
 		l += p.field9Length()
 		l += p.field10Length()
+		l += p.field11Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4494,8 +4568,17 @@ func (p *RoomView) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
 
 func (p *RoomView) fastWriteField10(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
-	if p.IsSetOnitama() {
+	if p.IsSetSixnimmt() {
 		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 10)
+		offset += p.Sixnimmt.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
+func (p *RoomView) fastWriteField11(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetOnitama() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 11)
 		offset += p.Onitama.FastWriteNocopy(buf[offset:], w)
 	}
 	return offset
@@ -4583,6 +4666,15 @@ func (p *RoomView) field9Length() int {
 }
 
 func (p *RoomView) field10Length() int {
+	l := 0
+	if p.IsSetSixnimmt() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Sixnimmt.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field11Length() int {
 	l := 0
 	if p.IsSetOnitama() {
 		l += thrift.Binary.FieldBeginLength()

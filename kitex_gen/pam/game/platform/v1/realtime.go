@@ -857,15 +857,16 @@ var fieldIDToName_CommonCommandPayload = map[int16]string{
 }
 
 type ClientCommandPayload struct {
-	Common   *CommonCommandPayload   `thrift:"common,1,optional" frugal:"1,optional,CommonCommandPayload" json:"common,omitempty"`
-	Acquire  *AcquireCommandPayload  `thrift:"acquire,2,optional" frugal:"2,optional,AcquireCommandPayload" json:"acquire,omitempty"`
-	Davinci  *DavinciCommandPayload  `thrift:"davinci,3,optional" frugal:"3,optional,DavinciCommandPayload" json:"davinci,omitempty"`
-	Splendor *SplendorCommandPayload `thrift:"splendor,4,optional" frugal:"4,optional,SplendorCommandPayload" json:"splendor,omitempty"`
-	Yinsh    *YinshCommandPayload    `thrift:"yinsh,5,optional" frugal:"5,optional,YinshCommandPayload" json:"yinsh,omitempty"`
-	Othello  *OthelloCommandPayload  `thrift:"othello,6,optional" frugal:"6,optional,OthelloCommandPayload" json:"othello,omitempty"`
-	Fugitive *FugitiveCommandPayload `thrift:"fugitive,7,optional" frugal:"7,optional,FugitiveCommandPayload" json:"fugitive,omitempty"`
-	Warchest *WarChestCommandPayload `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
-	Quoridor *QuoridorCommandPayload `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
+	Common     *CommonCommandPayload     `thrift:"common,1,optional" frugal:"1,optional,CommonCommandPayload" json:"common,omitempty"`
+	Acquire    *AcquireCommandPayload    `thrift:"acquire,2,optional" frugal:"2,optional,AcquireCommandPayload" json:"acquire,omitempty"`
+	Davinci    *DavinciCommandPayload    `thrift:"davinci,3,optional" frugal:"3,optional,DavinciCommandPayload" json:"davinci,omitempty"`
+	Splendor   *SplendorCommandPayload   `thrift:"splendor,4,optional" frugal:"4,optional,SplendorCommandPayload" json:"splendor,omitempty"`
+	Yinsh      *YinshCommandPayload      `thrift:"yinsh,5,optional" frugal:"5,optional,YinshCommandPayload" json:"yinsh,omitempty"`
+	Othello    *OthelloCommandPayload    `thrift:"othello,6,optional" frugal:"6,optional,OthelloCommandPayload" json:"othello,omitempty"`
+	Fugitive   *FugitiveCommandPayload   `thrift:"fugitive,7,optional" frugal:"7,optional,FugitiveCommandPayload" json:"fugitive,omitempty"`
+	Warchest   *WarChestCommandPayload   `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
+	Quoridor   *QuoridorCommandPayload   `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
+	Loveletter *LoveLetterCommandPayload `thrift:"loveletter,10,optional" frugal:"10,optional,LoveLetterCommandPayload" json:"loveletter,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -955,6 +956,15 @@ func (p *ClientCommandPayload) GetQuoridor() (v *QuoridorCommandPayload) {
 	}
 	return p.Quoridor
 }
+
+var ClientCommandPayload_Loveletter_DEFAULT *LoveLetterCommandPayload
+
+func (p *ClientCommandPayload) GetLoveletter() (v *LoveLetterCommandPayload) {
+	if !p.IsSetLoveletter() {
+		return ClientCommandPayload_Loveletter_DEFAULT
+	}
+	return p.Loveletter
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -981,6 +991,9 @@ func (p *ClientCommandPayload) SetWarchest(val *WarChestCommandPayload) {
 }
 func (p *ClientCommandPayload) SetQuoridor(val *QuoridorCommandPayload) {
 	p.Quoridor = val
+}
+func (p *ClientCommandPayload) SetLoveletter(val *LoveLetterCommandPayload) {
+	p.Loveletter = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -1010,6 +1023,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetQuoridor() {
+		count++
+	}
+	if p.IsSetLoveletter() {
 		count++
 	}
 	return count
@@ -1051,6 +1067,10 @@ func (p *ClientCommandPayload) IsSetQuoridor() bool {
 	return p.Quoridor != nil
 }
 
+func (p *ClientCommandPayload) IsSetLoveletter() bool {
+	return p.Loveletter != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1059,15 +1079,16 @@ func (p *ClientCommandPayload) String() string {
 }
 
 var fieldIDToName_ClientCommandPayload = map[int16]string{
-	1: "common",
-	2: "acquire",
-	3: "davinci",
-	4: "splendor",
-	5: "yinsh",
-	6: "othello",
-	7: "fugitive",
-	8: "warchest",
-	9: "quoridor",
+	1:  "common",
+	2:  "acquire",
+	3:  "davinci",
+	4:  "splendor",
+	5:  "yinsh",
+	6:  "othello",
+	7:  "fugitive",
+	8:  "warchest",
+	9:  "quoridor",
+	10: "loveletter",
 }
 
 type MatchSetupView struct {
@@ -1117,14 +1138,15 @@ var fieldIDToName_MatchSetupView = map[int16]string{
 }
 
 type RoomView struct {
-	Acquire  *AcquireRoomView  `thrift:"acquire,1,optional" frugal:"1,optional,AcquireRoomView" json:"acquire,omitempty"`
-	Davinci  *DavinciRoomView  `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomView" json:"davinci,omitempty"`
-	Splendor *SplendorRoomView `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomView" json:"splendor,omitempty"`
-	Yinsh    *YinshRoomView    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomView" json:"yinsh,omitempty"`
-	Othello  *OthelloRoomView  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomView" json:"othello,omitempty"`
-	Fugitive *FugitiveRoomView `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomView" json:"fugitive,omitempty"`
-	Warchest *WarChestRoomView `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
-	Quoridor *QuoridorRoomView `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
+	Acquire    *AcquireRoomView    `thrift:"acquire,1,optional" frugal:"1,optional,AcquireRoomView" json:"acquire,omitempty"`
+	Davinci    *DavinciRoomView    `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomView" json:"davinci,omitempty"`
+	Splendor   *SplendorRoomView   `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomView" json:"splendor,omitempty"`
+	Yinsh      *YinshRoomView      `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomView" json:"yinsh,omitempty"`
+	Othello    *OthelloRoomView    `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomView" json:"othello,omitempty"`
+	Fugitive   *FugitiveRoomView   `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomView" json:"fugitive,omitempty"`
+	Warchest   *WarChestRoomView   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
+	Quoridor   *QuoridorRoomView   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
+	Loveletter *LoveLetterRoomView `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomView" json:"loveletter,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1205,6 +1227,15 @@ func (p *RoomView) GetQuoridor() (v *QuoridorRoomView) {
 	}
 	return p.Quoridor
 }
+
+var RoomView_Loveletter_DEFAULT *LoveLetterRoomView
+
+func (p *RoomView) GetLoveletter() (v *LoveLetterRoomView) {
+	if !p.IsSetLoveletter() {
+		return RoomView_Loveletter_DEFAULT
+	}
+	return p.Loveletter
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1228,6 +1259,9 @@ func (p *RoomView) SetWarchest(val *WarChestRoomView) {
 }
 func (p *RoomView) SetQuoridor(val *QuoridorRoomView) {
 	p.Quoridor = val
+}
+func (p *RoomView) SetLoveletter(val *LoveLetterRoomView) {
+	p.Loveletter = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1254,6 +1288,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetQuoridor() {
+		count++
+	}
+	if p.IsSetLoveletter() {
 		count++
 	}
 	return count
@@ -1291,6 +1328,10 @@ func (p *RoomView) IsSetQuoridor() bool {
 	return p.Quoridor != nil
 }
 
+func (p *RoomView) IsSetLoveletter() bool {
+	return p.Loveletter != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1307,6 +1348,7 @@ var fieldIDToName_RoomView = map[int16]string{
 	6: "fugitive",
 	7: "warchest",
 	8: "quoridor",
+	9: "loveletter",
 }
 
 type ServerMessage struct {

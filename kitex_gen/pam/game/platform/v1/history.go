@@ -1990,12 +1990,13 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 }
 
 type ReplaySnapshot struct {
-	Acquire  *AcquireReplaySnapshot  `thrift:"acquire,1,optional" frugal:"1,optional,AcquireReplaySnapshot" json:"acquire,omitempty"`
-	Splendor *SplendorReplaySnapshot `thrift:"splendor,2,optional" frugal:"2,optional,SplendorReplaySnapshot" json:"splendor,omitempty"`
-	Yinsh    *YinshReplaySnapshot    `thrift:"yinsh,3,optional" frugal:"3,optional,YinshReplaySnapshot" json:"yinsh,omitempty"`
-	Othello  *OthelloReplaySnapshot  `thrift:"othello,4,optional" frugal:"4,optional,OthelloReplaySnapshot" json:"othello,omitempty"`
-	Warchest *WarChestReplaySnapshot `thrift:"warchest,5,optional" frugal:"5,optional,WarChestReplaySnapshot" json:"warchest,omitempty"`
-	Quoridor *QuoridorReplaySnapshot `thrift:"quoridor,6,optional" frugal:"6,optional,QuoridorReplaySnapshot" json:"quoridor,omitempty"`
+	Acquire    *AcquireReplaySnapshot    `thrift:"acquire,1,optional" frugal:"1,optional,AcquireReplaySnapshot" json:"acquire,omitempty"`
+	Splendor   *SplendorReplaySnapshot   `thrift:"splendor,2,optional" frugal:"2,optional,SplendorReplaySnapshot" json:"splendor,omitempty"`
+	Yinsh      *YinshReplaySnapshot      `thrift:"yinsh,3,optional" frugal:"3,optional,YinshReplaySnapshot" json:"yinsh,omitempty"`
+	Othello    *OthelloReplaySnapshot    `thrift:"othello,4,optional" frugal:"4,optional,OthelloReplaySnapshot" json:"othello,omitempty"`
+	Warchest   *WarChestReplaySnapshot   `thrift:"warchest,5,optional" frugal:"5,optional,WarChestReplaySnapshot" json:"warchest,omitempty"`
+	Quoridor   *QuoridorReplaySnapshot   `thrift:"quoridor,6,optional" frugal:"6,optional,QuoridorReplaySnapshot" json:"quoridor,omitempty"`
+	Loveletter *LoveLetterReplaySnapshot `thrift:"loveletter,7,optional" frugal:"7,optional,LoveLetterReplaySnapshot" json:"loveletter,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2058,6 +2059,15 @@ func (p *ReplaySnapshot) GetQuoridor() (v *QuoridorReplaySnapshot) {
 	}
 	return p.Quoridor
 }
+
+var ReplaySnapshot_Loveletter_DEFAULT *LoveLetterReplaySnapshot
+
+func (p *ReplaySnapshot) GetLoveletter() (v *LoveLetterReplaySnapshot) {
+	if !p.IsSetLoveletter() {
+		return ReplaySnapshot_Loveletter_DEFAULT
+	}
+	return p.Loveletter
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2075,6 +2085,9 @@ func (p *ReplaySnapshot) SetWarchest(val *WarChestReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetQuoridor(val *QuoridorReplaySnapshot) {
 	p.Quoridor = val
+}
+func (p *ReplaySnapshot) SetLoveletter(val *LoveLetterReplaySnapshot) {
+	p.Loveletter = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2095,6 +2108,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetQuoridor() {
+		count++
+	}
+	if p.IsSetLoveletter() {
 		count++
 	}
 	return count
@@ -2124,6 +2140,10 @@ func (p *ReplaySnapshot) IsSetQuoridor() bool {
 	return p.Quoridor != nil
 }
 
+func (p *ReplaySnapshot) IsSetLoveletter() bool {
+	return p.Loveletter != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2138,4 +2158,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	4: "othello",
 	5: "warchest",
 	6: "quoridor",
+	7: "loveletter",
 }

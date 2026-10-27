@@ -501,6 +501,71 @@ var fieldIDToName_QuoridorRoomMetrics = map[int16]string{
 	1: "turnCount",
 }
 
+type LoveLetterRoomMetrics struct {
+	CurrentRound    int32 `thrift:"currentRound,1,required" frugal:"1,required,i32" json:"currentRound"`
+	MaxFavor        int32 `thrift:"maxFavor,2,required" frugal:"2,required,i32" json:"maxFavor"`
+	TargetFavor     int32 `thrift:"targetFavor,3,required" frugal:"3,required,i32" json:"targetFavor"`
+	ProgressCurrent int32 `thrift:"progressCurrent,4,required" frugal:"4,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,5,required" frugal:"5,required,i32" json:"progressTotal"`
+}
+
+func NewLoveLetterRoomMetrics() *LoveLetterRoomMetrics {
+	return &LoveLetterRoomMetrics{}
+}
+
+func (p *LoveLetterRoomMetrics) InitDefault() {
+}
+
+func (p *LoveLetterRoomMetrics) GetCurrentRound() (v int32) {
+	return p.CurrentRound
+}
+
+func (p *LoveLetterRoomMetrics) GetMaxFavor() (v int32) {
+	return p.MaxFavor
+}
+
+func (p *LoveLetterRoomMetrics) GetTargetFavor() (v int32) {
+	return p.TargetFavor
+}
+
+func (p *LoveLetterRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *LoveLetterRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *LoveLetterRoomMetrics) SetCurrentRound(val int32) {
+	p.CurrentRound = val
+}
+func (p *LoveLetterRoomMetrics) SetMaxFavor(val int32) {
+	p.MaxFavor = val
+}
+func (p *LoveLetterRoomMetrics) SetTargetFavor(val int32) {
+	p.TargetFavor = val
+}
+func (p *LoveLetterRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *LoveLetterRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *LoveLetterRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("LoveLetterRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_LoveLetterRoomMetrics = map[int16]string{
+	1: "currentRound",
+	2: "maxFavor",
+	3: "targetFavor",
+	4: "progressCurrent",
+	5: "progressTotal",
+}
+
 type RoomInfo struct {
 	RoomID             string        `thrift:"roomID,1,required" frugal:"1,required,string" json:"roomID"`
 	GameType           GameType      `thrift:"gameType,2,required" frugal:"2,required,string" json:"gameType"`
@@ -1226,14 +1291,15 @@ var fieldIDToName_StartNextMatchResp = map[int16]string{
 }
 
 type RoomMetrics struct {
-	Acquire  *AcquireRoomMetrics  `thrift:"acquire,1,optional" frugal:"1,optional,AcquireRoomMetrics" json:"acquire,omitempty"`
-	Davinci  *DavinciRoomMetrics  `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomMetrics" json:"davinci,omitempty"`
-	Splendor *SplendorRoomMetrics `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomMetrics" json:"splendor,omitempty"`
-	Yinsh    *YinshRoomMetrics    `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomMetrics" json:"yinsh,omitempty"`
-	Othello  *OthelloRoomMetrics  `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomMetrics" json:"othello,omitempty"`
-	Fugitive *FugitiveRoomMetrics `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomMetrics" json:"fugitive,omitempty"`
-	Warchest *WarChestRoomMetrics `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
-	Quoridor *QuoridorRoomMetrics `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
+	Acquire    *AcquireRoomMetrics    `thrift:"acquire,1,optional" frugal:"1,optional,AcquireRoomMetrics" json:"acquire,omitempty"`
+	Davinci    *DavinciRoomMetrics    `thrift:"davinci,2,optional" frugal:"2,optional,DavinciRoomMetrics" json:"davinci,omitempty"`
+	Splendor   *SplendorRoomMetrics   `thrift:"splendor,3,optional" frugal:"3,optional,SplendorRoomMetrics" json:"splendor,omitempty"`
+	Yinsh      *YinshRoomMetrics      `thrift:"yinsh,4,optional" frugal:"4,optional,YinshRoomMetrics" json:"yinsh,omitempty"`
+	Othello    *OthelloRoomMetrics    `thrift:"othello,5,optional" frugal:"5,optional,OthelloRoomMetrics" json:"othello,omitempty"`
+	Fugitive   *FugitiveRoomMetrics   `thrift:"fugitive,6,optional" frugal:"6,optional,FugitiveRoomMetrics" json:"fugitive,omitempty"`
+	Warchest   *WarChestRoomMetrics   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
+	Quoridor   *QuoridorRoomMetrics   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
+	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1314,6 +1380,15 @@ func (p *RoomMetrics) GetQuoridor() (v *QuoridorRoomMetrics) {
 	}
 	return p.Quoridor
 }
+
+var RoomMetrics_Loveletter_DEFAULT *LoveLetterRoomMetrics
+
+func (p *RoomMetrics) GetLoveletter() (v *LoveLetterRoomMetrics) {
+	if !p.IsSetLoveletter() {
+		return RoomMetrics_Loveletter_DEFAULT
+	}
+	return p.Loveletter
+}
 func (p *RoomMetrics) SetAcquire(val *AcquireRoomMetrics) {
 	p.Acquire = val
 }
@@ -1337,6 +1412,9 @@ func (p *RoomMetrics) SetWarchest(val *WarChestRoomMetrics) {
 }
 func (p *RoomMetrics) SetQuoridor(val *QuoridorRoomMetrics) {
 	p.Quoridor = val
+}
+func (p *RoomMetrics) SetLoveletter(val *LoveLetterRoomMetrics) {
+	p.Loveletter = val
 }
 
 func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
@@ -1363,6 +1441,9 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetQuoridor() {
+		count++
+	}
+	if p.IsSetLoveletter() {
 		count++
 	}
 	return count
@@ -1400,6 +1481,10 @@ func (p *RoomMetrics) IsSetQuoridor() bool {
 	return p.Quoridor != nil
 }
 
+func (p *RoomMetrics) IsSetLoveletter() bool {
+	return p.Loveletter != nil
+}
+
 func (p *RoomMetrics) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1416,4 +1501,5 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	6: "fugitive",
 	7: "warchest",
 	8: "quoridor",
+	9: "loveletter",
 }

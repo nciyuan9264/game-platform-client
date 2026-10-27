@@ -7488,6 +7488,20 @@ func (p *ReplaySnapshot) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 7:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField7(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -7578,6 +7592,18 @@ func (p *ReplaySnapshot) FastReadField6(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *ReplaySnapshot) FastReadField7(buf []byte) (int, error) {
+	offset := 0
+	_field := NewLoveLetterReplaySnapshot()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Loveletter = _field
+	return offset, nil
+}
+
 func (p *ReplaySnapshot) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -7597,6 +7623,7 @@ func (p *ReplaySnapshot) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int 
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
+		offset += p.fastWriteField7(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -7619,6 +7646,7 @@ func (p *ReplaySnapshot) BLength() int {
 		l += p.field4Length()
 		l += p.field5Length()
 		l += p.field6Length()
+		l += p.field7Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -7680,6 +7708,15 @@ func (p *ReplaySnapshot) fastWriteField6(buf []byte, w thrift.NocopyWriter) int 
 	return offset
 }
 
+func (p *ReplaySnapshot) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetLoveletter() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 7)
+		offset += p.Loveletter.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *ReplaySnapshot) field1Length() int {
 	l := 0
 	if p.IsSetAcquire() {
@@ -7730,6 +7767,15 @@ func (p *ReplaySnapshot) field6Length() int {
 	if p.IsSetQuoridor() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Quoridor.BLength()
+	}
+	return l
+}
+
+func (p *ReplaySnapshot) field7Length() int {
+	l := 0
+	if p.IsSetLoveletter() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Loveletter.BLength()
 	}
 	return l
 }

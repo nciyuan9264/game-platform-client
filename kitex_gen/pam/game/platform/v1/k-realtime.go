@@ -3509,6 +3509,20 @@ func (p *ClientCommandPayload) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 10:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField10(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3635,6 +3649,18 @@ func (p *ClientCommandPayload) FastReadField9(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *ClientCommandPayload) FastReadField10(buf []byte) (int, error) {
+	offset := 0
+	_field := NewLoveLetterCommandPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Loveletter = _field
+	return offset, nil
+}
+
 func (p *ClientCommandPayload) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -3657,6 +3683,7 @@ func (p *ClientCommandPayload) FastWriteNocopy(buf []byte, w thrift.NocopyWriter
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
+		offset += p.fastWriteField10(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3682,6 +3709,7 @@ func (p *ClientCommandPayload) BLength() int {
 		l += p.field7Length()
 		l += p.field8Length()
 		l += p.field9Length()
+		l += p.field10Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3770,6 +3798,15 @@ func (p *ClientCommandPayload) fastWriteField9(buf []byte, w thrift.NocopyWriter
 	return offset
 }
 
+func (p *ClientCommandPayload) fastWriteField10(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetLoveletter() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 10)
+		offset += p.Loveletter.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *ClientCommandPayload) field1Length() int {
 	l := 0
 	if p.IsSetCommon() {
@@ -3847,6 +3884,15 @@ func (p *ClientCommandPayload) field9Length() int {
 	if p.IsSetQuoridor() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Quoridor.BLength()
+	}
+	return l
+}
+
+func (p *ClientCommandPayload) field10Length() int {
+	l := 0
+	if p.IsSetLoveletter() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Loveletter.BLength()
 	}
 	return l
 }
@@ -4097,6 +4143,20 @@ func (p *RoomView) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 9:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField9(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -4211,6 +4271,18 @@ func (p *RoomView) FastReadField8(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *RoomView) FastReadField9(buf []byte) (int, error) {
+	offset := 0
+	_field := NewLoveLetterRoomView()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Loveletter = _field
+	return offset, nil
+}
+
 func (p *RoomView) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -4232,6 +4304,7 @@ func (p *RoomView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField7(buf[offset:], w)
 		offset += p.fastWriteField8(buf[offset:], w)
+		offset += p.fastWriteField9(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4256,6 +4329,7 @@ func (p *RoomView) BLength() int {
 		l += p.field6Length()
 		l += p.field7Length()
 		l += p.field8Length()
+		l += p.field9Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -4335,6 +4409,15 @@ func (p *RoomView) fastWriteField8(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
+func (p *RoomView) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetLoveletter() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 9)
+		offset += p.Loveletter.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *RoomView) field1Length() int {
 	l := 0
 	if p.IsSetAcquire() {
@@ -4403,6 +4486,15 @@ func (p *RoomView) field8Length() int {
 	if p.IsSetQuoridor() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Quoridor.BLength()
+	}
+	return l
+}
+
+func (p *RoomView) field9Length() int {
+	l := 0
+	if p.IsSetLoveletter() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Loveletter.BLength()
 	}
 	return l
 }

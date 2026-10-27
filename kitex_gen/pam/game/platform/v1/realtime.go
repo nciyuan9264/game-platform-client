@@ -867,6 +867,7 @@ type ClientCommandPayload struct {
 	Warchest   *WarChestCommandPayload   `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
 	Quoridor   *QuoridorCommandPayload   `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterCommandPayload `thrift:"loveletter,10,optional" frugal:"10,optional,LoveLetterCommandPayload" json:"loveletter,omitempty"`
+	Onitama    *OnitamaCommandPayload    `thrift:"onitama,11,optional" frugal:"11,optional,OnitamaCommandPayload" json:"onitama,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -965,6 +966,15 @@ func (p *ClientCommandPayload) GetLoveletter() (v *LoveLetterCommandPayload) {
 	}
 	return p.Loveletter
 }
+
+var ClientCommandPayload_Onitama_DEFAULT *OnitamaCommandPayload
+
+func (p *ClientCommandPayload) GetOnitama() (v *OnitamaCommandPayload) {
+	if !p.IsSetOnitama() {
+		return ClientCommandPayload_Onitama_DEFAULT
+	}
+	return p.Onitama
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -994,6 +1004,9 @@ func (p *ClientCommandPayload) SetQuoridor(val *QuoridorCommandPayload) {
 }
 func (p *ClientCommandPayload) SetLoveletter(val *LoveLetterCommandPayload) {
 	p.Loveletter = val
+}
+func (p *ClientCommandPayload) SetOnitama(val *OnitamaCommandPayload) {
+	p.Onitama = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -1026,6 +1039,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetOnitama() {
 		count++
 	}
 	return count
@@ -1071,6 +1087,10 @@ func (p *ClientCommandPayload) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *ClientCommandPayload) IsSetOnitama() bool {
+	return p.Onitama != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1089,6 +1109,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	8:  "warchest",
 	9:  "quoridor",
 	10: "loveletter",
+	11: "onitama",
 }
 
 type MatchSetupView struct {
@@ -1147,6 +1168,7 @@ type RoomView struct {
 	Warchest   *WarChestRoomView   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomView   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomView `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomView" json:"loveletter,omitempty"`
+	Onitama    *OnitamaRoomView    `thrift:"onitama,10,optional" frugal:"10,optional,OnitamaRoomView" json:"onitama,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1236,6 +1258,15 @@ func (p *RoomView) GetLoveletter() (v *LoveLetterRoomView) {
 	}
 	return p.Loveletter
 }
+
+var RoomView_Onitama_DEFAULT *OnitamaRoomView
+
+func (p *RoomView) GetOnitama() (v *OnitamaRoomView) {
+	if !p.IsSetOnitama() {
+		return RoomView_Onitama_DEFAULT
+	}
+	return p.Onitama
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1262,6 +1293,9 @@ func (p *RoomView) SetQuoridor(val *QuoridorRoomView) {
 }
 func (p *RoomView) SetLoveletter(val *LoveLetterRoomView) {
 	p.Loveletter = val
+}
+func (p *RoomView) SetOnitama(val *OnitamaRoomView) {
+	p.Onitama = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1291,6 +1325,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetOnitama() {
 		count++
 	}
 	return count
@@ -1332,6 +1369,10 @@ func (p *RoomView) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomView) IsSetOnitama() bool {
+	return p.Onitama != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1340,15 +1381,16 @@ func (p *RoomView) String() string {
 }
 
 var fieldIDToName_RoomView = map[int16]string{
-	1: "acquire",
-	2: "davinci",
-	3: "splendor",
-	4: "yinsh",
-	5: "othello",
-	6: "fugitive",
-	7: "warchest",
-	8: "quoridor",
-	9: "loveletter",
+	1:  "acquire",
+	2:  "davinci",
+	3:  "splendor",
+	4:  "yinsh",
+	5:  "othello",
+	6:  "fugitive",
+	7:  "warchest",
+	8:  "quoridor",
+	9:  "loveletter",
+	10: "onitama",
 }
 
 type ServerMessage struct {

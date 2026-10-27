@@ -820,6 +820,44 @@ var fieldIDToName_QuoridorLeaderboardMetric = map[int16]string{
 	2: "winRate",
 }
 
+type OnitamaLeaderboardMetric struct {
+	Wins    int32   `thrift:"wins,1,required" frugal:"1,required,i32" json:"wins"`
+	WinRate float64 `thrift:"winRate,2,required" frugal:"2,required,double" json:"winRate"`
+}
+
+func NewOnitamaLeaderboardMetric() *OnitamaLeaderboardMetric {
+	return &OnitamaLeaderboardMetric{}
+}
+
+func (p *OnitamaLeaderboardMetric) InitDefault() {
+}
+
+func (p *OnitamaLeaderboardMetric) GetWins() (v int32) {
+	return p.Wins
+}
+
+func (p *OnitamaLeaderboardMetric) GetWinRate() (v float64) {
+	return p.WinRate
+}
+func (p *OnitamaLeaderboardMetric) SetWins(val int32) {
+	p.Wins = val
+}
+func (p *OnitamaLeaderboardMetric) SetWinRate(val float64) {
+	p.WinRate = val
+}
+
+func (p *OnitamaLeaderboardMetric) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OnitamaLeaderboardMetric(%+v)", *p)
+}
+
+var fieldIDToName_OnitamaLeaderboardMetric = map[int16]string{
+	1: "wins",
+	2: "winRate",
+}
+
 type LeaderboardEntry struct {
 	UserID      int64              `thrift:"userID,1,required" frugal:"1,required,i64" json:"userID"`
 	PlayerID    string             `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
@@ -1825,6 +1863,7 @@ type LeaderboardMetric struct {
 	Fugitive *FugitiveLeaderboardMetric `thrift:"fugitive,5,optional" frugal:"5,optional,FugitiveLeaderboardMetric" json:"fugitive,omitempty"`
 	Warchest *WarChestLeaderboardMetric `thrift:"warchest,6,optional" frugal:"6,optional,WarChestLeaderboardMetric" json:"warchest,omitempty"`
 	Quoridor *QuoridorLeaderboardMetric `thrift:"quoridor,7,optional" frugal:"7,optional,QuoridorLeaderboardMetric" json:"quoridor,omitempty"`
+	Onitama  *OnitamaLeaderboardMetric  `thrift:"onitama,8,optional" frugal:"8,optional,OnitamaLeaderboardMetric" json:"onitama,omitempty"`
 }
 
 func NewLeaderboardMetric() *LeaderboardMetric {
@@ -1896,6 +1935,15 @@ func (p *LeaderboardMetric) GetQuoridor() (v *QuoridorLeaderboardMetric) {
 	}
 	return p.Quoridor
 }
+
+var LeaderboardMetric_Onitama_DEFAULT *OnitamaLeaderboardMetric
+
+func (p *LeaderboardMetric) GetOnitama() (v *OnitamaLeaderboardMetric) {
+	if !p.IsSetOnitama() {
+		return LeaderboardMetric_Onitama_DEFAULT
+	}
+	return p.Onitama
+}
 func (p *LeaderboardMetric) SetDavinci(val *DavinciLeaderboardMetric) {
 	p.Davinci = val
 }
@@ -1916,6 +1964,9 @@ func (p *LeaderboardMetric) SetWarchest(val *WarChestLeaderboardMetric) {
 }
 func (p *LeaderboardMetric) SetQuoridor(val *QuoridorLeaderboardMetric) {
 	p.Quoridor = val
+}
+func (p *LeaderboardMetric) SetOnitama(val *OnitamaLeaderboardMetric) {
+	p.Onitama = val
 }
 
 func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
@@ -1939,6 +1990,9 @@ func (p *LeaderboardMetric) CountSetFieldsLeaderboardMetric() int {
 		count++
 	}
 	if p.IsSetQuoridor() {
+		count++
+	}
+	if p.IsSetOnitama() {
 		count++
 	}
 	return count
@@ -1972,6 +2026,10 @@ func (p *LeaderboardMetric) IsSetQuoridor() bool {
 	return p.Quoridor != nil
 }
 
+func (p *LeaderboardMetric) IsSetOnitama() bool {
+	return p.Onitama != nil
+}
+
 func (p *LeaderboardMetric) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1987,6 +2045,7 @@ var fieldIDToName_LeaderboardMetric = map[int16]string{
 	5: "fugitive",
 	6: "warchest",
 	7: "quoridor",
+	8: "onitama",
 }
 
 type ReplaySnapshot struct {
@@ -1997,6 +2056,7 @@ type ReplaySnapshot struct {
 	Warchest   *WarChestReplaySnapshot   `thrift:"warchest,5,optional" frugal:"5,optional,WarChestReplaySnapshot" json:"warchest,omitempty"`
 	Quoridor   *QuoridorReplaySnapshot   `thrift:"quoridor,6,optional" frugal:"6,optional,QuoridorReplaySnapshot" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterReplaySnapshot `thrift:"loveletter,7,optional" frugal:"7,optional,LoveLetterReplaySnapshot" json:"loveletter,omitempty"`
+	Onitama    *OnitamaReplaySnapshot    `thrift:"onitama,8,optional" frugal:"8,optional,OnitamaReplaySnapshot" json:"onitama,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2068,6 +2128,15 @@ func (p *ReplaySnapshot) GetLoveletter() (v *LoveLetterReplaySnapshot) {
 	}
 	return p.Loveletter
 }
+
+var ReplaySnapshot_Onitama_DEFAULT *OnitamaReplaySnapshot
+
+func (p *ReplaySnapshot) GetOnitama() (v *OnitamaReplaySnapshot) {
+	if !p.IsSetOnitama() {
+		return ReplaySnapshot_Onitama_DEFAULT
+	}
+	return p.Onitama
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2088,6 +2157,9 @@ func (p *ReplaySnapshot) SetQuoridor(val *QuoridorReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetLoveletter(val *LoveLetterReplaySnapshot) {
 	p.Loveletter = val
+}
+func (p *ReplaySnapshot) SetOnitama(val *OnitamaReplaySnapshot) {
+	p.Onitama = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2111,6 +2183,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetOnitama() {
 		count++
 	}
 	return count
@@ -2144,6 +2219,10 @@ func (p *ReplaySnapshot) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *ReplaySnapshot) IsSetOnitama() bool {
+	return p.Onitama != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2159,4 +2238,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	5: "warchest",
 	6: "quoridor",
 	7: "loveletter",
+	8: "onitama",
 }

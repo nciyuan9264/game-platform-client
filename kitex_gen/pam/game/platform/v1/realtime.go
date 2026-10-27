@@ -867,6 +867,7 @@ type ClientCommandPayload struct {
 	Warchest   *WarChestCommandPayload   `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
 	Quoridor   *QuoridorCommandPayload   `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterCommandPayload `thrift:"loveletter,10,optional" frugal:"10,optional,LoveLetterCommandPayload" json:"loveletter,omitempty"`
+	Sixnimmt   *SixNimmtCommandPayload   `thrift:"sixnimmt,11,optional" frugal:"11,optional,SixNimmtCommandPayload" json:"sixnimmt,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -965,6 +966,15 @@ func (p *ClientCommandPayload) GetLoveletter() (v *LoveLetterCommandPayload) {
 	}
 	return p.Loveletter
 }
+
+var ClientCommandPayload_Sixnimmt_DEFAULT *SixNimmtCommandPayload
+
+func (p *ClientCommandPayload) GetSixnimmt() (v *SixNimmtCommandPayload) {
+	if !p.IsSetSixnimmt() {
+		return ClientCommandPayload_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
 func (p *ClientCommandPayload) SetCommon(val *CommonCommandPayload) {
 	p.Common = val
 }
@@ -994,6 +1004,9 @@ func (p *ClientCommandPayload) SetQuoridor(val *QuoridorCommandPayload) {
 }
 func (p *ClientCommandPayload) SetLoveletter(val *LoveLetterCommandPayload) {
 	p.Loveletter = val
+}
+func (p *ClientCommandPayload) SetSixnimmt(val *SixNimmtCommandPayload) {
+	p.Sixnimmt = val
 }
 
 func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
@@ -1026,6 +1039,9 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
 		count++
 	}
 	return count
@@ -1071,6 +1087,10 @@ func (p *ClientCommandPayload) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *ClientCommandPayload) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
 func (p *ClientCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1089,6 +1109,7 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	8:  "warchest",
 	9:  "quoridor",
 	10: "loveletter",
+	11: "sixnimmt",
 }
 
 type MatchSetupView struct {
@@ -1147,6 +1168,7 @@ type RoomView struct {
 	Warchest   *WarChestRoomView   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomView   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomView `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomView" json:"loveletter,omitempty"`
+	Sixnimmt   *SixNimmtRoomView   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomView" json:"sixnimmt,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1236,6 +1258,15 @@ func (p *RoomView) GetLoveletter() (v *LoveLetterRoomView) {
 	}
 	return p.Loveletter
 }
+
+var RoomView_Sixnimmt_DEFAULT *SixNimmtRoomView
+
+func (p *RoomView) GetSixnimmt() (v *SixNimmtRoomView) {
+	if !p.IsSetSixnimmt() {
+		return RoomView_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
 func (p *RoomView) SetAcquire(val *AcquireRoomView) {
 	p.Acquire = val
 }
@@ -1262,6 +1293,9 @@ func (p *RoomView) SetQuoridor(val *QuoridorRoomView) {
 }
 func (p *RoomView) SetLoveletter(val *LoveLetterRoomView) {
 	p.Loveletter = val
+}
+func (p *RoomView) SetSixnimmt(val *SixNimmtRoomView) {
+	p.Sixnimmt = val
 }
 
 func (p *RoomView) CountSetFieldsRoomView() int {
@@ -1291,6 +1325,9 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
 		count++
 	}
 	return count
@@ -1332,6 +1369,10 @@ func (p *RoomView) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomView) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
 func (p *RoomView) String() string {
 	if p == nil {
 		return "<nil>"
@@ -1340,15 +1381,16 @@ func (p *RoomView) String() string {
 }
 
 var fieldIDToName_RoomView = map[int16]string{
-	1: "acquire",
-	2: "davinci",
-	3: "splendor",
-	4: "yinsh",
-	5: "othello",
-	6: "fugitive",
-	7: "warchest",
-	8: "quoridor",
-	9: "loveletter",
+	1:  "acquire",
+	2:  "davinci",
+	3:  "splendor",
+	4:  "yinsh",
+	5:  "othello",
+	6:  "fugitive",
+	7:  "warchest",
+	8:  "quoridor",
+	9:  "loveletter",
+	10: "sixnimmt",
 }
 
 type ServerMessage struct {

@@ -1997,6 +1997,7 @@ type ReplaySnapshot struct {
 	Warchest   *WarChestReplaySnapshot   `thrift:"warchest,5,optional" frugal:"5,optional,WarChestReplaySnapshot" json:"warchest,omitempty"`
 	Quoridor   *QuoridorReplaySnapshot   `thrift:"quoridor,6,optional" frugal:"6,optional,QuoridorReplaySnapshot" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterReplaySnapshot `thrift:"loveletter,7,optional" frugal:"7,optional,LoveLetterReplaySnapshot" json:"loveletter,omitempty"`
+	Sixnimmt   *SixNimmtReplaySnapshot   `thrift:"sixnimmt,8,optional" frugal:"8,optional,SixNimmtReplaySnapshot" json:"sixnimmt,omitempty"`
 }
 
 func NewReplaySnapshot() *ReplaySnapshot {
@@ -2068,6 +2069,15 @@ func (p *ReplaySnapshot) GetLoveletter() (v *LoveLetterReplaySnapshot) {
 	}
 	return p.Loveletter
 }
+
+var ReplaySnapshot_Sixnimmt_DEFAULT *SixNimmtReplaySnapshot
+
+func (p *ReplaySnapshot) GetSixnimmt() (v *SixNimmtReplaySnapshot) {
+	if !p.IsSetSixnimmt() {
+		return ReplaySnapshot_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
 func (p *ReplaySnapshot) SetAcquire(val *AcquireReplaySnapshot) {
 	p.Acquire = val
 }
@@ -2088,6 +2098,9 @@ func (p *ReplaySnapshot) SetQuoridor(val *QuoridorReplaySnapshot) {
 }
 func (p *ReplaySnapshot) SetLoveletter(val *LoveLetterReplaySnapshot) {
 	p.Loveletter = val
+}
+func (p *ReplaySnapshot) SetSixnimmt(val *SixNimmtReplaySnapshot) {
+	p.Sixnimmt = val
 }
 
 func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
@@ -2111,6 +2124,9 @@ func (p *ReplaySnapshot) CountSetFieldsReplaySnapshot() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
 		count++
 	}
 	return count
@@ -2144,6 +2160,10 @@ func (p *ReplaySnapshot) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *ReplaySnapshot) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
 func (p *ReplaySnapshot) String() string {
 	if p == nil {
 		return "<nil>"
@@ -2159,4 +2179,5 @@ var fieldIDToName_ReplaySnapshot = map[int16]string{
 	5: "warchest",
 	6: "quoridor",
 	7: "loveletter",
+	8: "sixnimmt",
 }

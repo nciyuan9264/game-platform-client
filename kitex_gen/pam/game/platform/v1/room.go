@@ -566,6 +566,91 @@ var fieldIDToName_LoveLetterRoomMetrics = map[int16]string{
 	5: "progressTotal",
 }
 
+type SixNimmtRoomMetrics struct {
+	MaxPenalty      int32 `thrift:"maxPenalty,1,required" frugal:"1,required,i32" json:"maxPenalty"`
+	TargetPenalty   int32 `thrift:"targetPenalty,2,required" frugal:"2,required,i32" json:"targetPenalty"`
+	ProgressCurrent int32 `thrift:"progressCurrent,3,required" frugal:"3,required,i32" json:"progressCurrent"`
+	ProgressTotal   int32 `thrift:"progressTotal,4,required" frugal:"4,required,i32" json:"progressTotal"`
+}
+
+func NewSixNimmtRoomMetrics() *SixNimmtRoomMetrics {
+	return &SixNimmtRoomMetrics{}
+}
+
+func (p *SixNimmtRoomMetrics) InitDefault() {
+}
+
+func (p *SixNimmtRoomMetrics) GetMaxPenalty() (v int32) {
+	return p.MaxPenalty
+}
+
+func (p *SixNimmtRoomMetrics) GetTargetPenalty() (v int32) {
+	return p.TargetPenalty
+}
+
+func (p *SixNimmtRoomMetrics) GetProgressCurrent() (v int32) {
+	return p.ProgressCurrent
+}
+
+func (p *SixNimmtRoomMetrics) GetProgressTotal() (v int32) {
+	return p.ProgressTotal
+}
+func (p *SixNimmtRoomMetrics) SetMaxPenalty(val int32) {
+	p.MaxPenalty = val
+}
+func (p *SixNimmtRoomMetrics) SetTargetPenalty(val int32) {
+	p.TargetPenalty = val
+}
+func (p *SixNimmtRoomMetrics) SetProgressCurrent(val int32) {
+	p.ProgressCurrent = val
+}
+func (p *SixNimmtRoomMetrics) SetProgressTotal(val int32) {
+	p.ProgressTotal = val
+}
+
+func (p *SixNimmtRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("SixNimmtRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_SixNimmtRoomMetrics = map[int16]string{
+	1: "maxPenalty",
+	2: "targetPenalty",
+	3: "progressCurrent",
+	4: "progressTotal",
+}
+
+type HexRoomMetrics struct {
+	TurnCount int32 `thrift:"turnCount,1,required" frugal:"1,required,i32" json:"turnCount"`
+}
+
+func NewHexRoomMetrics() *HexRoomMetrics {
+	return &HexRoomMetrics{}
+}
+
+func (p *HexRoomMetrics) InitDefault() {
+}
+
+func (p *HexRoomMetrics) GetTurnCount() (v int32) {
+	return p.TurnCount
+}
+func (p *HexRoomMetrics) SetTurnCount(val int32) {
+	p.TurnCount = val
+}
+
+func (p *HexRoomMetrics) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("HexRoomMetrics(%+v)", *p)
+}
+
+var fieldIDToName_HexRoomMetrics = map[int16]string{
+	1: "turnCount",
+}
+
 type ForSaleRoomMetrics struct {
 	ProgressCurrent int32 `thrift:"progressCurrent,1,required" frugal:"1,required,i32" json:"progressCurrent"`
 	ProgressTotal   int32 `thrift:"progressTotal,2,required" frugal:"2,required,i32" json:"progressTotal"`
@@ -1338,7 +1423,9 @@ type RoomMetrics struct {
 	Warchest   *WarChestRoomMetrics   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomMetrics" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomMetrics   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomMetrics" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomMetrics `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomMetrics" json:"loveletter,omitempty"`
-	ForSale    *ForSaleRoomMetrics    `thrift:"forSale,10,optional" frugal:"10,optional,ForSaleRoomMetrics" json:"forSale,omitempty"`
+	Sixnimmt   *SixNimmtRoomMetrics   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomMetrics" json:"sixnimmt,omitempty"`
+	Hex        *HexRoomMetrics        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomMetrics" json:"hex,omitempty"`
+	ForSale    *ForSaleRoomMetrics    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomMetrics" json:"forSale,omitempty"`
 }
 
 func NewRoomMetrics() *RoomMetrics {
@@ -1429,6 +1516,24 @@ func (p *RoomMetrics) GetLoveletter() (v *LoveLetterRoomMetrics) {
 	return p.Loveletter
 }
 
+var RoomMetrics_Sixnimmt_DEFAULT *SixNimmtRoomMetrics
+
+func (p *RoomMetrics) GetSixnimmt() (v *SixNimmtRoomMetrics) {
+	if !p.IsSetSixnimmt() {
+		return RoomMetrics_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
+
+var RoomMetrics_Hex_DEFAULT *HexRoomMetrics
+
+func (p *RoomMetrics) GetHex() (v *HexRoomMetrics) {
+	if !p.IsSetHex() {
+		return RoomMetrics_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
 var RoomMetrics_ForSale_DEFAULT *ForSaleRoomMetrics
 
 func (p *RoomMetrics) GetForSale() (v *ForSaleRoomMetrics) {
@@ -1464,6 +1569,12 @@ func (p *RoomMetrics) SetQuoridor(val *QuoridorRoomMetrics) {
 func (p *RoomMetrics) SetLoveletter(val *LoveLetterRoomMetrics) {
 	p.Loveletter = val
 }
+func (p *RoomMetrics) SetSixnimmt(val *SixNimmtRoomMetrics) {
+	p.Sixnimmt = val
+}
+func (p *RoomMetrics) SetHex(val *HexRoomMetrics) {
+	p.Hex = val
+}
 func (p *RoomMetrics) SetForSale(val *ForSaleRoomMetrics) {
 	p.ForSale = val
 }
@@ -1495,6 +1606,12 @@ func (p *RoomMetrics) CountSetFieldsRoomMetrics() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
 		count++
 	}
 	if p.IsSetForSale() {
@@ -1539,6 +1656,14 @@ func (p *RoomMetrics) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomMetrics) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
+func (p *RoomMetrics) IsSetHex() bool {
+	return p.Hex != nil
+}
+
 func (p *RoomMetrics) IsSetForSale() bool {
 	return p.ForSale != nil
 }
@@ -1560,5 +1685,7 @@ var fieldIDToName_RoomMetrics = map[int16]string{
 	7:  "warchest",
 	8:  "quoridor",
 	9:  "loveletter",
-	10: "forSale",
+	10: "sixnimmt",
+	11: "hex",
+	12: "forSale",
 }

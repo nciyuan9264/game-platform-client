@@ -867,7 +867,9 @@ type ClientCommandPayload struct {
 	Warchest   *WarChestCommandPayload   `thrift:"warchest,8,optional" frugal:"8,optional,WarChestCommandPayload" json:"warchest,omitempty"`
 	Quoridor   *QuoridorCommandPayload   `thrift:"quoridor,9,optional" frugal:"9,optional,QuoridorCommandPayload" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterCommandPayload `thrift:"loveletter,10,optional" frugal:"10,optional,LoveLetterCommandPayload" json:"loveletter,omitempty"`
-	ForSale    *ForSaleCommandPayload    `thrift:"forSale,11,optional" frugal:"11,optional,ForSaleCommandPayload" json:"forSale,omitempty"`
+	Sixnimmt   *SixNimmtCommandPayload   `thrift:"sixnimmt,11,optional" frugal:"11,optional,SixNimmtCommandPayload" json:"sixnimmt,omitempty"`
+	Hex        *HexCommandPayload        `thrift:"hex,12,optional" frugal:"12,optional,HexCommandPayload" json:"hex,omitempty"`
+	ForSale    *ForSaleCommandPayload    `thrift:"forSale,13,optional" frugal:"13,optional,ForSaleCommandPayload" json:"forSale,omitempty"`
 }
 
 func NewClientCommandPayload() *ClientCommandPayload {
@@ -967,6 +969,24 @@ func (p *ClientCommandPayload) GetLoveletter() (v *LoveLetterCommandPayload) {
 	return p.Loveletter
 }
 
+var ClientCommandPayload_Sixnimmt_DEFAULT *SixNimmtCommandPayload
+
+func (p *ClientCommandPayload) GetSixnimmt() (v *SixNimmtCommandPayload) {
+	if !p.IsSetSixnimmt() {
+		return ClientCommandPayload_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
+
+var ClientCommandPayload_Hex_DEFAULT *HexCommandPayload
+
+func (p *ClientCommandPayload) GetHex() (v *HexCommandPayload) {
+	if !p.IsSetHex() {
+		return ClientCommandPayload_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
 var ClientCommandPayload_ForSale_DEFAULT *ForSaleCommandPayload
 
 func (p *ClientCommandPayload) GetForSale() (v *ForSaleCommandPayload) {
@@ -1005,6 +1025,12 @@ func (p *ClientCommandPayload) SetQuoridor(val *QuoridorCommandPayload) {
 func (p *ClientCommandPayload) SetLoveletter(val *LoveLetterCommandPayload) {
 	p.Loveletter = val
 }
+func (p *ClientCommandPayload) SetSixnimmt(val *SixNimmtCommandPayload) {
+	p.Sixnimmt = val
+}
+func (p *ClientCommandPayload) SetHex(val *HexCommandPayload) {
+	p.Hex = val
+}
 func (p *ClientCommandPayload) SetForSale(val *ForSaleCommandPayload) {
 	p.ForSale = val
 }
@@ -1039,6 +1065,12 @@ func (p *ClientCommandPayload) CountSetFieldsClientCommandPayload() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
 		count++
 	}
 	if p.IsSetForSale() {
@@ -1087,6 +1119,14 @@ func (p *ClientCommandPayload) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *ClientCommandPayload) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
+func (p *ClientCommandPayload) IsSetHex() bool {
+	return p.Hex != nil
+}
+
 func (p *ClientCommandPayload) IsSetForSale() bool {
 	return p.ForSale != nil
 }
@@ -1109,7 +1149,9 @@ var fieldIDToName_ClientCommandPayload = map[int16]string{
 	8:  "warchest",
 	9:  "quoridor",
 	10: "loveletter",
-	11: "forSale",
+	11: "sixnimmt",
+	12: "hex",
+	13: "forSale",
 }
 
 type MatchSetupView struct {
@@ -1168,7 +1210,9 @@ type RoomView struct {
 	Warchest   *WarChestRoomView   `thrift:"warchest,7,optional" frugal:"7,optional,WarChestRoomView" json:"warchest,omitempty"`
 	Quoridor   *QuoridorRoomView   `thrift:"quoridor,8,optional" frugal:"8,optional,QuoridorRoomView" json:"quoridor,omitempty"`
 	Loveletter *LoveLetterRoomView `thrift:"loveletter,9,optional" frugal:"9,optional,LoveLetterRoomView" json:"loveletter,omitempty"`
-	ForSale    *ForSaleRoomView    `thrift:"forSale,10,optional" frugal:"10,optional,ForSaleRoomView" json:"forSale,omitempty"`
+	Sixnimmt   *SixNimmtRoomView   `thrift:"sixnimmt,10,optional" frugal:"10,optional,SixNimmtRoomView" json:"sixnimmt,omitempty"`
+	Hex        *HexRoomView        `thrift:"hex,11,optional" frugal:"11,optional,HexRoomView" json:"hex,omitempty"`
+	ForSale    *ForSaleRoomView    `thrift:"forSale,12,optional" frugal:"12,optional,ForSaleRoomView" json:"forSale,omitempty"`
 }
 
 func NewRoomView() *RoomView {
@@ -1259,6 +1303,24 @@ func (p *RoomView) GetLoveletter() (v *LoveLetterRoomView) {
 	return p.Loveletter
 }
 
+var RoomView_Sixnimmt_DEFAULT *SixNimmtRoomView
+
+func (p *RoomView) GetSixnimmt() (v *SixNimmtRoomView) {
+	if !p.IsSetSixnimmt() {
+		return RoomView_Sixnimmt_DEFAULT
+	}
+	return p.Sixnimmt
+}
+
+var RoomView_Hex_DEFAULT *HexRoomView
+
+func (p *RoomView) GetHex() (v *HexRoomView) {
+	if !p.IsSetHex() {
+		return RoomView_Hex_DEFAULT
+	}
+	return p.Hex
+}
+
 var RoomView_ForSale_DEFAULT *ForSaleRoomView
 
 func (p *RoomView) GetForSale() (v *ForSaleRoomView) {
@@ -1294,6 +1356,12 @@ func (p *RoomView) SetQuoridor(val *QuoridorRoomView) {
 func (p *RoomView) SetLoveletter(val *LoveLetterRoomView) {
 	p.Loveletter = val
 }
+func (p *RoomView) SetSixnimmt(val *SixNimmtRoomView) {
+	p.Sixnimmt = val
+}
+func (p *RoomView) SetHex(val *HexRoomView) {
+	p.Hex = val
+}
 func (p *RoomView) SetForSale(val *ForSaleRoomView) {
 	p.ForSale = val
 }
@@ -1325,6 +1393,12 @@ func (p *RoomView) CountSetFieldsRoomView() int {
 		count++
 	}
 	if p.IsSetLoveletter() {
+		count++
+	}
+	if p.IsSetSixnimmt() {
+		count++
+	}
+	if p.IsSetHex() {
 		count++
 	}
 	if p.IsSetForSale() {
@@ -1369,6 +1443,14 @@ func (p *RoomView) IsSetLoveletter() bool {
 	return p.Loveletter != nil
 }
 
+func (p *RoomView) IsSetSixnimmt() bool {
+	return p.Sixnimmt != nil
+}
+
+func (p *RoomView) IsSetHex() bool {
+	return p.Hex != nil
+}
+
 func (p *RoomView) IsSetForSale() bool {
 	return p.ForSale != nil
 }
@@ -1390,7 +1472,9 @@ var fieldIDToName_RoomView = map[int16]string{
 	7:  "warchest",
 	8:  "quoridor",
 	9:  "loveletter",
-	10: "forSale",
+	10: "sixnimmt",
+	11: "hex",
+	12: "forSale",
 }
 
 type ServerMessage struct {

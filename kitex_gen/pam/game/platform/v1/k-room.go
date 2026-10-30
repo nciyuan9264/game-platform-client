@@ -3867,20 +3867,6 @@ func (p *RoomInfo) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
-		case 16:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField16(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
 		case 17:
 			if fieldTypeId == thrift.I32 {
 				l, err = p.FastReadField17(buf[offset:])
@@ -4208,20 +4194,6 @@ func (p *RoomInfo) FastReadField15(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *RoomInfo) FastReadField16(buf []byte) (int, error) {
-	offset := 0
-
-	var _field *string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = &v
-	}
-	p.DisplayName = _field
-	return offset, nil
-}
-
 func (p *RoomInfo) FastReadField17(buf []byte) (int, error) {
 	offset := 0
 
@@ -4259,7 +4231,6 @@ func (p *RoomInfo) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField13(buf[offset:], w)
 		offset += p.fastWriteField14(buf[offset:], w)
 		offset += p.fastWriteField15(buf[offset:], w)
-		offset += p.fastWriteField16(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4283,7 +4254,6 @@ func (p *RoomInfo) BLength() int {
 		l += p.field13Length()
 		l += p.field14Length()
 		l += p.field15Length()
-		l += p.field16Length()
 		l += p.field17Length()
 	}
 	l += thrift.Binary.FieldStopLength()
@@ -4399,15 +4369,6 @@ func (p *RoomInfo) fastWriteField15(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 15)
 	offset += p.Metrics.FastWriteNocopy(buf[offset:], w)
-	return offset
-}
-
-func (p *RoomInfo) fastWriteField16(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetDisplayName() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 16)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.DisplayName)
-	}
 	return offset
 }
 
@@ -4529,15 +4490,6 @@ func (p *RoomInfo) field15Length() int {
 	return l
 }
 
-func (p *RoomInfo) field16Length() int {
-	l := 0
-	if p.IsSetDisplayName() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.DisplayName)
-	}
-	return l
-}
-
 func (p *RoomInfo) field17Length() int {
 	l := 0
 	if p.IsSetTurnTimeoutSeconds() {
@@ -4617,20 +4569,6 @@ func (p *CreateRoomReq) FastRead(buf []byte) (int, error) {
 					goto ReadFieldError
 				}
 				issetRequestId = true
-			} else {
-				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
-				offset += l
-				if err != nil {
-					goto SkipFieldError
-				}
-			}
-		case 5:
-			if fieldTypeId == thrift.STRING {
-				l, err = p.FastReadField5(buf[offset:])
-				offset += l
-				if err != nil {
-					goto ReadFieldError
-				}
 			} else {
 				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 				offset += l
@@ -4737,20 +4675,6 @@ func (p *CreateRoomReq) FastReadField4(buf []byte) (int, error) {
 	return offset, nil
 }
 
-func (p *CreateRoomReq) FastReadField5(buf []byte) (int, error) {
-	offset := 0
-
-	var _field *string
-	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
-		return offset, err
-	} else {
-		offset += l
-		_field = &v
-	}
-	p.DisplayName = _field
-	return offset, nil
-}
-
 func (p *CreateRoomReq) FastReadField6(buf []byte) (int, error) {
 	offset := 0
 
@@ -4777,7 +4701,6 @@ func (p *CreateRoomReq) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
-		offset += p.fastWriteField5(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -4790,7 +4713,6 @@ func (p *CreateRoomReq) BLength() int {
 		l += p.field2Length()
 		l += p.field3Length()
 		l += p.field4Length()
-		l += p.field5Length()
 		l += p.field6Length()
 	}
 	l += thrift.Binary.FieldStopLength()
@@ -4826,15 +4748,6 @@ func (p *CreateRoomReq) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
 	offset := 0
 	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 4)
 	offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, p.RequestId)
-	return offset
-}
-
-func (p *CreateRoomReq) fastWriteField5(buf []byte, w thrift.NocopyWriter) int {
-	offset := 0
-	if p.IsSetDisplayName() {
-		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 5)
-		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.DisplayName)
-	}
 	return offset
 }
 
@@ -4876,15 +4789,6 @@ func (p *CreateRoomReq) field4Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
 	l += thrift.Binary.StringLengthNocopy(p.RequestId)
-	return l
-}
-
-func (p *CreateRoomReq) field5Length() int {
-	l := 0
-	if p.IsSetDisplayName() {
-		l += thrift.Binary.FieldBeginLength()
-		l += thrift.Binary.StringLengthNocopy(*p.DisplayName)
-	}
 	return l
 }
 

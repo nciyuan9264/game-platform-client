@@ -220,7 +220,6 @@ type HistoryGame struct {
 	CreatedAt       ISODateTime          `thrift:"createdAt,11,required" frugal:"11,required,string" json:"createdAt"`
 	UpdatedAt       ISODateTime          `thrift:"updatedAt,12,required" frugal:"12,required,string" json:"updatedAt"`
 	Players         []*HistoryGamePlayer `thrift:"players,13,optional" frugal:"13,optional,list<HistoryGamePlayer>" json:"players,omitempty"`
-	RoomDisplayName *string              `thrift:"roomDisplayName,14,optional" frugal:"14,optional,string" json:"roomDisplayName,omitempty"`
 }
 
 func NewHistoryGame() *HistoryGame {
@@ -306,15 +305,6 @@ func (p *HistoryGame) GetPlayers() (v []*HistoryGamePlayer) {
 	}
 	return p.Players
 }
-
-var HistoryGame_RoomDisplayName_DEFAULT string
-
-func (p *HistoryGame) GetRoomDisplayName() (v string) {
-	if !p.IsSetRoomDisplayName() {
-		return HistoryGame_RoomDisplayName_DEFAULT
-	}
-	return *p.RoomDisplayName
-}
 func (p *HistoryGame) SetId(val int64) {
 	p.Id = val
 }
@@ -354,9 +344,6 @@ func (p *HistoryGame) SetUpdatedAt(val ISODateTime) {
 func (p *HistoryGame) SetPlayers(val []*HistoryGamePlayer) {
 	p.Players = val
 }
-func (p *HistoryGame) SetRoomDisplayName(val *string) {
-	p.RoomDisplayName = val
-}
 
 func (p *HistoryGame) IsSetEndedAt() bool {
 	return p.EndedAt != nil
@@ -376,10 +363,6 @@ func (p *HistoryGame) IsSetEndReason() bool {
 
 func (p *HistoryGame) IsSetPlayers() bool {
 	return p.Players != nil
-}
-
-func (p *HistoryGame) IsSetRoomDisplayName() bool {
-	return p.RoomDisplayName != nil
 }
 
 func (p *HistoryGame) String() string {
@@ -403,7 +386,6 @@ var fieldIDToName_HistoryGame = map[int16]string{
 	11: "createdAt",
 	12: "updatedAt",
 	13: "players",
-	14: "roomDisplayName",
 }
 
 type HistoryEventMeta struct {

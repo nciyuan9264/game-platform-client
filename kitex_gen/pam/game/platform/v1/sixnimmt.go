@@ -778,6 +778,7 @@ type SixNimmtRoomData struct {
 	RoundTransitionDeadline *string                 `thrift:"roundTransitionDeadline,12,optional" frugal:"12,optional,string" json:"roundTransitionDeadline,omitempty"`
 	Players                 map[string]*RoomPlayer  `thrift:"players,13,required" frugal:"13,required,map<string:RoomPlayer>" json:"players"`
 	PlayerOrder             []string                `thrift:"playerOrder,14,required" frugal:"14,required,list<string>" json:"playerOrder"`
+	RevealDeadline          *string                 `thrift:"revealDeadline,15,optional" frugal:"15,optional,string" json:"revealDeadline,omitempty"`
 }
 
 func NewSixNimmtRoomData() *SixNimmtRoomData {
@@ -872,6 +873,15 @@ func (p *SixNimmtRoomData) GetPlayers() (v map[string]*RoomPlayer) {
 func (p *SixNimmtRoomData) GetPlayerOrder() (v []string) {
 	return p.PlayerOrder
 }
+
+var SixNimmtRoomData_RevealDeadline_DEFAULT string
+
+func (p *SixNimmtRoomData) GetRevealDeadline() (v string) {
+	if !p.IsSetRevealDeadline() {
+		return SixNimmtRoomData_RevealDeadline_DEFAULT
+	}
+	return *p.RevealDeadline
+}
 func (p *SixNimmtRoomData) SetGameStatus(val SixNimmtGameStatus) {
 	p.GameStatus = val
 }
@@ -914,6 +924,9 @@ func (p *SixNimmtRoomData) SetPlayers(val map[string]*RoomPlayer) {
 func (p *SixNimmtRoomData) SetPlayerOrder(val []string) {
 	p.PlayerOrder = val
 }
+func (p *SixNimmtRoomData) SetRevealDeadline(val *string) {
+	p.RevealDeadline = val
+}
 
 func (p *SixNimmtRoomData) IsSetLastResolution() bool {
 	return p.LastResolution != nil
@@ -939,6 +952,10 @@ func (p *SixNimmtRoomData) IsSetRoundTransitionDeadline() bool {
 	return p.RoundTransitionDeadline != nil
 }
 
+func (p *SixNimmtRoomData) IsSetRevealDeadline() bool {
+	return p.RevealDeadline != nil
+}
+
 func (p *SixNimmtRoomData) String() string {
 	if p == nil {
 		return "<nil>"
@@ -961,6 +978,7 @@ var fieldIDToName_SixNimmtRoomData = map[int16]string{
 	12: "roundTransitionDeadline",
 	13: "players",
 	14: "playerOrder",
+	15: "revealDeadline",
 }
 
 type SixNimmtRoomView struct {

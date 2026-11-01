@@ -2030,6 +2030,34 @@ func (p *ForSaleRoomData) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 18:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField18(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 19:
+			if fieldTypeId == thrift.I64 {
+				l, err = p.FastReadField19(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -2437,6 +2465,34 @@ func (p *ForSaleRoomData) FastReadField17(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *ForSaleRoomData) FastReadField18(buf []byte) (int, error) {
+	offset := 0
+
+	var _field *string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = &v
+	}
+	p.TurnDeadline = _field
+	return offset, nil
+}
+
+func (p *ForSaleRoomData) FastReadField19(buf []byte) (int, error) {
+	offset := 0
+
+	var _field *int64
+	if v, l, err := thrift.Binary.ReadI64(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = &v
+	}
+	p.TurnTimeoutMs = _field
+	return offset, nil
+}
+
 func (p *ForSaleRoomData) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -2449,6 +2505,7 @@ func (p *ForSaleRoomData) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 		offset += p.fastWriteField6(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
 		offset += p.fastWriteField15(buf[offset:], w)
+		offset += p.fastWriteField19(buf[offset:], w)
 		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
@@ -2461,6 +2518,7 @@ func (p *ForSaleRoomData) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 		offset += p.fastWriteField14(buf[offset:], w)
 		offset += p.fastWriteField16(buf[offset:], w)
 		offset += p.fastWriteField17(buf[offset:], w)
+		offset += p.fastWriteField18(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -2486,6 +2544,8 @@ func (p *ForSaleRoomData) BLength() int {
 		l += p.field15Length()
 		l += p.field16Length()
 		l += p.field17Length()
+		l += p.field18Length()
+		l += p.field19Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -2666,6 +2726,24 @@ func (p *ForSaleRoomData) fastWriteField17(buf []byte, w thrift.NocopyWriter) in
 	return offset
 }
 
+func (p *ForSaleRoomData) fastWriteField18(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetTurnDeadline() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 18)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.TurnDeadline)
+	}
+	return offset
+}
+
+func (p *ForSaleRoomData) fastWriteField19(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetTurnTimeoutMs() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I64, 19)
+		offset += thrift.Binary.WriteI64(buf[offset:], *p.TurnTimeoutMs)
+	}
+	return offset
+}
+
 func (p *ForSaleRoomData) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
@@ -2813,6 +2891,24 @@ func (p *ForSaleRoomData) field17Length() int {
 	for _, v := range p.PlayerOrder {
 		_ = v
 		l += thrift.Binary.StringLengthNocopy(v)
+	}
+	return l
+}
+
+func (p *ForSaleRoomData) field18Length() int {
+	l := 0
+	if p.IsSetTurnDeadline() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.StringLengthNocopy(*p.TurnDeadline)
+	}
+	return l
+}
+
+func (p *ForSaleRoomData) field19Length() int {
+	l := 0
+	if p.IsSetTurnTimeoutMs() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.I64Length()
 	}
 	return l
 }

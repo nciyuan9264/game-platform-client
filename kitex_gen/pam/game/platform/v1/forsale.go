@@ -477,6 +477,8 @@ type ForSaleRoomData struct {
 	TransitionTimeoutMs *int64                 `thrift:"transitionTimeoutMs,15,optional" frugal:"15,optional,i64" json:"transitionTimeoutMs,omitempty"`
 	Players             map[string]*RoomPlayer `thrift:"players,16,required" frugal:"16,required,map<string:RoomPlayer>" json:"players"`
 	PlayerOrder         []string               `thrift:"playerOrder,17,required" frugal:"17,required,list<string>" json:"playerOrder"`
+	TurnDeadline        *string                `thrift:"turnDeadline,18,optional" frugal:"18,optional,string" json:"turnDeadline,omitempty"`
+	TurnTimeoutMs       *int64                 `thrift:"turnTimeoutMs,19,optional" frugal:"19,optional,i64" json:"turnTimeoutMs,omitempty"`
 }
 
 func NewForSaleRoomData() *ForSaleRoomData {
@@ -568,6 +570,24 @@ func (p *ForSaleRoomData) GetPlayers() (v map[string]*RoomPlayer) {
 func (p *ForSaleRoomData) GetPlayerOrder() (v []string) {
 	return p.PlayerOrder
 }
+
+var ForSaleRoomData_TurnDeadline_DEFAULT string
+
+func (p *ForSaleRoomData) GetTurnDeadline() (v string) {
+	if !p.IsSetTurnDeadline() {
+		return ForSaleRoomData_TurnDeadline_DEFAULT
+	}
+	return *p.TurnDeadline
+}
+
+var ForSaleRoomData_TurnTimeoutMs_DEFAULT int64
+
+func (p *ForSaleRoomData) GetTurnTimeoutMs() (v int64) {
+	if !p.IsSetTurnTimeoutMs() {
+		return ForSaleRoomData_TurnTimeoutMs_DEFAULT
+	}
+	return *p.TurnTimeoutMs
+}
 func (p *ForSaleRoomData) SetGameStatus(val ForSaleGameStatus) {
 	p.GameStatus = val
 }
@@ -619,6 +639,12 @@ func (p *ForSaleRoomData) SetPlayers(val map[string]*RoomPlayer) {
 func (p *ForSaleRoomData) SetPlayerOrder(val []string) {
 	p.PlayerOrder = val
 }
+func (p *ForSaleRoomData) SetTurnDeadline(val *string) {
+	p.TurnDeadline = val
+}
+func (p *ForSaleRoomData) SetTurnTimeoutMs(val *int64) {
+	p.TurnTimeoutMs = val
+}
 
 func (p *ForSaleRoomData) IsSetLastAction() bool {
 	return p.LastAction != nil
@@ -630,6 +656,14 @@ func (p *ForSaleRoomData) IsSetTransitionDeadline() bool {
 
 func (p *ForSaleRoomData) IsSetTransitionTimeoutMs() bool {
 	return p.TransitionTimeoutMs != nil
+}
+
+func (p *ForSaleRoomData) IsSetTurnDeadline() bool {
+	return p.TurnDeadline != nil
+}
+
+func (p *ForSaleRoomData) IsSetTurnTimeoutMs() bool {
+	return p.TurnTimeoutMs != nil
 }
 
 func (p *ForSaleRoomData) String() string {
@@ -657,6 +691,8 @@ var fieldIDToName_ForSaleRoomData = map[int16]string{
 	15: "transitionTimeoutMs",
 	16: "players",
 	17: "playerOrder",
+	18: "turnDeadline",
+	19: "turnTimeoutMs",
 }
 
 type ForSalePlayerResult_ struct {

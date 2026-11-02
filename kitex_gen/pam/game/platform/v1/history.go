@@ -960,6 +960,7 @@ type LeaderboardEntry struct {
 	TotalGames  int32              `thrift:"totalGames,3,required" frugal:"3,required,i32" json:"totalGames"`
 	Metric      *LeaderboardMetric `thrift:"metric,4,required" frugal:"4,required,LeaderboardMetric" json:"metric"`
 	DisplayName *string            `thrift:"displayName,5,optional" frugal:"5,optional,string" json:"displayName,omitempty"`
+	Avatar      *string            `thrift:"avatar,6,optional" frugal:"6,optional,string" json:"avatar,omitempty"`
 }
 
 func NewLeaderboardEntry() *LeaderboardEntry {
@@ -998,6 +999,15 @@ func (p *LeaderboardEntry) GetDisplayName() (v string) {
 	}
 	return *p.DisplayName
 }
+
+var LeaderboardEntry_Avatar_DEFAULT string
+
+func (p *LeaderboardEntry) GetAvatar() (v string) {
+	if !p.IsSetAvatar() {
+		return LeaderboardEntry_Avatar_DEFAULT
+	}
+	return *p.Avatar
+}
 func (p *LeaderboardEntry) SetUserID(val int64) {
 	p.UserID = val
 }
@@ -1013,6 +1023,9 @@ func (p *LeaderboardEntry) SetMetric(val *LeaderboardMetric) {
 func (p *LeaderboardEntry) SetDisplayName(val *string) {
 	p.DisplayName = val
 }
+func (p *LeaderboardEntry) SetAvatar(val *string) {
+	p.Avatar = val
+}
 
 func (p *LeaderboardEntry) IsSetMetric() bool {
 	return p.Metric != nil
@@ -1020,6 +1033,10 @@ func (p *LeaderboardEntry) IsSetMetric() bool {
 
 func (p *LeaderboardEntry) IsSetDisplayName() bool {
 	return p.DisplayName != nil
+}
+
+func (p *LeaderboardEntry) IsSetAvatar() bool {
+	return p.Avatar != nil
 }
 
 func (p *LeaderboardEntry) String() string {
@@ -1035,6 +1052,7 @@ var fieldIDToName_LeaderboardEntry = map[int16]string{
 	3: "totalGames",
 	4: "metric",
 	5: "displayName",
+	6: "avatar",
 }
 
 type ListHistoryGamesReq struct {

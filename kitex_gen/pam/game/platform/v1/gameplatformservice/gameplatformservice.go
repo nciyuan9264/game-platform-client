@@ -62,6 +62,13 @@ var serviceMethods = map[string]kitex.MethodInfo{
 		false,
 		kitex.WithStreamingMode(kitex.StreamingNone),
 	),
+	"GetResultCard": kitex.NewMethodInfo(
+		getResultCardHandler,
+		newGamePlatformServiceGetResultCardArgs,
+		newGamePlatformServiceGetResultCardResult,
+		false,
+		kitex.WithStreamingMode(kitex.StreamingNone),
+	),
 	"GetSnapshot": kitex.NewMethodInfo(
 		getSnapshotHandler,
 		newGamePlatformServiceGetSnapshotArgs,
@@ -324,6 +331,30 @@ func newGamePlatformServiceGetHistoryDetailResult() interface{} {
 	return v1.NewGamePlatformServiceGetHistoryDetailResult()
 }
 
+func getResultCardHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
+	realArg := arg.(*v1.GamePlatformServiceGetResultCardArgs)
+	realResult := result.(*v1.GamePlatformServiceGetResultCardResult)
+	success, err := handler.(v1.GamePlatformService).GetResultCard(ctx, realArg.Req)
+	if err != nil {
+		switch v := err.(type) {
+		case *v1.GamePlatformError:
+			realResult.Err = v
+		default:
+			return err
+		}
+	} else {
+		realResult.Success = success
+	}
+	return nil
+}
+func newGamePlatformServiceGetResultCardArgs() interface{} {
+	return v1.NewGamePlatformServiceGetResultCardArgs()
+}
+
+func newGamePlatformServiceGetResultCardResult() interface{} {
+	return v1.NewGamePlatformServiceGetResultCardResult()
+}
+
 func getSnapshotHandler(ctx context.Context, handler interface{}, arg, result interface{}) error {
 	realArg := arg.(*v1.GamePlatformServiceGetSnapshotArgs)
 	realResult := result.(*v1.GamePlatformServiceGetSnapshotResult)
@@ -519,6 +550,20 @@ func (p *kClient) GetHistoryDetail(ctx context.Context, req *v1.GetHistoryDetail
 	_args.Req = req
 	var _result v1.GamePlatformServiceGetHistoryDetailResult
 	if err = p.c.Call(ctx, "GetHistoryDetail", &_args, &_result); err != nil {
+		return
+	}
+	switch {
+	case _result.Err != nil:
+		return r, _result.Err
+	}
+	return _result.GetSuccess(), nil
+}
+
+func (p *kClient) GetResultCard(ctx context.Context, req *v1.GetResultCardReq) (r *v1.ResultCardResp, err error) {
+	var _args v1.GamePlatformServiceGetResultCardArgs
+	_args.Req = req
+	var _result v1.GamePlatformServiceGetResultCardResult
+	if err = p.c.Call(ctx, "GetResultCard", &_args, &_result); err != nil {
 		return
 	}
 	switch {

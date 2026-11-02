@@ -22,6 +22,8 @@ type GamePlatformService interface {
 
 	GetHistoryDetail(ctx context.Context, req *GetHistoryDetailReq) (r *HistoryDetailResp, err error)
 
+	GetResultCard(ctx context.Context, req *GetResultCardReq) (r *ResultCardResp, err error)
+
 	GetSnapshot(ctx context.Context, req *GetSnapshotReq) (r *SnapshotResp, err error)
 
 	ListSnapshots(ctx context.Context, req *ListSnapshotsReq) (r *SnapshotListResp, err error)
@@ -685,6 +687,100 @@ func (p *GamePlatformServiceGetHistoryDetailResult) String() string {
 }
 
 var fieldIDToName_GamePlatformServiceGetHistoryDetailResult = map[int16]string{
+	0: "success",
+	1: "err",
+}
+
+type GamePlatformServiceGetResultCardArgs struct {
+	Req *GetResultCardReq `thrift:"req,1,required" frugal:"1,required,GetResultCardReq" json:"req"`
+}
+
+func NewGamePlatformServiceGetResultCardArgs() *GamePlatformServiceGetResultCardArgs {
+	return &GamePlatformServiceGetResultCardArgs{}
+}
+
+func (p *GamePlatformServiceGetResultCardArgs) InitDefault() {
+}
+
+var GamePlatformServiceGetResultCardArgs_Req_DEFAULT *GetResultCardReq
+
+func (p *GamePlatformServiceGetResultCardArgs) GetReq() (v *GetResultCardReq) {
+	if !p.IsSetReq() {
+		return GamePlatformServiceGetResultCardArgs_Req_DEFAULT
+	}
+	return p.Req
+}
+func (p *GamePlatformServiceGetResultCardArgs) SetReq(val *GetResultCardReq) {
+	p.Req = val
+}
+
+func (p *GamePlatformServiceGetResultCardArgs) IsSetReq() bool {
+	return p.Req != nil
+}
+
+func (p *GamePlatformServiceGetResultCardArgs) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GamePlatformServiceGetResultCardArgs(%+v)", *p)
+}
+
+var fieldIDToName_GamePlatformServiceGetResultCardArgs = map[int16]string{
+	1: "req",
+}
+
+type GamePlatformServiceGetResultCardResult struct {
+	Success *ResultCardResp    `thrift:"success,0,optional" frugal:"0,optional,ResultCardResp" json:"success,omitempty"`
+	Err     *GamePlatformError `thrift:"err,1,optional" frugal:"1,optional,GamePlatformError" json:"err,omitempty"`
+}
+
+func NewGamePlatformServiceGetResultCardResult() *GamePlatformServiceGetResultCardResult {
+	return &GamePlatformServiceGetResultCardResult{}
+}
+
+func (p *GamePlatformServiceGetResultCardResult) InitDefault() {
+}
+
+var GamePlatformServiceGetResultCardResult_Success_DEFAULT *ResultCardResp
+
+func (p *GamePlatformServiceGetResultCardResult) GetSuccess() (v *ResultCardResp) {
+	if !p.IsSetSuccess() {
+		return GamePlatformServiceGetResultCardResult_Success_DEFAULT
+	}
+	return p.Success
+}
+
+var GamePlatformServiceGetResultCardResult_Err_DEFAULT *GamePlatformError
+
+func (p *GamePlatformServiceGetResultCardResult) GetErr() (v *GamePlatformError) {
+	if !p.IsSetErr() {
+		return GamePlatformServiceGetResultCardResult_Err_DEFAULT
+	}
+	return p.Err
+}
+func (p *GamePlatformServiceGetResultCardResult) SetSuccess(x interface{}) {
+	p.Success = x.(*ResultCardResp)
+}
+func (p *GamePlatformServiceGetResultCardResult) SetErr(val *GamePlatformError) {
+	p.Err = val
+}
+
+func (p *GamePlatformServiceGetResultCardResult) IsSetSuccess() bool {
+	return p.Success != nil
+}
+
+func (p *GamePlatformServiceGetResultCardResult) IsSetErr() bool {
+	return p.Err != nil
+}
+
+func (p *GamePlatformServiceGetResultCardResult) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GamePlatformServiceGetResultCardResult(%+v)", *p)
+}
+
+var fieldIDToName_GamePlatformServiceGetResultCardResult = map[int16]string{
 	0: "success",
 	1: "err",
 }

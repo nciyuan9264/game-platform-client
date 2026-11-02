@@ -1140,6 +1140,44 @@ var fieldIDToName_GetHistoryDetailReq = map[int16]string{
 	2: "game_type",
 }
 
+type GetResultCardReq struct {
+	MatchId  string   `thrift:"match_id,1,required" frugal:"1,required,string" json:"match_id"`
+	GameType GameType `thrift:"game_type,2,required" frugal:"2,required,string" json:"game_type"`
+}
+
+func NewGetResultCardReq() *GetResultCardReq {
+	return &GetResultCardReq{}
+}
+
+func (p *GetResultCardReq) InitDefault() {
+}
+
+func (p *GetResultCardReq) GetMatchId() (v string) {
+	return p.MatchId
+}
+
+func (p *GetResultCardReq) GetGameType() (v GameType) {
+	return p.GameType
+}
+func (p *GetResultCardReq) SetMatchId(val string) {
+	p.MatchId = val
+}
+func (p *GetResultCardReq) SetGameType(val GameType) {
+	p.GameType = val
+}
+
+func (p *GetResultCardReq) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("GetResultCardReq(%+v)", *p)
+}
+
+var fieldIDToName_GetResultCardReq = map[int16]string{
+	1: "match_id",
+	2: "game_type",
+}
+
 type GetSnapshotReq struct {
 	Id       int64    `thrift:"id,1,required" frugal:"1,required,i64" json:"id"`
 	GameType GameType `thrift:"game_type,2,required" frugal:"2,required,string" json:"game_type"`
@@ -1601,6 +1639,273 @@ func (p *HistoryDetailResp) String() string {
 }
 
 var fieldIDToName_HistoryDetailResp = map[int16]string{
+	1: "status_code",
+	2: "message",
+	3: "data",
+}
+
+type ResultCardPlayer struct {
+	DisplayName string  `thrift:"display_name,1,required" frugal:"1,required,string" json:"display_name"`
+	SeatIndex   int32   `thrift:"seat_index,2,required" frugal:"2,required,i32" json:"seat_index"`
+	IsAi        bool    `thrift:"is_ai,3,required" frugal:"3,required,bool" json:"is_ai"`
+	FinalScore  *int32  `thrift:"final_score,4,optional" frugal:"4,optional,i32" json:"final_score,omitempty"`
+	FinalMoney  *int32  `thrift:"final_money,5,optional" frugal:"5,optional,i32" json:"final_money,omitempty"`
+	FinalStocks int32   `thrift:"final_stocks,6,required" frugal:"6,required,i32" json:"final_stocks"`
+	FinalRank   *int32  `thrift:"final_rank,7,optional" frugal:"7,optional,i32" json:"final_rank,omitempty"`
+	IsWinner    bool    `thrift:"is_winner,8,required" frugal:"8,required,bool" json:"is_winner"`
+	GameRole    *string `thrift:"game_role,9,optional" frugal:"9,optional,string" json:"game_role,omitempty"`
+	IsSelf      bool    `thrift:"is_self,10,required" frugal:"10,required,bool" json:"is_self"`
+}
+
+func NewResultCardPlayer() *ResultCardPlayer {
+	return &ResultCardPlayer{}
+}
+
+func (p *ResultCardPlayer) InitDefault() {
+}
+
+func (p *ResultCardPlayer) GetDisplayName() (v string) {
+	return p.DisplayName
+}
+
+func (p *ResultCardPlayer) GetSeatIndex() (v int32) {
+	return p.SeatIndex
+}
+
+func (p *ResultCardPlayer) GetIsAi() (v bool) {
+	return p.IsAi
+}
+
+var ResultCardPlayer_FinalScore_DEFAULT int32
+
+func (p *ResultCardPlayer) GetFinalScore() (v int32) {
+	if !p.IsSetFinalScore() {
+		return ResultCardPlayer_FinalScore_DEFAULT
+	}
+	return *p.FinalScore
+}
+
+var ResultCardPlayer_FinalMoney_DEFAULT int32
+
+func (p *ResultCardPlayer) GetFinalMoney() (v int32) {
+	if !p.IsSetFinalMoney() {
+		return ResultCardPlayer_FinalMoney_DEFAULT
+	}
+	return *p.FinalMoney
+}
+
+func (p *ResultCardPlayer) GetFinalStocks() (v int32) {
+	return p.FinalStocks
+}
+
+var ResultCardPlayer_FinalRank_DEFAULT int32
+
+func (p *ResultCardPlayer) GetFinalRank() (v int32) {
+	if !p.IsSetFinalRank() {
+		return ResultCardPlayer_FinalRank_DEFAULT
+	}
+	return *p.FinalRank
+}
+
+func (p *ResultCardPlayer) GetIsWinner() (v bool) {
+	return p.IsWinner
+}
+
+var ResultCardPlayer_GameRole_DEFAULT string
+
+func (p *ResultCardPlayer) GetGameRole() (v string) {
+	if !p.IsSetGameRole() {
+		return ResultCardPlayer_GameRole_DEFAULT
+	}
+	return *p.GameRole
+}
+
+func (p *ResultCardPlayer) GetIsSelf() (v bool) {
+	return p.IsSelf
+}
+func (p *ResultCardPlayer) SetDisplayName(val string) {
+	p.DisplayName = val
+}
+func (p *ResultCardPlayer) SetSeatIndex(val int32) {
+	p.SeatIndex = val
+}
+func (p *ResultCardPlayer) SetIsAi(val bool) {
+	p.IsAi = val
+}
+func (p *ResultCardPlayer) SetFinalScore(val *int32) {
+	p.FinalScore = val
+}
+func (p *ResultCardPlayer) SetFinalMoney(val *int32) {
+	p.FinalMoney = val
+}
+func (p *ResultCardPlayer) SetFinalStocks(val int32) {
+	p.FinalStocks = val
+}
+func (p *ResultCardPlayer) SetFinalRank(val *int32) {
+	p.FinalRank = val
+}
+func (p *ResultCardPlayer) SetIsWinner(val bool) {
+	p.IsWinner = val
+}
+func (p *ResultCardPlayer) SetGameRole(val *string) {
+	p.GameRole = val
+}
+func (p *ResultCardPlayer) SetIsSelf(val bool) {
+	p.IsSelf = val
+}
+
+func (p *ResultCardPlayer) IsSetFinalScore() bool {
+	return p.FinalScore != nil
+}
+
+func (p *ResultCardPlayer) IsSetFinalMoney() bool {
+	return p.FinalMoney != nil
+}
+
+func (p *ResultCardPlayer) IsSetFinalRank() bool {
+	return p.FinalRank != nil
+}
+
+func (p *ResultCardPlayer) IsSetGameRole() bool {
+	return p.GameRole != nil
+}
+
+func (p *ResultCardPlayer) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ResultCardPlayer(%+v)", *p)
+}
+
+var fieldIDToName_ResultCardPlayer = map[int16]string{
+	1:  "display_name",
+	2:  "seat_index",
+	3:  "is_ai",
+	4:  "final_score",
+	5:  "final_money",
+	6:  "final_stocks",
+	7:  "final_rank",
+	8:  "is_winner",
+	9:  "game_role",
+	10: "is_self",
+}
+
+type ResultCardData struct {
+	GameType        GameType            `thrift:"game_type,1,required" frugal:"1,required,string" json:"game_type"`
+	StartedAt       ISODateTime         `thrift:"started_at,2,required" frugal:"2,required,string" json:"started_at"`
+	EndedAt         ISODateTime         `thrift:"ended_at,3,required" frugal:"3,required,string" json:"ended_at"`
+	DurationSeconds int32               `thrift:"duration_seconds,4,required" frugal:"4,required,i32" json:"duration_seconds"`
+	Players         []*ResultCardPlayer `thrift:"players,5,required" frugal:"5,required,list<ResultCardPlayer>" json:"players"`
+}
+
+func NewResultCardData() *ResultCardData {
+	return &ResultCardData{}
+}
+
+func (p *ResultCardData) InitDefault() {
+}
+
+func (p *ResultCardData) GetGameType() (v GameType) {
+	return p.GameType
+}
+
+func (p *ResultCardData) GetStartedAt() (v ISODateTime) {
+	return p.StartedAt
+}
+
+func (p *ResultCardData) GetEndedAt() (v ISODateTime) {
+	return p.EndedAt
+}
+
+func (p *ResultCardData) GetDurationSeconds() (v int32) {
+	return p.DurationSeconds
+}
+
+func (p *ResultCardData) GetPlayers() (v []*ResultCardPlayer) {
+	return p.Players
+}
+func (p *ResultCardData) SetGameType(val GameType) {
+	p.GameType = val
+}
+func (p *ResultCardData) SetStartedAt(val ISODateTime) {
+	p.StartedAt = val
+}
+func (p *ResultCardData) SetEndedAt(val ISODateTime) {
+	p.EndedAt = val
+}
+func (p *ResultCardData) SetDurationSeconds(val int32) {
+	p.DurationSeconds = val
+}
+func (p *ResultCardData) SetPlayers(val []*ResultCardPlayer) {
+	p.Players = val
+}
+
+func (p *ResultCardData) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ResultCardData(%+v)", *p)
+}
+
+var fieldIDToName_ResultCardData = map[int16]string{
+	1: "game_type",
+	2: "started_at",
+	3: "ended_at",
+	4: "duration_seconds",
+	5: "players",
+}
+
+type ResultCardResp struct {
+	StatusCode int32           `thrift:"status_code,1,required" frugal:"1,required,i32" json:"status_code"`
+	Message    string          `thrift:"message,2,required" frugal:"2,required,string" json:"message"`
+	Data       *ResultCardData `thrift:"data,3,required" frugal:"3,required,ResultCardData" json:"data"`
+}
+
+func NewResultCardResp() *ResultCardResp {
+	return &ResultCardResp{}
+}
+
+func (p *ResultCardResp) InitDefault() {
+}
+
+func (p *ResultCardResp) GetStatusCode() (v int32) {
+	return p.StatusCode
+}
+
+func (p *ResultCardResp) GetMessage() (v string) {
+	return p.Message
+}
+
+var ResultCardResp_Data_DEFAULT *ResultCardData
+
+func (p *ResultCardResp) GetData() (v *ResultCardData) {
+	if !p.IsSetData() {
+		return ResultCardResp_Data_DEFAULT
+	}
+	return p.Data
+}
+func (p *ResultCardResp) SetStatusCode(val int32) {
+	p.StatusCode = val
+}
+func (p *ResultCardResp) SetMessage(val string) {
+	p.Message = val
+}
+func (p *ResultCardResp) SetData(val *ResultCardData) {
+	p.Data = val
+}
+
+func (p *ResultCardResp) IsSetData() bool {
+	return p.Data != nil
+}
+
+func (p *ResultCardResp) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("ResultCardResp(%+v)", *p)
+}
+
+var fieldIDToName_ResultCardResp = map[int16]string{
 	1: "status_code",
 	2: "message",
 	3: "data",

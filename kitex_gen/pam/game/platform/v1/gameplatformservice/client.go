@@ -18,6 +18,7 @@ type Client interface {
 	StartNextMatch(ctx context.Context, req *v1.StartNextMatchReq, callOptions ...callopt.Option) (r *v1.StartNextMatchResp, err error)
 	ListHistoryGames(ctx context.Context, req *v1.ListHistoryGamesReq, callOptions ...callopt.Option) (r *v1.HistoryListResp, err error)
 	GetHistoryDetail(ctx context.Context, req *v1.GetHistoryDetailReq, callOptions ...callopt.Option) (r *v1.HistoryDetailResp, err error)
+	GetResultCard(ctx context.Context, req *v1.GetResultCardReq, callOptions ...callopt.Option) (r *v1.ResultCardResp, err error)
 	GetSnapshot(ctx context.Context, req *v1.GetSnapshotReq, callOptions ...callopt.Option) (r *v1.SnapshotResp, err error)
 	ListSnapshots(ctx context.Context, req *v1.ListSnapshotsReq, callOptions ...callopt.Option) (r *v1.SnapshotListResp, err error)
 	GetStats(ctx context.Context, req *v1.GetStatsReq, callOptions ...callopt.Option) (r *v1.StatsResp, err error)
@@ -86,6 +87,11 @@ func (p *kGamePlatformServiceClient) ListHistoryGames(ctx context.Context, req *
 func (p *kGamePlatformServiceClient) GetHistoryDetail(ctx context.Context, req *v1.GetHistoryDetailReq, callOptions ...callopt.Option) (r *v1.HistoryDetailResp, err error) {
 	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
 	return p.kClient.GetHistoryDetail(ctx, req)
+}
+
+func (p *kGamePlatformServiceClient) GetResultCard(ctx context.Context, req *v1.GetResultCardReq, callOptions ...callopt.Option) (r *v1.ResultCardResp, err error) {
+	ctx = client.NewCtxWithCallOptions(ctx, callOptions)
+	return p.kClient.GetResultCard(ctx, req)
 }
 
 func (p *kGamePlatformServiceClient) GetSnapshot(ctx context.Context, req *v1.GetSnapshotReq, callOptions ...callopt.Option) (r *v1.SnapshotResp, err error) {

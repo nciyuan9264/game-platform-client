@@ -187,21 +187,186 @@ var fieldIDToName_OthelloPlayerState = map[int16]string{
 	2: "discCount",
 }
 
+type OthelloPositionAnalysis struct {
+	RequestID     string   `thrift:"requestID,1,required" frugal:"1,required,string" json:"requestID"`
+	Status        string   `thrift:"status,2,required" frugal:"2,required,string" json:"status"`
+	BlackWinRate  *float64 `thrift:"blackWinRate,3,optional" frugal:"3,optional,double" json:"blackWinRate,omitempty"`
+	DrawRate      *float64 `thrift:"drawRate,4,optional" frugal:"4,optional,double" json:"drawRate,omitempty"`
+	WhiteWinRate  *float64 `thrift:"whiteWinRate,5,optional" frugal:"5,optional,double" json:"whiteWinRate,omitempty"`
+	Score         *int32   `thrift:"score,6,optional" frugal:"6,optional,i32" json:"score,omitempty"`
+	Depth         *int32   `thrift:"depth,7,optional" frugal:"7,optional,i32" json:"depth,omitempty"`
+	ElapsedMs     *int64   `thrift:"elapsedMs,8,optional" frugal:"8,optional,i64" json:"elapsedMs,omitempty"`
+	Exact         bool     `thrift:"exact,9,required" frugal:"9,required,bool" json:"exact"`
+	EngineVersion string   `thrift:"engineVersion,10,required" frugal:"10,required,string" json:"engineVersion"`
+}
+
+func NewOthelloPositionAnalysis() *OthelloPositionAnalysis {
+	return &OthelloPositionAnalysis{}
+}
+
+func (p *OthelloPositionAnalysis) InitDefault() {
+}
+
+func (p *OthelloPositionAnalysis) GetRequestID() (v string) {
+	return p.RequestID
+}
+
+func (p *OthelloPositionAnalysis) GetStatus() (v string) {
+	return p.Status
+}
+
+var OthelloPositionAnalysis_BlackWinRate_DEFAULT float64
+
+func (p *OthelloPositionAnalysis) GetBlackWinRate() (v float64) {
+	if !p.IsSetBlackWinRate() {
+		return OthelloPositionAnalysis_BlackWinRate_DEFAULT
+	}
+	return *p.BlackWinRate
+}
+
+var OthelloPositionAnalysis_DrawRate_DEFAULT float64
+
+func (p *OthelloPositionAnalysis) GetDrawRate() (v float64) {
+	if !p.IsSetDrawRate() {
+		return OthelloPositionAnalysis_DrawRate_DEFAULT
+	}
+	return *p.DrawRate
+}
+
+var OthelloPositionAnalysis_WhiteWinRate_DEFAULT float64
+
+func (p *OthelloPositionAnalysis) GetWhiteWinRate() (v float64) {
+	if !p.IsSetWhiteWinRate() {
+		return OthelloPositionAnalysis_WhiteWinRate_DEFAULT
+	}
+	return *p.WhiteWinRate
+}
+
+var OthelloPositionAnalysis_Score_DEFAULT int32
+
+func (p *OthelloPositionAnalysis) GetScore() (v int32) {
+	if !p.IsSetScore() {
+		return OthelloPositionAnalysis_Score_DEFAULT
+	}
+	return *p.Score
+}
+
+var OthelloPositionAnalysis_Depth_DEFAULT int32
+
+func (p *OthelloPositionAnalysis) GetDepth() (v int32) {
+	if !p.IsSetDepth() {
+		return OthelloPositionAnalysis_Depth_DEFAULT
+	}
+	return *p.Depth
+}
+
+var OthelloPositionAnalysis_ElapsedMs_DEFAULT int64
+
+func (p *OthelloPositionAnalysis) GetElapsedMs() (v int64) {
+	if !p.IsSetElapsedMs() {
+		return OthelloPositionAnalysis_ElapsedMs_DEFAULT
+	}
+	return *p.ElapsedMs
+}
+
+func (p *OthelloPositionAnalysis) GetExact() (v bool) {
+	return p.Exact
+}
+
+func (p *OthelloPositionAnalysis) GetEngineVersion() (v string) {
+	return p.EngineVersion
+}
+func (p *OthelloPositionAnalysis) SetRequestID(val string) {
+	p.RequestID = val
+}
+func (p *OthelloPositionAnalysis) SetStatus(val string) {
+	p.Status = val
+}
+func (p *OthelloPositionAnalysis) SetBlackWinRate(val *float64) {
+	p.BlackWinRate = val
+}
+func (p *OthelloPositionAnalysis) SetDrawRate(val *float64) {
+	p.DrawRate = val
+}
+func (p *OthelloPositionAnalysis) SetWhiteWinRate(val *float64) {
+	p.WhiteWinRate = val
+}
+func (p *OthelloPositionAnalysis) SetScore(val *int32) {
+	p.Score = val
+}
+func (p *OthelloPositionAnalysis) SetDepth(val *int32) {
+	p.Depth = val
+}
+func (p *OthelloPositionAnalysis) SetElapsedMs(val *int64) {
+	p.ElapsedMs = val
+}
+func (p *OthelloPositionAnalysis) SetExact(val bool) {
+	p.Exact = val
+}
+func (p *OthelloPositionAnalysis) SetEngineVersion(val string) {
+	p.EngineVersion = val
+}
+
+func (p *OthelloPositionAnalysis) IsSetBlackWinRate() bool {
+	return p.BlackWinRate != nil
+}
+
+func (p *OthelloPositionAnalysis) IsSetDrawRate() bool {
+	return p.DrawRate != nil
+}
+
+func (p *OthelloPositionAnalysis) IsSetWhiteWinRate() bool {
+	return p.WhiteWinRate != nil
+}
+
+func (p *OthelloPositionAnalysis) IsSetScore() bool {
+	return p.Score != nil
+}
+
+func (p *OthelloPositionAnalysis) IsSetDepth() bool {
+	return p.Depth != nil
+}
+
+func (p *OthelloPositionAnalysis) IsSetElapsedMs() bool {
+	return p.ElapsedMs != nil
+}
+
+func (p *OthelloPositionAnalysis) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OthelloPositionAnalysis(%+v)", *p)
+}
+
+var fieldIDToName_OthelloPositionAnalysis = map[int16]string{
+	1:  "requestID",
+	2:  "status",
+	3:  "blackWinRate",
+	4:  "drawRate",
+	5:  "whiteWinRate",
+	6:  "score",
+	7:  "depth",
+	8:  "elapsedMs",
+	9:  "exact",
+	10: "engineVersion",
+}
+
 type OthelloRoomData struct {
-	Board         []OthelloDisc          `thrift:"board,1,required" frugal:"1,required,list<string>" json:"board"`
-	CurrentPlayer string                 `thrift:"currentPlayer,2,required" frugal:"2,required,string" json:"currentPlayer"`
-	CurrentSide   OthelloSide            `thrift:"currentSide,3,required" frugal:"3,required,string" json:"currentSide"`
-	BlackPlayerID string                 `thrift:"blackPlayerID,4,required" frugal:"4,required,string" json:"blackPlayerID"`
-	WhitePlayerID string                 `thrift:"whitePlayerID,5,required" frugal:"5,required,string" json:"whitePlayerID"`
-	RoundNo       int32                  `thrift:"roundNo,6,required" frugal:"6,required,i32" json:"roundNo"`
-	GameStatus    string                 `thrift:"gameStatus,7,required" frugal:"7,required,string" json:"gameStatus"`
-	LegalMoves    []*OthelloLegalMove    `thrift:"legalMoves,8,required" frugal:"8,required,list<OthelloLegalMove>" json:"legalMoves"`
-	MoveLog       []*OthelloMoveEntry    `thrift:"moveLog,9,required" frugal:"9,required,list<OthelloMoveEntry>" json:"moveLog"`
-	LastData      *OthelloMoveEntry      `thrift:"lastData,10,optional" frugal:"10,optional,OthelloMoveEntry" json:"lastData,omitempty"`
-	TurnDeadline  *string                `thrift:"turnDeadline,11,optional" frugal:"11,optional,string" json:"turnDeadline,omitempty"`
-	TurnTimeoutMs *int64                 `thrift:"turnTimeoutMs,12,optional" frugal:"12,optional,i64" json:"turnTimeoutMs,omitempty"`
-	Players       map[string]*RoomPlayer `thrift:"players,13,required" frugal:"13,required,map<string:RoomPlayer>" json:"players"`
-	PlayerOrder   []string               `thrift:"playerOrder,14,required" frugal:"14,required,list<string>" json:"playerOrder"`
+	Board         []OthelloDisc            `thrift:"board,1,required" frugal:"1,required,list<string>" json:"board"`
+	CurrentPlayer string                   `thrift:"currentPlayer,2,required" frugal:"2,required,string" json:"currentPlayer"`
+	CurrentSide   OthelloSide              `thrift:"currentSide,3,required" frugal:"3,required,string" json:"currentSide"`
+	BlackPlayerID string                   `thrift:"blackPlayerID,4,required" frugal:"4,required,string" json:"blackPlayerID"`
+	WhitePlayerID string                   `thrift:"whitePlayerID,5,required" frugal:"5,required,string" json:"whitePlayerID"`
+	RoundNo       int32                    `thrift:"roundNo,6,required" frugal:"6,required,i32" json:"roundNo"`
+	GameStatus    string                   `thrift:"gameStatus,7,required" frugal:"7,required,string" json:"gameStatus"`
+	LegalMoves    []*OthelloLegalMove      `thrift:"legalMoves,8,required" frugal:"8,required,list<OthelloLegalMove>" json:"legalMoves"`
+	MoveLog       []*OthelloMoveEntry      `thrift:"moveLog,9,required" frugal:"9,required,list<OthelloMoveEntry>" json:"moveLog"`
+	LastData      *OthelloMoveEntry        `thrift:"lastData,10,optional" frugal:"10,optional,OthelloMoveEntry" json:"lastData,omitempty"`
+	TurnDeadline  *string                  `thrift:"turnDeadline,11,optional" frugal:"11,optional,string" json:"turnDeadline,omitempty"`
+	TurnTimeoutMs *int64                   `thrift:"turnTimeoutMs,12,optional" frugal:"12,optional,i64" json:"turnTimeoutMs,omitempty"`
+	Players       map[string]*RoomPlayer   `thrift:"players,13,required" frugal:"13,required,map<string:RoomPlayer>" json:"players"`
+	PlayerOrder   []string                 `thrift:"playerOrder,14,required" frugal:"14,required,list<string>" json:"playerOrder"`
+	Analysis      *OthelloPositionAnalysis `thrift:"analysis,15,optional" frugal:"15,optional,OthelloPositionAnalysis" json:"analysis,omitempty"`
 }
 
 func NewOthelloRoomData() *OthelloRoomData {
@@ -281,6 +446,15 @@ func (p *OthelloRoomData) GetPlayers() (v map[string]*RoomPlayer) {
 func (p *OthelloRoomData) GetPlayerOrder() (v []string) {
 	return p.PlayerOrder
 }
+
+var OthelloRoomData_Analysis_DEFAULT *OthelloPositionAnalysis
+
+func (p *OthelloRoomData) GetAnalysis() (v *OthelloPositionAnalysis) {
+	if !p.IsSetAnalysis() {
+		return OthelloRoomData_Analysis_DEFAULT
+	}
+	return p.Analysis
+}
 func (p *OthelloRoomData) SetBoard(val []OthelloDisc) {
 	p.Board = val
 }
@@ -323,6 +497,9 @@ func (p *OthelloRoomData) SetPlayers(val map[string]*RoomPlayer) {
 func (p *OthelloRoomData) SetPlayerOrder(val []string) {
 	p.PlayerOrder = val
 }
+func (p *OthelloRoomData) SetAnalysis(val *OthelloPositionAnalysis) {
+	p.Analysis = val
+}
 
 func (p *OthelloRoomData) IsSetLastData() bool {
 	return p.LastData != nil
@@ -334,6 +511,10 @@ func (p *OthelloRoomData) IsSetTurnDeadline() bool {
 
 func (p *OthelloRoomData) IsSetTurnTimeoutMs() bool {
 	return p.TurnTimeoutMs != nil
+}
+
+func (p *OthelloRoomData) IsSetAnalysis() bool {
+	return p.Analysis != nil
 }
 
 func (p *OthelloRoomData) String() string {
@@ -358,6 +539,7 @@ var fieldIDToName_OthelloRoomData = map[int16]string{
 	12: "turnTimeoutMs",
 	13: "players",
 	14: "playerOrder",
+	15: "analysis",
 }
 
 type OthelloResult_ struct {

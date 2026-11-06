@@ -7,15 +7,16 @@ import (
 )
 
 type RoomPlayer struct {
-	UserID      *string `thrift:"userID,1,optional" frugal:"1,optional,string" json:"userID,omitempty"`
-	PlayerID    string  `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
-	DisplayName string  `thrift:"displayName,3,required" frugal:"3,required,string" json:"displayName"`
-	Avatar      *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
-	SeatIndex   int32   `thrift:"seatIndex,5,required" frugal:"5,required,i32" json:"seatIndex"`
-	Online      bool    `thrift:"online,6,required" frugal:"6,required,bool" json:"online"`
-	Ai          bool    `thrift:"ai,7,required" frugal:"7,required,bool" json:"ai"`
-	Ready       bool    `thrift:"ready,8,required" frugal:"8,required,bool" json:"ready"`
-	GameRole    *string `thrift:"gameRole,9,optional" frugal:"9,optional,string" json:"gameRole,omitempty"`
+	UserID       *string `thrift:"userID,1,optional" frugal:"1,optional,string" json:"userID,omitempty"`
+	PlayerID     string  `thrift:"playerID,2,required" frugal:"2,required,string" json:"playerID"`
+	DisplayName  string  `thrift:"displayName,3,required" frugal:"3,required,string" json:"displayName"`
+	Avatar       *string `thrift:"avatar,4,optional" frugal:"4,optional,string" json:"avatar,omitempty"`
+	SeatIndex    int32   `thrift:"seatIndex,5,required" frugal:"5,required,i32" json:"seatIndex"`
+	Online       bool    `thrift:"online,6,required" frugal:"6,required,bool" json:"online"`
+	Ai           bool    `thrift:"ai,7,required" frugal:"7,required,bool" json:"ai"`
+	Ready        bool    `thrift:"ready,8,required" frugal:"8,required,bool" json:"ready"`
+	GameRole     *string `thrift:"gameRole,9,optional" frugal:"9,optional,string" json:"gameRole,omitempty"`
+	AiDifficulty *string `thrift:"aiDifficulty,10,optional" frugal:"10,optional,string" json:"aiDifficulty,omitempty"`
 }
 
 func NewRoomPlayer() *RoomPlayer {
@@ -75,6 +76,15 @@ func (p *RoomPlayer) GetGameRole() (v string) {
 	}
 	return *p.GameRole
 }
+
+var RoomPlayer_AiDifficulty_DEFAULT string
+
+func (p *RoomPlayer) GetAiDifficulty() (v string) {
+	if !p.IsSetAiDifficulty() {
+		return RoomPlayer_AiDifficulty_DEFAULT
+	}
+	return *p.AiDifficulty
+}
 func (p *RoomPlayer) SetUserID(val *string) {
 	p.UserID = val
 }
@@ -102,6 +112,9 @@ func (p *RoomPlayer) SetReady(val bool) {
 func (p *RoomPlayer) SetGameRole(val *string) {
 	p.GameRole = val
 }
+func (p *RoomPlayer) SetAiDifficulty(val *string) {
+	p.AiDifficulty = val
+}
 
 func (p *RoomPlayer) IsSetUserID() bool {
 	return p.UserID != nil
@@ -115,6 +128,10 @@ func (p *RoomPlayer) IsSetGameRole() bool {
 	return p.GameRole != nil
 }
 
+func (p *RoomPlayer) IsSetAiDifficulty() bool {
+	return p.AiDifficulty != nil
+}
+
 func (p *RoomPlayer) String() string {
 	if p == nil {
 		return "<nil>"
@@ -123,15 +140,16 @@ func (p *RoomPlayer) String() string {
 }
 
 var fieldIDToName_RoomPlayer = map[int16]string{
-	1: "userID",
-	2: "playerID",
-	3: "displayName",
-	4: "avatar",
-	5: "seatIndex",
-	6: "online",
-	7: "ai",
-	8: "ready",
-	9: "gameRole",
+	1:  "userID",
+	2:  "playerID",
+	3:  "displayName",
+	4:  "avatar",
+	5:  "seatIndex",
+	6:  "online",
+	7:  "ai",
+	8:  "ready",
+	9:  "gameRole",
+	10: "aiDifficulty",
 }
 
 type AcquireRoomMetrics struct {

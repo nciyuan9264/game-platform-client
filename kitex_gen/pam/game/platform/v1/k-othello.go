@@ -2703,6 +2703,212 @@ func (p *OthelloResult_) field6Length() int {
 	return l
 }
 
+func (p *OthelloHintState) FastRead(buf []byte) (int, error) {
+
+	var err error
+	var offset int
+	var l int
+	var fieldTypeId thrift.TType
+	var fieldId int16
+	var issetRemaining bool = false
+	var issetPending bool = false
+	for {
+		fieldTypeId, fieldId, l, err = thrift.Binary.ReadFieldBegin(buf[offset:])
+		offset += l
+		if err != nil {
+			goto ReadFieldBeginError
+		}
+		if fieldTypeId == thrift.STOP {
+			break
+		}
+		switch fieldId {
+		case 1:
+			if fieldTypeId == thrift.I32 {
+				l, err = p.FastReadField1(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetRemaining = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 2:
+			if fieldTypeId == thrift.BOOL {
+				l, err = p.FastReadField2(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+				issetPending = true
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 3:
+			if fieldTypeId == thrift.I32 {
+				l, err = p.FastReadField3(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		default:
+			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+			offset += l
+			if err != nil {
+				goto SkipFieldError
+			}
+		}
+	}
+
+	if !issetRemaining {
+		fieldId = 1
+		goto RequiredFieldNotSetError
+	}
+
+	if !issetPending {
+		fieldId = 2
+		goto RequiredFieldNotSetError
+	}
+	return offset, nil
+ReadFieldBeginError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d begin error: ", p, fieldId), err)
+ReadFieldError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T read field %d '%s' error: ", p, fieldId, fieldIDToName_OthelloHintState[fieldId]), err)
+SkipFieldError:
+	return offset, thrift.PrependError(fmt.Sprintf("%T field %d skip type %d error: ", p, fieldId, fieldTypeId), err)
+RequiredFieldNotSetError:
+	return offset, thrift.NewProtocolException(thrift.INVALID_DATA, fmt.Sprintf("required field %s is not set", fieldIDToName_OthelloHintState[fieldId]))
+}
+
+func (p *OthelloHintState) FastReadField1(buf []byte) (int, error) {
+	offset := 0
+
+	var _field int32
+	if v, l, err := thrift.Binary.ReadI32(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Remaining = _field
+	return offset, nil
+}
+
+func (p *OthelloHintState) FastReadField2(buf []byte) (int, error) {
+	offset := 0
+
+	var _field bool
+	if v, l, err := thrift.Binary.ReadBool(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = v
+	}
+	p.Pending = _field
+	return offset, nil
+}
+
+func (p *OthelloHintState) FastReadField3(buf []byte) (int, error) {
+	offset := 0
+
+	var _field *int32
+	if v, l, err := thrift.Binary.ReadI32(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = &v
+	}
+	p.Index = _field
+	return offset, nil
+}
+
+func (p *OthelloHintState) FastWrite(buf []byte) int {
+	return p.FastWriteNocopy(buf, nil)
+}
+
+func (p *OthelloHintState) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p != nil {
+		offset += p.fastWriteField1(buf[offset:], w)
+		offset += p.fastWriteField2(buf[offset:], w)
+		offset += p.fastWriteField3(buf[offset:], w)
+	}
+	offset += thrift.Binary.WriteFieldStop(buf[offset:])
+	return offset
+}
+
+func (p *OthelloHintState) BLength() int {
+	l := 0
+	if p != nil {
+		l += p.field1Length()
+		l += p.field2Length()
+		l += p.field3Length()
+	}
+	l += thrift.Binary.FieldStopLength()
+	return l
+}
+
+func (p *OthelloHintState) fastWriteField1(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I32, 1)
+	offset += thrift.Binary.WriteI32(buf[offset:], p.Remaining)
+	return offset
+}
+
+func (p *OthelloHintState) fastWriteField2(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.BOOL, 2)
+	offset += thrift.Binary.WriteBool(buf[offset:], p.Pending)
+	return offset
+}
+
+func (p *OthelloHintState) fastWriteField3(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetIndex() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.I32, 3)
+		offset += thrift.Binary.WriteI32(buf[offset:], *p.Index)
+	}
+	return offset
+}
+
+func (p *OthelloHintState) field1Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.I32Length()
+	return l
+}
+
+func (p *OthelloHintState) field2Length() int {
+	l := 0
+	l += thrift.Binary.FieldBeginLength()
+	l += thrift.Binary.BoolLength()
+	return l
+}
+
+func (p *OthelloHintState) field3Length() int {
+	l := 0
+	if p.IsSetIndex() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.I32Length()
+	}
+	return l
+}
+
 func (p *OthelloRoomView) FastRead(buf []byte) (int, error) {
 
 	var err error
@@ -2803,6 +3009,20 @@ func (p *OthelloRoomView) FastRead(buf []byte) (int, error) {
 		case 6:
 			if fieldTypeId == thrift.STRUCT {
 				l, err = p.FastReadField6(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
+		case 7:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField7(buf[offset:])
 				offset += l
 				if err != nil {
 					goto ReadFieldError
@@ -2957,6 +3177,18 @@ func (p *OthelloRoomView) FastReadField6(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *OthelloRoomView) FastReadField7(buf []byte) (int, error) {
+	offset := 0
+	_field := NewOthelloHintState()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.Hint = _field
+	return offset, nil
+}
+
 func (p *OthelloRoomView) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -2970,6 +3202,7 @@ func (p *OthelloRoomView) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField5(buf[offset:], w)
 		offset += p.fastWriteField6(buf[offset:], w)
+		offset += p.fastWriteField7(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -2984,6 +3217,7 @@ func (p *OthelloRoomView) BLength() int {
 		l += p.field4Length()
 		l += p.field5Length()
 		l += p.field6Length()
+		l += p.field7Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3041,6 +3275,15 @@ func (p *OthelloRoomView) fastWriteField6(buf []byte, w thrift.NocopyWriter) int
 	return offset
 }
 
+func (p *OthelloRoomView) fastWriteField7(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetHint() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 7)
+		offset += p.Hint.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *OthelloRoomView) field1Length() int {
 	l := 0
 	l += thrift.Binary.FieldBeginLength()
@@ -3087,6 +3330,15 @@ func (p *OthelloRoomView) field6Length() int {
 	if p.IsSetResult_() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Result_.BLength()
+	}
+	return l
+}
+
+func (p *OthelloRoomView) field7Length() int {
+	l := 0
+	if p.IsSetHint() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.Hint.BLength()
 	}
 	return l
 }
@@ -3643,6 +3895,20 @@ func (p *OthelloCommandPayload) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 4:
+			if fieldTypeId == thrift.STRUCT {
+				l, err = p.FastReadField4(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -3697,6 +3963,18 @@ func (p *OthelloCommandPayload) FastReadField3(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *OthelloCommandPayload) FastReadField4(buf []byte) (int, error) {
+	offset := 0
+	_field := NewEmptyPayload()
+	if l, err := _field.FastRead(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+	}
+	p.RequestHint = _field
+	return offset, nil
+}
+
 func (p *OthelloCommandPayload) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -3713,6 +3991,7 @@ func (p *OthelloCommandPayload) FastWriteNocopy(buf []byte, w thrift.NocopyWrite
 		offset += p.fastWriteField1(buf[offset:], w)
 		offset += p.fastWriteField2(buf[offset:], w)
 		offset += p.fastWriteField3(buf[offset:], w)
+		offset += p.fastWriteField4(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -3732,6 +4011,7 @@ func (p *OthelloCommandPayload) BLength() int {
 		l += p.field1Length()
 		l += p.field2Length()
 		l += p.field3Length()
+		l += p.field4Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -3766,6 +4046,15 @@ func (p *OthelloCommandPayload) fastWriteField3(buf []byte, w thrift.NocopyWrite
 	return offset
 }
 
+func (p *OthelloCommandPayload) fastWriteField4(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetRequestHint() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRUCT, 4)
+		offset += p.RequestHint.FastWriteNocopy(buf[offset:], w)
+	}
+	return offset
+}
+
 func (p *OthelloCommandPayload) field1Length() int {
 	l := 0
 	if p.IsSetPlaceDisc() {
@@ -3789,6 +4078,15 @@ func (p *OthelloCommandPayload) field3Length() int {
 	if p.IsSetResign() {
 		l += thrift.Binary.FieldBeginLength()
 		l += p.Resign.BLength()
+	}
+	return l
+}
+
+func (p *OthelloCommandPayload) field4Length() int {
+	l := 0
+	if p.IsSetRequestHint() {
+		l += thrift.Binary.FieldBeginLength()
+		l += p.RequestHint.BLength()
 	}
 	return l
 }

@@ -634,6 +634,62 @@ var fieldIDToName_OthelloResult_ = map[int16]string{
 	6: "reason",
 }
 
+type OthelloHintState struct {
+	Remaining int32  `thrift:"remaining,1,required" frugal:"1,required,i32" json:"remaining"`
+	Pending   bool   `thrift:"pending,2,required" frugal:"2,required,bool" json:"pending"`
+	Index     *int32 `thrift:"index,3,optional" frugal:"3,optional,i32" json:"index,omitempty"`
+}
+
+func NewOthelloHintState() *OthelloHintState {
+	return &OthelloHintState{}
+}
+
+func (p *OthelloHintState) InitDefault() {
+}
+
+func (p *OthelloHintState) GetRemaining() (v int32) {
+	return p.Remaining
+}
+
+func (p *OthelloHintState) GetPending() (v bool) {
+	return p.Pending
+}
+
+var OthelloHintState_Index_DEFAULT int32
+
+func (p *OthelloHintState) GetIndex() (v int32) {
+	if !p.IsSetIndex() {
+		return OthelloHintState_Index_DEFAULT
+	}
+	return *p.Index
+}
+func (p *OthelloHintState) SetRemaining(val int32) {
+	p.Remaining = val
+}
+func (p *OthelloHintState) SetPending(val bool) {
+	p.Pending = val
+}
+func (p *OthelloHintState) SetIndex(val *int32) {
+	p.Index = val
+}
+
+func (p *OthelloHintState) IsSetIndex() bool {
+	return p.Index != nil
+}
+
+func (p *OthelloHintState) String() string {
+	if p == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("OthelloHintState(%+v)", *p)
+}
+
+var fieldIDToName_OthelloHintState = map[int16]string{
+	1: "remaining",
+	2: "pending",
+	3: "index",
+}
+
 type OthelloRoomView struct {
 	PlayerId   string                         `thrift:"playerId,1,required" frugal:"1,required,string" json:"playerId"`
 	OwnerID    string                         `thrift:"ownerID,2,required" frugal:"2,required,string" json:"ownerID"`
@@ -641,6 +697,7 @@ type OthelloRoomView struct {
 	PlayerData map[string]*OthelloPlayerState `thrift:"playerData,4,required" frugal:"4,required,map<string:OthelloPlayerState>" json:"playerData"`
 	RoomData   *OthelloRoomData               `thrift:"roomData,5,required" frugal:"5,required,OthelloRoomData" json:"roomData"`
 	Result_    *OthelloResult_                `thrift:"result,6,optional" frugal:"6,optional,OthelloResult_" json:"result,omitempty"`
+	Hint       *OthelloHintState              `thrift:"hint,7,optional" frugal:"7,optional,OthelloHintState" json:"hint,omitempty"`
 }
 
 func NewOthelloRoomView() *OthelloRoomView {
@@ -683,6 +740,15 @@ func (p *OthelloRoomView) GetResult_() (v *OthelloResult_) {
 	}
 	return p.Result_
 }
+
+var OthelloRoomView_Hint_DEFAULT *OthelloHintState
+
+func (p *OthelloRoomView) GetHint() (v *OthelloHintState) {
+	if !p.IsSetHint() {
+		return OthelloRoomView_Hint_DEFAULT
+	}
+	return p.Hint
+}
 func (p *OthelloRoomView) SetPlayerId(val string) {
 	p.PlayerId = val
 }
@@ -701,6 +767,9 @@ func (p *OthelloRoomView) SetRoomData(val *OthelloRoomData) {
 func (p *OthelloRoomView) SetResult_(val *OthelloResult_) {
 	p.Result_ = val
 }
+func (p *OthelloRoomView) SetHint(val *OthelloHintState) {
+	p.Hint = val
+}
 
 func (p *OthelloRoomView) IsSetRoomData() bool {
 	return p.RoomData != nil
@@ -708,6 +777,10 @@ func (p *OthelloRoomView) IsSetRoomData() bool {
 
 func (p *OthelloRoomView) IsSetResult_() bool {
 	return p.Result_ != nil
+}
+
+func (p *OthelloRoomView) IsSetHint() bool {
+	return p.Hint != nil
 }
 
 func (p *OthelloRoomView) String() string {
@@ -724,6 +797,7 @@ var fieldIDToName_OthelloRoomView = map[int16]string{
 	4: "playerData",
 	5: "roomData",
 	6: "result",
+	7: "hint",
 }
 
 type OthelloReplaySnapshot struct {
@@ -857,9 +931,10 @@ var fieldIDToName_OthelloPlaceDiscPayload = map[int16]string{
 }
 
 type OthelloCommandPayload struct {
-	PlaceDisc *OthelloPlaceDiscPayload `thrift:"placeDisc,1,optional" frugal:"1,optional,OthelloPlaceDiscPayload" json:"placeDisc,omitempty"`
-	Pass      *EmptyPayload            `thrift:"pass,2,optional" frugal:"2,optional,EmptyPayload" json:"pass,omitempty"`
-	Resign    *EmptyPayload            `thrift:"resign,3,optional" frugal:"3,optional,EmptyPayload" json:"resign,omitempty"`
+	PlaceDisc   *OthelloPlaceDiscPayload `thrift:"placeDisc,1,optional" frugal:"1,optional,OthelloPlaceDiscPayload" json:"placeDisc,omitempty"`
+	Pass        *EmptyPayload            `thrift:"pass,2,optional" frugal:"2,optional,EmptyPayload" json:"pass,omitempty"`
+	Resign      *EmptyPayload            `thrift:"resign,3,optional" frugal:"3,optional,EmptyPayload" json:"resign,omitempty"`
+	RequestHint *EmptyPayload            `thrift:"requestHint,4,optional" frugal:"4,optional,EmptyPayload" json:"requestHint,omitempty"`
 }
 
 func NewOthelloCommandPayload() *OthelloCommandPayload {
@@ -895,6 +970,15 @@ func (p *OthelloCommandPayload) GetResign() (v *EmptyPayload) {
 	}
 	return p.Resign
 }
+
+var OthelloCommandPayload_RequestHint_DEFAULT *EmptyPayload
+
+func (p *OthelloCommandPayload) GetRequestHint() (v *EmptyPayload) {
+	if !p.IsSetRequestHint() {
+		return OthelloCommandPayload_RequestHint_DEFAULT
+	}
+	return p.RequestHint
+}
 func (p *OthelloCommandPayload) SetPlaceDisc(val *OthelloPlaceDiscPayload) {
 	p.PlaceDisc = val
 }
@@ -903,6 +987,9 @@ func (p *OthelloCommandPayload) SetPass(val *EmptyPayload) {
 }
 func (p *OthelloCommandPayload) SetResign(val *EmptyPayload) {
 	p.Resign = val
+}
+func (p *OthelloCommandPayload) SetRequestHint(val *EmptyPayload) {
+	p.RequestHint = val
 }
 
 func (p *OthelloCommandPayload) CountSetFieldsOthelloCommandPayload() int {
@@ -914,6 +1001,9 @@ func (p *OthelloCommandPayload) CountSetFieldsOthelloCommandPayload() int {
 		count++
 	}
 	if p.IsSetResign() {
+		count++
+	}
+	if p.IsSetRequestHint() {
 		count++
 	}
 	return count
@@ -931,6 +1021,10 @@ func (p *OthelloCommandPayload) IsSetResign() bool {
 	return p.Resign != nil
 }
 
+func (p *OthelloCommandPayload) IsSetRequestHint() bool {
+	return p.RequestHint != nil
+}
+
 func (p *OthelloCommandPayload) String() string {
 	if p == nil {
 		return "<nil>"
@@ -942,4 +1036,5 @@ var fieldIDToName_OthelloCommandPayload = map[int16]string{
 	1: "placeDisc",
 	2: "pass",
 	3: "resign",
+	4: "requestHint",
 }

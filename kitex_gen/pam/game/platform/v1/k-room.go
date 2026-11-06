@@ -175,6 +175,20 @@ func (p *RoomPlayer) FastRead(buf []byte) (int, error) {
 					goto SkipFieldError
 				}
 			}
+		case 10:
+			if fieldTypeId == thrift.STRING {
+				l, err = p.FastReadField10(buf[offset:])
+				offset += l
+				if err != nil {
+					goto ReadFieldError
+				}
+			} else {
+				l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
+				offset += l
+				if err != nil {
+					goto SkipFieldError
+				}
+			}
 		default:
 			l, err = thrift.Binary.Skip(buf[offset:], fieldTypeId)
 			offset += l
@@ -350,6 +364,20 @@ func (p *RoomPlayer) FastReadField9(buf []byte) (int, error) {
 	return offset, nil
 }
 
+func (p *RoomPlayer) FastReadField10(buf []byte) (int, error) {
+	offset := 0
+
+	var _field *string
+	if v, l, err := thrift.Binary.ReadString(buf[offset:]); err != nil {
+		return offset, err
+	} else {
+		offset += l
+		_field = &v
+	}
+	p.AiDifficulty = _field
+	return offset, nil
+}
+
 func (p *RoomPlayer) FastWrite(buf []byte) int {
 	return p.FastWriteNocopy(buf, nil)
 }
@@ -366,6 +394,7 @@ func (p *RoomPlayer) FastWriteNocopy(buf []byte, w thrift.NocopyWriter) int {
 		offset += p.fastWriteField3(buf[offset:], w)
 		offset += p.fastWriteField4(buf[offset:], w)
 		offset += p.fastWriteField9(buf[offset:], w)
+		offset += p.fastWriteField10(buf[offset:], w)
 	}
 	offset += thrift.Binary.WriteFieldStop(buf[offset:])
 	return offset
@@ -383,6 +412,7 @@ func (p *RoomPlayer) BLength() int {
 		l += p.field7Length()
 		l += p.field8Length()
 		l += p.field9Length()
+		l += p.field10Length()
 	}
 	l += thrift.Binary.FieldStopLength()
 	return l
@@ -457,6 +487,15 @@ func (p *RoomPlayer) fastWriteField9(buf []byte, w thrift.NocopyWriter) int {
 	return offset
 }
 
+func (p *RoomPlayer) fastWriteField10(buf []byte, w thrift.NocopyWriter) int {
+	offset := 0
+	if p.IsSetAiDifficulty() {
+		offset += thrift.Binary.WriteFieldBegin(buf[offset:], thrift.STRING, 10)
+		offset += thrift.Binary.WriteStringNocopy(buf[offset:], w, *p.AiDifficulty)
+	}
+	return offset
+}
+
 func (p *RoomPlayer) field1Length() int {
 	l := 0
 	if p.IsSetUserID() {
@@ -522,6 +561,15 @@ func (p *RoomPlayer) field9Length() int {
 	if p.IsSetGameRole() {
 		l += thrift.Binary.FieldBeginLength()
 		l += thrift.Binary.StringLengthNocopy(*p.GameRole)
+	}
+	return l
+}
+
+func (p *RoomPlayer) field10Length() int {
+	l := 0
+	if p.IsSetAiDifficulty() {
+		l += thrift.Binary.FieldBeginLength()
+		l += thrift.Binary.StringLengthNocopy(*p.AiDifficulty)
 	}
 	return l
 }

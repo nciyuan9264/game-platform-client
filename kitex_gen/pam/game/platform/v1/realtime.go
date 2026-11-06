@@ -36,7 +36,8 @@ var fieldIDToName_MatchReadyPayload = map[int16]string{
 }
 
 type MatchSeatPayload struct {
-	SeatIndex *int32 `thrift:"seatIndex,1,optional" frugal:"1,optional,i32" json:"seatIndex,omitempty"`
+	SeatIndex    *int32  `thrift:"seatIndex,1,optional" frugal:"1,optional,i32" json:"seatIndex,omitempty"`
+	AiDifficulty *string `thrift:"aiDifficulty,2,optional" frugal:"2,optional,string" json:"aiDifficulty,omitempty"`
 }
 
 func NewMatchSeatPayload() *MatchSeatPayload {
@@ -54,12 +55,28 @@ func (p *MatchSeatPayload) GetSeatIndex() (v int32) {
 	}
 	return *p.SeatIndex
 }
+
+var MatchSeatPayload_AiDifficulty_DEFAULT string
+
+func (p *MatchSeatPayload) GetAiDifficulty() (v string) {
+	if !p.IsSetAiDifficulty() {
+		return MatchSeatPayload_AiDifficulty_DEFAULT
+	}
+	return *p.AiDifficulty
+}
 func (p *MatchSeatPayload) SetSeatIndex(val *int32) {
 	p.SeatIndex = val
+}
+func (p *MatchSeatPayload) SetAiDifficulty(val *string) {
+	p.AiDifficulty = val
 }
 
 func (p *MatchSeatPayload) IsSetSeatIndex() bool {
 	return p.SeatIndex != nil
+}
+
+func (p *MatchSeatPayload) IsSetAiDifficulty() bool {
+	return p.AiDifficulty != nil
 }
 
 func (p *MatchSeatPayload) String() string {
@@ -71,6 +88,7 @@ func (p *MatchSeatPayload) String() string {
 
 var fieldIDToName_MatchSeatPayload = map[int16]string{
 	1: "seatIndex",
+	2: "aiDifficulty",
 }
 
 type MatchRemovePlayerPayload struct {
